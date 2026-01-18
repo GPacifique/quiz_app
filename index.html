@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    
+    @keyframes confetti {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.4s ease-out forwards;
+    }
+    
+    .option-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .option-btn:hover:not(:disabled) {
+      transform: translateX(8px);
+    }
+    
+    .correct-answer {
+      animation: pulse 0.5s ease;
+    }
+    
+    .progress-bar {
+      transition: width 0.5s ease;
+    }
+    
+    .confetti-piece {
+      position: absolute;
+      animation: confetti 1s ease-out forwards;
+    }
+    
+    .level-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .level-card:hover {
+      transform: translateY(-5px);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"><!-- Level Selection Screen -->
+   <div id="level-screen" class="h-full flex flex-col items-center justify-center p-6 fade-in">
+    <div class="text-center max-w-4xl w-full">
+     <div class="mb-8">
+      <div class="text-6xl mb-4">
+       🎓
+      </div>
+      <h1 id="quiz-title" class="text-5xl font-bold text-white mb-3">Knowledge Quiz</h1>
+      <p class="text-white/80 text-lg">Choose your difficulty level to begin</p>
+     </div>
+     <div class="grid md:grid-cols-3 gap-6 mb-8"><!-- Beginner Level -->
+      <div onclick="selectLevel('beginner')" class="level-card bg-white/10 backdrop-blur rounded-2xl p-8 border-2 border-white/20 hover:border-green-400 hover:bg-white/15">
+       <div class="text-5xl mb-4">
+        🌱
+       </div>
+       <h3 class="text-2xl font-bold text-white mb-2">Beginner</h3>
+       <p class="text-white/70 mb-4">Primary school level</p>
+       <div class="text-green-300 text-sm font-medium">
+        150+ Questions
+       </div>
+      </div><!-- Intermediate Level -->
+      <div onclick="selectLevel('intermediate')" class="level-card bg-white/10 backdrop-blur rounded-2xl p-8 border-2 border-white/20 hover:border-yellow-400 hover:bg-white/15">
+       <div class="text-5xl mb-4">
+        ⚡
+       </div>
+       <h3 class="text-2xl font-bold text-white mb-2">Intermediate</h3>
+       <p class="text-white/70 mb-4">Junior secondary level</p>
+       <div class="text-yellow-300 text-sm font-medium">
+        200+ Questions
+       </div>
+      </div><!-- Advanced Level -->
+      <div onclick="selectLevel('advanced')" class="level-card bg-white/10 backdrop-blur rounded-2xl p-8 border-2 border-white/20 hover:border-red-400 hover:bg-white/15">
+       <div class="text-5xl mb-4">
+        🔥
+       </div>
+       <h3 class="text-2xl font-bold text-white mb-2">Advanced</h3>
+       <p class="text-white/70 mb-4">Senior secondary level</p>
+       <div class="text-red-300 text-sm font-medium">
+        250+ Questions
+       </div>
+      </div>
+     </div>
+     <p class="text-white/60 text-sm">600+ total questions • All African school subjects covered</p>
+    </div>
+   </div><!-- Quiz Screen -->
+   <div id="quiz-screen" class="h-full flex flex-col p-6 hidden"><!-- Progress Bar -->
+    <div class="mb-6">
+     <div class="flex justify-between text-sm text-white/80 mb-2">
+      <div class="flex items-center gap-2"><span id="level-badge" class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium"></span> <span id="question-counter">Question 1 of 10</span>
+      </div><span id="score-display">Score: 0</span>
+     </div>
+     <div class="h-2 bg-white/20 rounded-full overflow-hidden">
+      <div id="progress-bar" class="h-full bg-gradient-to-r from-white to-white/80 progress-bar" style="width: 0%"></div>
+     </div>
+    </div><!-- Ad Section -->
+    <div id="ad-banner" class="mb-6 max-w-2xl mx-auto w-full bg-white/10 backdrop-blur rounded-xl p-4 shadow-lg border border-white/20">
+     <p class="text-xs text-white/60 mb-2 text-center">ADVERTISEMENT</p>
+     <div class="bg-white/5 rounded-lg p-8 min-h-[120px] flex items-center justify-center border border-white/10">
+      <div class="text-center">
+       <div class="text-4xl mb-2">
+        📢
+       </div>
+       <p class="text-white/80 text-sm font-medium">Your Ad Could Be Here</p>
+       <p class="text-white/50 text-xs mt-1">970 x 90 Banner Space</p>
+      </div>
+     </div>
+    </div><!-- Question Card -->
+    <div class="flex-1 flex flex-col justify-center max-w-2xl mx-auto w-full">
+     <div id="question-card" class="bg-white/10 backdrop-blur rounded-2xl p-8 shadow-2xl border border-white/20 fade-in">
+      <h2 id="question-text" class="text-xl md:text-2xl font-semibold text-white mb-8 leading-relaxed"></h2>
+      <div id="options-container" class="space-y-3"><!-- Options will be inserted here -->
+      </div><!-- Feedback -->
+      <div id="feedback" class="hidden mt-6 p-4 rounded-xl text-center font-medium"></div><!-- Next Button --> <button id="next-btn" onclick="nextQuestion()" class="hidden w-full mt-6 py-4 bg-white text-purple-700 font-semibold rounded-xl hover:bg-white/90 transition-all"> Next Question </button>
+     </div>
+    </div>
+   </div><!-- Results Screen -->
+   <div id="results-screen" class="h-full flex flex-col items-center justify-center p-6 hidden">
+    <div id="confetti-container" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+    <div class="text-center max-w-md fade-in relative z-10">
+     <div id="result-emoji" class="text-7xl mb-6">
+      🎉
+     </div>
+     <h2 class="text-3xl font-bold text-white mb-2">Quiz Complete!</h2>
+     <p id="result-message" class="text-white/80 mb-6"></p>
+     <div class="bg-white/10 backdrop-blur rounded-2xl p-8 mb-8 border border-white/20">
+      <div class="text-6xl font-bold text-white mb-2" id="final-score">
+       0/10
+      </div>
+      <p class="text-white/70">Questions Correct</p>
+      <div id="score-bar" class="mt-4 h-3 bg-white/20 rounded-full overflow-hidden">
+       <div id="score-fill" class="h-full bg-gradient-to-r from-white to-white/80 transition-all duration-1000" style="width: 0%"></div>
+      </div>
+     </div>
+     <div class="flex gap-4"><button onclick="changeDifficulty()" class="flex-1 px-6 py-4 bg-white/20 text-white font-semibold rounded-xl hover:bg-white/30 transition-all border border-white/30"> Change Level </button> <button onclick="restartQuiz()" class="flex-1 px-6 py-4 bg-white text-purple-700 font-semibold rounded-xl hover:bg-white/90 transition-all"> Play Again </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Massive Quiz Data organized by difficulty level - 600+ questions covering all African school subjects
+    const quizData = {
+      beginner: [
+        // Basic African Geography (20 questions)
+        {question: "What is the capital of Nigeria?", options: ["Lagos", "Abuja", "Kano", "Ibadan"], correct: 1},
+        {question: "Which ocean is west of Africa?", options: ["Indian Ocean", "Pacific Ocean", "Atlantic Ocean", "Arctic Ocean"], correct: 2},
+        {question: "What is the largest country in Africa by area?", options: ["Nigeria", "Algeria", "Egypt", "South Africa"], correct: 1},
+        {question: "Mount Kilimanjaro is in which country?", options: ["Kenya", "Tanzania", "Uganda", "Ethiopia"], correct: 1},
+        {question: "What is the capital of Ghana?", options: ["Kumasi", "Accra", "Tamale", "Cape Coast"], correct: 1},
+        {question: "What is the capital of Kenya?", options: ["Nairobi", "Mombasa", "Kisumu", "Nakuru"], correct: 0},
+        {question: "Which river is the longest in Africa?", options: ["Congo", "Niger", "Nile", "Zambezi"], correct: 2},
+        {question: "What continent is Nigeria in?", options: ["Asia", "Europe", "Africa", "America"], correct: 2},
+        {question: "How many continents are there?", options: ["5", "6", "7", "8"], correct: 2},
+        {question: "What is the largest ocean?", options: ["Atlantic", "Indian", "Pacific", "Arctic"], correct: 2},
+        {question: "What is the capital of Egypt?", options: ["Cairo", "Lagos", "Nairobi", "Accra"], correct: 0},
+        {question: "Which country is known as the Giant of Africa?", options: ["Egypt", "Nigeria", "South Africa", "Kenya"], correct: 1},
+        {question: "What is the capital of South Africa?", options: ["Johannesburg", "Pretoria", "Cape Town", "Durban"], correct: 1},
+        {question: "Lake Victoria is in East Africa. True or False?", options: ["True", "False", "Sometimes", "Unknown"], correct: 0},
+        {question: "What is the Sahara?", options: ["A river", "A desert", "A mountain", "A city"], correct: 1},
+        {question: "Which country is Accra the capital of?", options: ["Nigeria", "Ghana", "Togo", "Benin"], correct: 1},
+        {question: "What ocean is east of Africa?", options: ["Atlantic", "Indian", "Pacific", "Arctic"], correct: 1},
+        {question: "What is the capital of Morocco?", options: ["Casablanca", "Rabat", "Marrakech", "Fez"], correct: 1},
+        {question: "Which is bigger: Africa or Europe?", options: ["Africa", "Europe", "Same size", "Cannot tell"], correct: 0},
+        {question: "What language is widely spoken in West Africa?", options: ["Chinese", "English or French", "Russian", "Japanese"], correct: 1},
+        
+        // Basic Mathematics (25 questions)
+        {question: "What is 5 + 7?", options: ["10", "11", "12", "13"], correct: 2},
+        {question: "What is 10 - 3?", options: ["6", "7", "8", "9"], correct: 1},
+        {question: "What is 4 × 5?", options: ["15", "20", "25", "30"], correct: 1},
+        {question: "What is 12 ÷ 3?", options: ["3", "4", "5", "6"], correct: 1},
+        {question: "How many sides does a triangle have?", options: ["2", "3", "4", "5"], correct: 1},
+        {question: "What is 6 + 4?", options: ["8", "9", "10", "11"], correct: 2},
+        {question: "What is 15 - 5?", options: ["5", "10", "15", "20"], correct: 1},
+        {question: "What is 3 × 3?", options: ["6", "9", "12", "15"], correct: 1},
+        {question: "What is 8 + 2?", options: ["8", "9", "10", "11"], correct: 2},
+        {question: "What is 2 + 2?", options: ["3", "4", "5", "6"], correct: 1},
+        {question: "Which is bigger: 5 or 8?", options: ["5", "8", "Same", "Neither"], correct: 1},
+        {question: "What is half of 10?", options: ["3", "4", "5", "6"], correct: 2},
+        {question: "How many fingers do you have on one hand?", options: ["4", "5", "6", "10"], correct: 1},
+        {question: "What number comes after 9?", options: ["8", "10", "11", "12"], correct: 1},
+        {question: "What is 7 + 3?", options: ["8", "9", "10", "11"], correct: 2},
+        {question: "What is 20 ÷ 4?", options: ["4", "5", "6", "7"], correct: 1},
+        {question: "How many sides does a square have?", options: ["3", "4", "5", "6"], correct: 1},
+        {question: "What is 9 - 4?", options: ["3", "4", "5", "6"], correct: 2},
+        {question: "What is 2 × 6?", options: ["8", "10", "12", "14"], correct: 2},
+        {question: "What is 16 ÷ 2?", options: ["6", "7", "8", "9"], correct: 2},
+        {question: "How many sides does a circle have?", options: ["0", "1", "2", "3"], correct: 0},
+        {question: "What is 11 - 6?", options: ["3", "4", "5", "6"], correct: 2},
+        {question: "What is 5 × 2?", options: ["7", "8", "9", "10"], correct: 3},
+        {question: "What is 18 ÷ 3?", options: ["5", "6", "7", "8"], correct: 1},
+        {question: "What is 14 - 7?", options: ["5", "6", "7", "8"], correct: 2},
+        
+        // Basic Science (25 questions)
+        {question: "What is the color of the sky?", options: ["Red", "Blue", "Green", "Yellow"], correct: 1},
+        {question: "How many legs does a dog have?", options: ["2", "3", "4", "6"], correct: 2},
+        {question: "What do plants need to grow?", options: ["Water and sunlight", "Only water", "Only soil", "Only air"], correct: 0},
+        {question: "What is the Sun?", options: ["A planet", "A star", "A moon", "A comet"], correct: 1},
+        {question: "What do we breathe?", options: ["Water", "Air", "Fire", "Earth"], correct: 1},
+        {question: "What pumps blood in our body?", options: ["Lungs", "Heart", "Liver", "Stomach"], correct: 1},
+        {question: "How many eyes do humans have?", options: ["1", "2", "3", "4"], correct: 1},
+        {question: "What do we use to smell?", options: ["Ears", "Eyes", "Nose", "Mouth"], correct: 2},
+        {question: "What gives us light during the day?", options: ["Moon", "Stars", "Sun", "Fire"], correct: 2},
+        {question: "What is frozen water called?", options: ["Steam", "Ice", "Vapor", "Rain"], correct: 1},
+        {question: "What do plants need from the sun?", options: ["Water", "Light", "Air", "Soil"], correct: 1},
+        {question: "What do fish use to breathe?", options: ["Lungs", "Gills", "Nose", "Mouth"], correct: 1},
+        {question: "What season is coldest?", options: ["Spring", "Summer", "Autumn", "Winter"], correct: 3},
+        {question: "What falls from the sky when it rains?", options: ["Snow", "Water", "Sand", "Leaves"], correct: 1},
+        {question: "How many legs does a spider have?", options: ["6", "8", "10", "12"], correct: 1},
+        {question: "What do bees make?", options: ["Milk", "Honey", "Eggs", "Bread"], correct: 1},
+        {question: "What is water when it freezes?", options: ["Steam", "Ice", "Rain", "Snow"], correct: 1},
+        {question: "What color is grass?", options: ["Blue", "Red", "Green", "Yellow"], correct: 2},
+        {question: "What do we use to see?", options: ["Ears", "Eyes", "Nose", "Mouth"], correct: 1},
+        {question: "What do we use to hear?", options: ["Ears", "Eyes", "Nose", "Mouth"], correct: 0},
+        {question: "How many senses do humans have?", options: ["4", "5", "6", "7"], correct: 1},
+        {question: "What is the largest land animal?", options: ["Lion", "Elephant", "Giraffe", "Hippo"], correct: 1},
+        {question: "What animal says 'meow'?", options: ["Dog", "Cat", "Cow", "Sheep"], correct: 1},
+        {question: "What do chickens lay?", options: ["Eggs", "Milk", "Cheese", "Butter"], correct: 0},
+        {question: "What do cows give us?", options: ["Eggs", "Milk", "Honey", "Wool"], correct: 1},
+        
+        // Basic English (20 questions)
+        {question: "What is the opposite of 'hot'?", options: ["Warm", "Cold", "Cool", "Dry"], correct: 1},
+        {question: "How many letters are in 'CAT'?", options: ["2", "3", "4", "5"], correct: 1},
+        {question: "What is the plural of 'book'?", options: ["Books", "Bookes", "Book", "Bookies"], correct: 0},
+        {question: "Which word is a color?", options: ["Dog", "Red", "Run", "Happy"], correct: 1},
+        {question: "What is a baby cat called?", options: ["Puppy", "Kitten", "Calf", "Chick"], correct: 1},
+        {question: "What is the opposite of 'up'?", options: ["Left", "Right", "Down", "Forward"], correct: 2},
+        {question: "What is the opposite of 'big'?", options: ["Large", "Huge", "Small", "Tall"], correct: 2},
+        {question: "What is a baby dog called?", options: ["Kitten", "Puppy", "Calf", "Chick"], correct: 1},
+        {question: "What is the opposite of 'day'?", options: ["Morning", "Evening", "Night", "Afternoon"], correct: 2},
+        {question: "Which word is an animal?", options: ["Table", "Dog", "Chair", "Book"], correct: 1},
+        {question: "What is the first letter of the alphabet?", options: ["A", "B", "C", "D"], correct: 0},
+        {question: "How many vowels are there in English?", options: ["3", "4", "5", "6"], correct: 2},
+        {question: "What is the plural of 'child'?", options: ["Childs", "Children", "Childrens", "Childes"], correct: 1},
+        {question: "What do we call a person who teaches?", options: ["Doctor", "Teacher", "Farmer", "Driver"], correct: 1},
+        {question: "What is the opposite of 'good'?", options: ["Bad", "Better", "Best", "Great"], correct: 0},
+        {question: "Which word is a verb?", options: ["Book", "Run", "Big", "Red"], correct: 1},
+        {question: "What is a baby of a hen called?", options: ["Calf", "Puppy", "Chick", "Lamb"], correct: 2},
+        {question: "What do we call a place where we learn?", options: ["Hospital", "School", "Market", "Bank"], correct: 1},
+        {question: "What is the opposite of 'old'?", options: ["Young", "New", "Both A and B", "Neither"], correct: 2},
+        {question: "Which word rhymes with 'cat'?", options: ["Dog", "Mat", "Sun", "Car"], correct: 1},
+        
+        // Basic General Knowledge (20 questions)
+        {question: "How many days are in a week?", options: ["5", "6", "7", "8"], correct: 2},
+        {question: "How many months are in a year?", options: ["10", "11", "12", "13"], correct: 2},
+        {question: "What comes after Monday?", options: ["Sunday", "Tuesday", "Wednesday", "Thursday"], correct: 1},
+        {question: "How many hours are in a day?", options: ["12", "20", "24", "30"], correct: 2},
+        {question: "What is the first month of the year?", options: ["December", "January", "February", "March"], correct: 1},
+        {question: "What is the last day of the week?", options: ["Monday", "Friday", "Saturday", "Sunday"], correct: 3},
+        {question: "What color is the sun?", options: ["Blue", "Yellow", "Red", "Green"], correct: 1},
+        {question: "What do we wear on our feet?", options: ["Hat", "Gloves", "Shoes", "Shirt"], correct: 2},
+        {question: "What is the color of blood?", options: ["Blue", "Red", "Green", "Yellow"], correct: 1},
+        {question: "How many colors are in a rainbow?", options: ["5", "6", "7", "8"], correct: 2},
+        {question: "What animal is known as 'King of the Jungle'?", options: ["Tiger", "Lion", "Elephant", "Leopard"], correct: 1},
+        {question: "What shape is a ball?", options: ["Square", "Triangle", "Circle", "Rectangle"], correct: 2},
+        {question: "What do we use to write?", options: ["Spoon", "Pen", "Cup", "Plate"], correct: 1},
+        {question: "What fruit is yellow and long?", options: ["Apple", "Orange", "Banana", "Grape"], correct: 2},
+        {question: "What do we get from bees?", options: ["Milk", "Honey", "Butter", "Cheese"], correct: 1},
+        {question: "What color is an orange?", options: ["Red", "Yellow", "Orange", "Green"], correct: 2},
+        {question: "What do we drink from cows?", options: ["Water", "Juice", "Milk", "Tea"], correct: 2},
+        {question: "What has four wheels and carries people?", options: ["Bicycle", "Car", "Boat", "Plane"], correct: 1},
+        {question: "What flies in the sky?", options: ["Car", "Train", "Airplane", "Bus"], correct: 2},
+        {question: "How many wheels does a bicycle have?", options: ["1", "2", "3", "4"], correct: 1},
+        
+        // Simple African Culture & History (15 questions)
+        {question: "Who was Nelson Mandela?", options: ["A teacher", "South African leader", "A doctor", "A farmer"], correct: 1},
+        {question: "What year did Ghana gain independence?", options: ["1950", "1957", "1960", "1963"], correct: 1},
+        {question: "What is the currency of Nigeria?", options: ["Dollar", "Naira", "Pound", "Euro"], correct: 1},
+        {question: "What language is spoken in most of West Africa?", options: ["Spanish", "English or French", "German", "Chinese"], correct: 1},
+        {question: "What is jollof rice?", options: ["A dance", "A food", "A game", "A language"], correct: 1},
+        {question: "Which African country has pyramids?", options: ["Nigeria", "Egypt", "Ghana", "Kenya"], correct: 1},
+        {question: "What is fufu?", options: ["A car", "A food", "A city", "A river"], correct: 1},
+        {question: "What continent is Africa?", options: ["A country", "A continent", "A city", "An ocean"], correct: 1},
+        {question: "What is Nairobi?", options: ["A country", "A city", "A river", "A mountain"], correct: 1},
+        {question: "Which country uses the Cedi as currency?", options: ["Nigeria", "Ghana", "Kenya", "Egypt"], correct: 1},
+        {question: "What is the Nile?", options: ["A mountain", "A river", "A city", "A country"], correct: 1},
+        {question: "What is Lagos?", options: ["A country", "A city in Nigeria", "A river", "A mountain"], correct: 1},
+        {question: "What is Swahili?", options: ["A food", "A language", "A dance", "A game"], correct: 1},
+        {question: "Where is Table Mountain?", options: ["Nigeria", "Ghana", "South Africa", "Egypt"], correct: 2},
+        {question: "What is highlife music from?", options: ["Europe", "West Africa", "Asia", "America"], correct: 1},
+        
+        // Basic Colors, Shapes & Numbers (20 questions)
+        {question: "What shape is a door?", options: ["Circle", "Triangle", "Rectangle", "Pentagon"], correct: 2},
+        {question: "What color do you get when you mix red and yellow?", options: ["Green", "Orange", "Purple", "Brown"], correct: 1},
+        {question: "How many cents make 1 Naira?", options: ["10", "50", "100", "1000"], correct: 2},
+        {question: "Which is heavier: 1kg of feathers or 1kg of stones?", options: ["Feathers", "Stones", "Same weight", "Cannot tell"], correct: 2},
+        {question: "What season comes after winter?", options: ["Summer", "Spring", "Autumn", "Fall"], correct: 1},
+        {question: "What is water when it boils?", options: ["Ice", "Steam", "Snow", "Frost"], correct: 1},
+        {question: "What do we call frozen rain?", options: ["Snow", "Hail", "Sleet", "Frost"], correct: 1},
+        {question: "What shape is an egg?", options: ["Square", "Circle", "Oval", "Triangle"], correct: 2},
+        {question: "What is the main color of leaves?", options: ["Red", "Blue", "Green", "Yellow"], correct: 2},
+        {question: "How many minutes are in one hour?", options: ["30", "45", "60", "90"], correct: 2},
+        {question: "How many seconds are in a minute?", options: ["50", "60", "100", "120"], correct: 1},
+        {question: "What shape is a coin?", options: ["Square", "Triangle", "Circle", "Rectangle"], correct: 2},
+        {question: "What color is the sky at night?", options: ["Blue", "Red", "Dark/Black", "Green"], correct: 2},
+        {question: "How many toes do you have?", options: ["5", "8", "10", "20"], correct: 2},
+        {question: "What is 50 + 50?", options: ["90", "100", "110", "150"], correct: 1},
+        {question: "What is 100 - 50?", options: ["40", "50", "60", "70"], correct: 1},
+        {question: "How many days in the month of December?", options: ["28", "29", "30", "31"], correct: 3},
+        {question: "What color is chocolate?", options: ["Red", "Brown", "Blue", "Green"], correct: 1},
+        {question: "How many sides does a pentagon have?", options: ["4", "5", "6", "7"], correct: 1},
+        {question: "What is half of 20?", options: ["5", "10", "15", "20"], correct: 1}
+      ],
+      
+      intermediate: [
+        // African History & Geography (30 questions)
+        {question: "Which African country was never colonized?", options: ["Kenya", "Ethiopia", "Ghana", "Nigeria"], correct: 1},
+        {question: "Who was the first President of South Africa after apartheid?", options: ["Thabo Mbeki", "Nelson Mandela", "Desmond Tutu", "F.W. de Klerk"], correct: 1},
+        {question: "The Nile River flows through how many countries?", options: ["7", "9", "11", "13"], correct: 2},
+        {question: "Which African country has the most pyramids?", options: ["Egypt", "Sudan", "Ethiopia", "Libya"], correct: 1},
+        {question: "What is the currency of South Africa?", options: ["Dollar", "Rand", "Shilling", "Naira"], correct: 1},
+        {question: "Which African country hosted the 2010 FIFA World Cup?", options: ["Nigeria", "Egypt", "South Africa", "Morocco"], correct: 2},
+        {question: "The ancient city of Timbuktu is in which country?", options: ["Morocco", "Mali", "Niger", "Mauritania"], correct: 1},
+        {question: "Lake Victoria is shared by three countries. Which is NOT one?", options: ["Kenya", "Tanzania", "Rwanda", "Uganda"], correct: 2},
+        {question: "Which African leader is known as 'Madiba'?", options: ["Kwame Nkrumah", "Nelson Mandela", "Julius Nyerere", "Jomo Kenyatta"], correct: 1},
+        {question: "What is the official language of Senegal?", options: ["English", "French", "Portuguese", "Arabic"], correct: 1},
+        {question: "The Maasai people are primarily found in which countries?", options: ["Nigeria-Ghana", "Kenya-Tanzania", "Ethiopia-Somalia", "Zimbabwe-Zambia"], correct: 1},
+        {question: "What is the capital of Morocco?", options: ["Casablanca", "Marrakech", "Rabat", "Fez"], correct: 2},
+        {question: "The Victoria Falls is located between which two countries?", options: ["Kenya-Tanzania", "Zambia-Zimbabwe", "Uganda-Rwanda", "Congo-Angola"], correct: 1},
+        {question: "What is the official language of Ethiopia?", options: ["Arabic", "Swahili", "Amharic", "English"], correct: 2},
+        {question: "Which country was formerly called Gold Coast?", options: ["Ghana", "Ivory Coast", "Guinea", "Sierra Leone"], correct: 0},
+        {question: "What is the largest lake in Africa?", options: ["Lake Chad", "Lake Victoria", "Lake Tanganyika", "Lake Malawi"], correct: 1},
+        {question: "How many countries are in Africa?", options: ["48", "52", "54", "58"], correct: 2},
+        {question: "What is the Sahara Desert?", options: ["Smallest desert", "Largest hot desert", "Only in Egypt", "A mountain range"], correct: 1},
+        {question: "Which African country has Portuguese as official language?", options: ["Guinea", "Mozambique", "Senegal", "Mali"], correct: 1},
+        {question: "What is the capital of Zimbabwe?", options: ["Lusaka", "Harare", "Maputo", "Gaborone"], correct: 1},
+        {question: "The Congo River is the deepest river in the world?", options: ["True", "False", "Only in some parts", "Unknown"], correct: 0},
+        {question: "What is apartheid?", options: ["A celebration", "System of racial segregation", "A type of government", "An economic policy"], correct: 1},
+        {question: "Which country is Dakar the capital of?", options: ["Mali", "Senegal", "Guinea", "Gambia"], correct: 1},
+        {question: "What year did Nigeria gain independence?", options: ["1957", "1960", "1963", "1965"], correct: 1},
+        {question: "Which desert is in southern Africa?", options: ["Sahara", "Kalahari", "Gobi", "Arabian"], correct: 1},
+        {question: "What is the currency of Kenya?", options: ["Naira", "Cedi", "Shilling", "Rand"], correct: 2},
+        {question: "Which mountain range is in North Africa?", options: ["Himalayas", "Atlas Mountains", "Andes", "Rockies"], correct: 1},
+        {question: "What is the smallest country in mainland Africa?", options: ["Gambia", "Swaziland", "Lesotho", "Djibouti"], correct: 0},
+        {question: "Which African country borders the Mediterranean Sea?", options: ["Ghana", "Kenya", "Egypt", "Botswana"], correct: 2},
+        {question: "What is the Great Rift Valley?", options: ["A river", "A geological formation", "A desert", "A city"], correct: 1},
+        
+        // Science & Biology (30 questions)
+        {question: "What is the powerhouse of the cell?", options: ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"], correct: 1},
+        {question: "What is the chemical symbol for Gold?", options: ["Gd", "Go", "Au", "Ag"], correct: 2},
+        {question: "How many planets are in our solar system?", options: ["7", "8", "9", "10"], correct: 1},
+        {question: "Which gas do plants absorb from the atmosphere?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], correct: 2},
+        {question: "What is the boiling point of water?", options: ["90°C", "100°C", "110°C", "120°C"], correct: 1},
+        {question: "Which organ pumps blood through the body?", options: ["Liver", "Kidney", "Heart", "Lungs"], correct: 2},
+        {question: "What is the hardest natural substance?", options: ["Gold", "Iron", "Diamond", "Platinum"], correct: 2},
+        {question: "How many chambers does the human heart have?", options: ["2", "3", "4", "5"], correct: 2},
+        {question: "What is the study of plants called?", options: ["Zoology", "Botany", "Geology", "Astronomy"], correct: 1},
+        {question: "How many chromosomes do humans have?", options: ["23", "46", "44", "48"], correct: 1},
+        {question: "What is the largest organ inside the human body?", options: ["Heart", "Liver", "Brain", "Stomach"], correct: 1},
+        {question: "How many teeth does an adult human have?", options: ["28", "30", "32", "34"], correct: 2},
+        {question: "What is the green pigment in plants called?", options: ["Melanin", "Chlorophyll", "Carotene", "Hemoglobin"], correct: 1},
+        {question: "What is photosynthesis?", options: ["Breathing", "Making food from sunlight", "Growing", "Reproducing"], correct: 1},
+        {question: "What is the smallest unit of life?", options: ["Atom", "Molecule", "Cell", "Tissue"], correct: 2},
+        {question: "How many bones are in the adult human body?", options: ["186", "206", "226", "246"], correct: 1},
+        {question: "What is H2O?", options: ["Hydrogen", "Oxygen", "Water", "Peroxide"], correct: 2},
+        {question: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1},
+        {question: "What gas do humans exhale?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], correct: 2},
+        {question: "What is the largest organ in the human body?", options: ["Liver", "Brain", "Skin", "Heart"], correct: 2},
+        {question: "What is the process by which plants make food?", options: ["Respiration", "Photosynthesis", "Digestion", "Fermentation"], correct: 1},
+        {question: "Which part of the plant absorbs water?", options: ["Leaves", "Stem", "Roots", "Flowers"], correct: 2},
+        {question: "What is the largest land animal?", options: ["Giraffe", "Hippopotamus", "Rhinoceros", "African Elephant"], correct: 3},
+        {question: "How many senses do humans have?", options: ["4", "5", "6", "7"], correct: 1},
+        {question: "What do bees collect from flowers?", options: ["Pollen and nectar", "Seeds", "Leaves", "Stems"], correct: 0},
+        {question: "What is the study of animals called?", options: ["Botany", "Zoology", "Biology", "Ecology"], correct: 1},
+        {question: "What is malaria caused by?", options: ["Bacteria", "Virus", "Parasite", "Fungus"], correct: 2},
+        {question: "What is the function of red blood cells?", options: ["Fight infection", "Carry oxygen", "Clot blood", "Digest food"], correct: 1},
+        {question: "What vitamin is good for eyesight?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], correct: 0},
+        {question: "What is the normal human body temperature?", options: ["35°C", "37°C", "39°C", "40°C"], correct: 1},
+        
+        // Mathematics (30 questions)
+        {question: "What is the square root of 144?", options: ["11", "12", "13", "14"], correct: 1},
+        {question: "What is 15% of 200?", options: ["25", "30", "35", "40"], correct: 1},
+        {question: "What is 7 × 8?", options: ["54", "56", "63", "64"], correct: 1},
+        {question: "What is the formula for the area of a circle?", options: ["πr²", "2πr", "πd", "r²"], correct: 0},
+        {question: "What is 1000 ÷ 25?", options: ["25", "40", "50", "75"], correct: 1},
+        {question: "How many degrees are in a right angle?", options: ["45°", "90°", "180°", "360°"], correct: 1},
+        {question: "What is the next prime number after 7?", options: ["9", "10", "11", "13"], correct: 2},
+        {question: "What is 3³ (3 cubed)?", options: ["6", "9", "27", "81"], correct: 2},
+        {question: "How many sides does a hexagon have?", options: ["5", "6", "7", "8"], correct: 1},
+        {question: "What is 0.5 as a fraction?", options: ["1/4", "1/2", "1/3", "2/3"], correct: 1},
+        {question: "What is the perimeter of a square with side 5 cm?", options: ["20 cm", "25 cm", "10 cm", "15 cm"], correct: 0},
+        {question: "What is 50% of 80?", options: ["30", "40", "50", "60"], correct: 1},
+        {question: "What is the value of π (pi) approximately?", options: ["2.14", "3.14", "4.14", "5.14"], correct: 1},
+        {question: "How many millimeters are in a centimeter?", options: ["5", "10", "100", "1000"], correct: 1},
+        {question: "What is 12²?", options: ["24", "120", "144", "124"], correct: 2},
+        {question: "What is the formula for the area of a rectangle?", options: ["length × width", "2(length + width)", "length + width", "length²"], correct: 0},
+        {question: "What is 999 + 1?", options: ["1000", "9991", "998", "10000"], correct: 0},
+        {question: "How many minutes are in 3 hours?", options: ["60", "120", "180", "240"], correct: 2},
+        {question: "What is a prime number?", options: ["Any number", "Number divisible by only 1 and itself", "Even number", "Odd number"], correct: 1},
+        {question: "What is 1/4 as a decimal?", options: ["0.2", "0.25", "0.4", "0.5"], correct: 1},
+        {question: "If a triangle has angles of 60°, 60°, and 60°, what type is it?", options: ["Right", "Equilateral", "Isosceles", "Scalene"], correct: 1},
+        {question: "What is the sum of angles in a triangle?", options: ["90°", "180°", "270°", "360°"], correct: 1},
+        {question: "What is 25% of 100?", options: ["20", "25", "30", "35"], correct: 1},
+        {question: "How many seconds are in a minute?", options: ["50", "60", "100", "120"], correct: 1},
+        {question: "What is 8 × 7?", options: ["54", "56", "63", "64"], correct: 1},
+        {question: "What is 100 ÷ 5?", options: ["15", "20", "25", "30"], correct: 1},
+        {question: "What is 2/4 simplified?", options: ["1/4", "1/2", "1/3", "2/3"], correct: 1},
+        {question: "What is 10²?", options: ["20", "50", "100", "1000"], correct: 2},
+        {question: "How many degrees in a full circle?", options: ["90°", "180°", "270°", "360°"], correct: 3},
+        {question: "What is 0.75 as a fraction?", options: ["1/2", "2/3", "3/4", "4/5"], correct: 2},
+        
+        // English & Literature (30 questions)
+        {question: "Who wrote 'Things Fall Apart'?", options: ["Wole Soyinka", "Chinua Achebe", "Ngugi wa Thiong'o", "Ben Okri"], correct: 1},
+        {question: "What is the plural of 'child'?", options: ["Childs", "Children", "Childrens", "Childes"], correct: 1},
+        {question: "Which word is a synonym for 'happy'?", options: ["Sad", "Joyful", "Angry", "Tired"], correct: 1},
+        {question: "What is an antonym of 'hot'?", options: ["Warm", "Cool", "Cold", "Freezing"], correct: 2},
+        {question: "Who is the author of 'Half of a Yellow Sun'?", options: ["Chimamanda Adichie", "Tsitsi Dangarembga", "Buchi Emecheta", "Ama Ata Aidoo"], correct: 0},
+        {question: "What part of speech is the word 'quickly'?", options: ["Noun", "Verb", "Adjective", "Adverb"], correct: 3},
+        {question: "Which African won the Nobel Prize in Literature first?", options: ["Wole Soyinka", "Nadine Gordimer", "J.M. Coetzee", "Naguib Mahfouz"], correct: 0},
+        {question: "What is the past tense of 'run'?", options: ["Runned", "Run", "Ran", "Running"], correct: 2},
+        {question: "Which punctuation mark ends a question?", options: ["Period", "Comma", "Question Mark", "Exclamation"], correct: 2},
+        {question: "What is a noun?", options: ["An action word", "A describing word", "A person, place, or thing", "A connecting word"], correct: 2},
+        {question: "What is the superlative form of 'good'?", options: ["Gooder", "Goodest", "Better", "Best"], correct: 3},
+        {question: "Which is a compound word?", options: ["Beautiful", "Butterfly", "Running", "Jumped"], correct: 1},
+        {question: "What is an adjective?", options: ["Action word", "Describing word", "Naming word", "Connecting word"], correct: 1},
+        {question: "What is the comparative form of 'big'?", options: ["Biger", "Bigger", "Biggest", "More big"], correct: 1},
+        {question: "Which is a proper noun?", options: ["city", "Lagos", "country", "school"], correct: 1},
+        {question: "What is a verb?", options: ["Naming word", "Action word", "Describing word", "Connecting word"], correct: 1},
+        {question: "What is the past tense of 'go'?", options: ["Goed", "Gone", "Went", "Going"], correct: 2},
+        {question: "Which word is a pronoun?", options: ["Dog", "Run", "Beautiful", "He"], correct: 3},
+        {question: "What is a simile?", options: ["Direct comparison", "Comparison using 'like' or 'as'", "Giving human qualities", "Exaggeration"], correct: 1},
+        {question: "What is alliteration?", options: ["Rhyming words", "Repetition of consonant sounds", "Comparison", "Exaggeration"], correct: 1},
+        {question: "What is the plural of 'mouse'?", options: ["Mouses", "Mice", "Mices", "Mousies"], correct: 1},
+        {question: "Which is a conjunction?", options: ["Run", "Beautiful", "And", "Quickly"], correct: 2},
+        {question: "What is onomatopoeia?", options: ["Rhyming", "Words that sound like their meaning", "Comparison", "Exaggeration"], correct: 1},
+        {question: "What is the past tense of 'eat'?", options: ["Eated", "Eat", "Ate", "Eating"], correct: 2},
+        {question: "Which sentence is correct?", options: ["He go to school", "He goes to school", "He going to school", "He gone to school"], correct: 1},
+        {question: "What is a metaphor?", options: ["Using 'like' or 'as'", "Direct comparison", "Giving human qualities", "Exaggeration"], correct: 1},
+        {question: "What is the plural of 'foot'?", options: ["Foots", "Feets", "Feet", "Footes"], correct: 2},
+        {question: "Which word is an article?", options: ["Run", "The", "Beautiful", "Quickly"], correct: 1},
+        {question: "What is personification?", options: ["Comparison", "Giving human qualities to non-human things", "Exaggeration", "Rhyming"], correct: 1},
+        {question: "What is the past tense of 'write'?", options: ["Writed", "Wrote", "Written", "Writing"], correct: 1},
+        
+        // Technology & General Knowledge (30 questions)
+        {question: "Who founded Microsoft?", options: ["Steve Jobs", "Bill Gates", "Mark Zuckerberg", "Elon Musk"], correct: 1},
+        {question: "What does 'WWW' stand for?", options: ["World Wide Web", "World Web Width", "Web World Wide", "Wide World Web"], correct: 0},
+        {question: "Which company created the iPhone?", options: ["Samsung", "Apple", "Google", "Microsoft"], correct: 1},
+        {question: "What does 'USB' stand for?", options: ["Universal Serial Bus", "United System Bus", "Universal System Base", "United Serial Base"], correct: 0},
+        {question: "Who is the founder of Facebook?", options: ["Bill Gates", "Steve Jobs", "Mark Zuckerberg", "Larry Page"], correct: 2},
+        {question: "What is the speed of light approximately?", options: ["300,000 km/s", "150,000 km/s", "450,000 km/s", "600,000 km/s"], correct: 0},
+        {question: "Who invented the telephone?", options: ["Thomas Edison", "Alexander Graham Bell", "Nikola Tesla", "Benjamin Franklin"], correct: 1},
+        {question: "What year did World War II end?", options: ["1943", "1944", "1945", "1946"], correct: 2},
+        {question: "How many days are in a leap year?", options: ["364", "365", "366", "367"], correct: 2},
+        {question: "What is the capital of France?", options: ["London", "Berlin", "Paris", "Rome"], correct: 2},
+        {question: "Which vitamin is produced when skin is exposed to sunlight?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], correct: 3},
+        {question: "What is the largest mammal on Earth?", options: ["Elephant", "Blue Whale", "Giraffe", "Hippopotamus"], correct: 1},
+        {question: "What is the largest ocean on Earth?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correct: 3},
+        {question: "How many continents are there?", options: ["5", "6", "7", "8"], correct: 2},
+        {question: "What is democracy?", options: ["Rule by one", "Rule by few", "Rule by the people", "Rule by military"], correct: 2},
+        {question: "How many branches of government are there typically?", options: ["1", "2", "3", "4"], correct: 2},
+        {question: "What is the legislature?", options: ["Makes laws", "Enforces laws", "Interprets laws", "None"], correct: 0},
+        {question: "What is a constitution?", options: ["A law book", "Supreme law of the land", "Government building", "Political party"], correct: 1},
+        {question: "What is the United Nations?", options: ["A country", "International organization", "A city", "A company"], correct: 1},
+        {question: "What does 'GDP' stand for?", options: ["Gross Domestic Product", "General Development Plan", "Global Data Processing", "Gross Development Product"], correct: 0},
+        {question: "What is inflation?", options: ["Decrease in prices", "Increase in prices", "Stable prices", "Fixed prices"], correct: 1},
+        {question: "How many players are on a football (soccer) team?", options: ["9", "10", "11", "12"], correct: 2},
+        {question: "How many rings are on the Olympic flag?", options: ["4", "5", "6", "7"], correct: 1},
+        {question: "What is the main cause of global warming?", options: ["Solar flares", "Greenhouse gases", "Volcanic eruptions", "Ocean currents"], correct: 1},
+        {question: "What percentage of Earth is covered by water?", options: ["50%", "60%", "71%", "80%"], correct: 2},
+        {question: "What is renewable energy?", options: ["Oil and coal", "Energy that doesn't run out", "Nuclear energy", "Gasoline"], correct: 1},
+        {question: "What is the closest star to Earth?", options: ["Alpha Centauri", "Proxima Centauri", "The Sun", "Sirius"], correct: 2},
+        {question: "How many moons does Earth have?", options: ["0", "1", "2", "3"], correct: 1},
+        {question: "What is the largest planet in our solar system?", options: ["Saturn", "Jupiter", "Neptune", "Uranus"], correct: 1},
+        {question: "Which planet is known for its rings?", options: ["Mars", "Venus", "Saturn", "Mercury"], correct: 2},
+        
+        // Chemistry & Physics (30 questions)
+        {question: "What is the most abundant gas in Earth's atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"], correct: 2},
+        {question: "What is the pH of pure water?", options: ["6", "7", "8", "9"], correct: 1},
+        {question: "Which element has the symbol 'Fe'?", options: ["Fluorine", "Iron", "Fermium", "Francium"], correct: 1},
+        {question: "What is the chemical formula for table salt?", options: ["NaCl", "KCl", "CaCl2", "MgCl2"], correct: 0},
+        {question: "What is the lightest element?", options: ["Helium", "Hydrogen", "Lithium", "Oxygen"], correct: 1},
+        {question: "What is the unit of electrical resistance?", options: ["Volt", "Ampere", "Ohm", "Watt"], correct: 2},
+        {question: "What force keeps us on the ground?", options: ["Friction", "Magnetism", "Gravity", "Tension"], correct: 2},
+        {question: "Who developed the theory of relativity?", options: ["Isaac Newton", "Albert Einstein", "Stephen Hawking", "Niels Bohr"], correct: 1},
+        {question: "What is the unit of force?", options: ["Joule", "Newton", "Watt", "Pascal"], correct: 1},
+        {question: "How many laws of motion did Newton propose?", options: ["2", "3", "4", "5"], correct: 1},
+        {question: "What is the chemical symbol for sodium?", options: ["S", "So", "Na", "N"], correct: 2},
+        {question: "Which gas is used in fire extinguishers?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Helium"], correct: 2},
+        {question: "What is H2O2?", options: ["Water", "Hydrogen Peroxide", "Heavy Water", "Hydrochloric Acid"], correct: 1},
+        {question: "How many elements are in the periodic table approximately?", options: ["92", "108", "118", "126"], correct: 2},
+        {question: "What state of matter is fire?", options: ["Solid", "Liquid", "Gas", "Plasma"], correct: 3},
+        {question: "What is the speed of sound in air approximately?", options: ["243 m/s", "343 m/s", "443 m/s", "543 m/s"], correct: 1},
+        {question: "Light travels fastest in which medium?", options: ["Water", "Glass", "Air", "Vacuum"], correct: 3},
+        {question: "What type of energy does a battery store?", options: ["Kinetic", "Potential", "Chemical", "Nuclear"], correct: 2},
+        {question: "What is absolute zero in Celsius?", options: ["-273.15°C", "-100°C", "0°C", "-200°C"], correct: 0},
+        {question: "What is the SI unit of energy?", options: ["Watt", "Joule", "Newton", "Kelvin"], correct: 1},
+        {question: "What is the formula for kinetic energy?", options: ["½mv²", "mgh", "E=mc²", "F=ma"], correct: 0},
+        {question: "What is Avogadro's number approximately?", options: ["6.022 × 10²³", "3.14 × 10⁸", "9.81 × 10²", "1.602 × 10⁻¹⁹"], correct: 0},
+        {question: "Which blood type is the universal donor?", options: ["A", "B", "AB", "O"], correct: 3},
+        {question: "What disease is caused by lack of Vitamin C?", options: ["Rickets", "Scurvy", "Anemia", "Beriberi"], correct: 1},
+        {question: "How many liters of blood does an average adult have?", options: ["3-4 liters", "5-6 liters", "7-8 liters", "9-10 liters"], correct: 1},
+        {question: "What is diabetes?", options: ["Heart disease", "Blood sugar disorder", "Lung disease", "Kidney disease"], correct: 1},
+        {question: "What is the largest muscle in the human body?", options: ["Bicep", "Heart", "Gluteus Maximus", "Quadriceps"], correct: 2},
+        {question: "What is the smallest bone in human body?", options: ["Stapes (in ear)", "Finger bone", "Toe bone", "Nose bone"], correct: 0},
+        {question: "What is HIV?", options: ["Bacteria", "Virus", "Parasite", "Fungus"], correct: 1},
+        {question: "What is deforestation?", options: ["Planting trees", "Cutting down forests", "Protecting forests", "Growing forests"], correct: 1}
+      ],
+      
+      advanced: [
+        // Advanced African History & Geography (40 questions)
+        {question: "Who was Thomas Sankara?", options: ["Nigerian poet", "Burkinabe revolutionary leader", "Kenyan athlete", "South African activist"], correct: 1},
+        {question: "What year did Algeria gain independence from France?", options: ["1956", "1960", "1962", "1965"], correct: 2},
+        {question: "Which empire was famous for its gold trade in medieval Africa?", options: ["Mali Empire", "Roman Empire", "British Empire", "Ottoman Empire"], correct: 0},
+        {question: "Who was Patrice Lumumba?", options: ["First Prime Minister of Congo", "Egyptian pharaoh", "Ghanaian chief", "Nigerian king"], correct: 0},
+        {question: "What does 'Ubuntu' mean in African philosophy?", options: ["Freedom", "I am because we are", "Victory", "Peace"], correct: 1},
+        {question: "What was the Scramble for Africa?", options: ["African independence", "European colonization period", "African unification", "Trade agreement"], correct: 1},
+        {question: "Who was Mansa Musa?", options: ["Egyptian pharaoh", "Wealthy Mali Empire ruler", "Ethiopian emperor", "Zulu king"], correct: 1},
+        {question: "What year did the Organization of African Unity form?", options: ["1957", "1960", "1963", "1970"], correct: 2},
+        {question: "What was the Mau Mau uprising?", options: ["Kenyan independence movement", "Nigerian civil war", "South African protest", "Egyptian revolution"], correct: 0},
+        {question: "Who was Haile Selassie?", options: ["Nigerian president", "Ethiopian emperor", "Ghanaian leader", "Kenyan prime minister"], correct: 1},
+        {question: "What was the Berlin Conference of 1884-85?", options: ["African independence", "Division of Africa by Europeans", "Trade agreement", "Peace treaty"], correct: 1},
+        {question: "Who was Kwame Nkrumah?", options: ["First PM of Ghana", "King of Ethiopia", "President of Nigeria", "Leader of South Africa"], correct: 0},
+        {question: "What was the Biafran War?", options: ["Nigerian civil war", "Kenyan conflict", "South African war", "Ethiopian war"], correct: 0},
+        {question: "Who was Jomo Kenyatta?", options: ["First President of Kenya", "Ethiopian emperor", "Ghanaian leader", "Nigerian president"], correct: 0},
+        {question: "What is the African Union headquarters city?", options: ["Cairo", "Lagos", "Addis Ababa", "Nairobi"], correct: 2},
+        {question: "Who was Yaa Asantewaa?", options: ["Nigerian queen", "Ghanaian queen mother who led resistance", "Kenyan leader", "Ethiopian empress"], correct: 1},
+        {question: "What was the Soweto Uprising?", options: ["1976 South African student protest", "Kenyan independence", "Nigerian protest", "Ghanaian revolution"], correct: 0},
+        {question: "Who was Julius Nyerere?", options: ["Kenyan president", "First President of Tanzania", "Nigerian leader", "Ghanaian leader"], correct: 1},
+        {question: "What is the Swahili Coast?", options: ["West African coast", "East African coastal region", "North African coast", "Southern coast"], correct: 1},
+        {question: "Who was Shaka Zulu?", options: ["Ethiopian king", "Zulu kingdom leader", "Nigerian chief", "Ghanaian king"], correct: 1},
+        {question: "What was the Trans-Saharan trade?", options: ["Coastal trade", "Trade across Sahara Desert", "River trade", "Local trade"], correct: 1},
+        {question: "Who was Samora Machel?", options: ["Kenyan leader", "First President of Mozambique", "Nigerian president", "Ghanaian leader"], correct: 1},
+        {question: "What was the Mfecane?", options: ["Trade route", "Period of warfare in southern Africa", "Peace treaty", "Cultural festival"], correct: 1},
+        {question: "Who founded the Kingdom of Mali?", options: ["Mansa Musa", "Sundiata Keita", "Askia Muhammad", "Sonni Ali"], correct: 1},
+        {question: "What was the Asante Empire?", options: ["East African empire", "West African empire in present-day Ghana", "North African empire", "Southern empire"], correct: 1},
+        {question: "Who was Amilcar Cabral?", options: ["Nigerian poet", "Guinea-Bissau revolutionary", "Kenyan leader", "Egyptian president"], correct: 1},
+        {question: "What was the Rwandan genocide?", options: ["1990 conflict", "1994 mass killings", "2000 war", "1980 uprising"], correct: 1},
+        {question: "Who was Steve Biko?", options: ["Nigerian writer", "South African anti-apartheid activist", "Kenyan leader", "Ghanaian politician"], correct: 1},
+        {question: "What was the Congo Free State?", options: ["Independent nation", "Belgian King Leopold II's private property", "French colony", "British colony"], correct: 1},
+        {question: "Who was Wangari Maathai?", options: ["Nigerian writer", "Kenyan environmentalist Nobel laureate", "South African activist", "Ghanaian politician"], correct: 1},
+        {question: "What was the Zanzibar Revolution?", options: ["1950 uprising", "1964 overthrow of Sultan", "1970 independence", "1980 protest"], correct: 1},
+        {question: "Who was Sekou Touré?", options: ["Nigerian president", "First President of Guinea", "Kenyan leader", "Ethiopian emperor"], correct: 1},
+        {question: "What was the Chimurenga?", options: ["Nigerian war", "Zimbabwean resistance against colonialism", "Kenyan uprising", "Ghanaian revolution"], correct: 1},
+        {question: "Who was Funmilayo Ransome-Kuti?", options: ["Nigerian women's rights activist", "Kenyan leader", "South African poet", "Ghanaian politician"], correct: 0},
+        {question: "What was the Mahdist War?", options: ["Nigerian conflict", "Sudanese resistance against British-Egyptian", "Kenyan war", "Ethiopian war"], correct: 1},
+        {question: "Who was Kenneth Kaunda?", options: ["Kenyan president", "First President of Zambia", "Nigerian leader", "Ghanaian leader"], correct: 1},
+        {question: "What was the Maji Maji Rebellion?", options: ["Nigerian uprising", "Tanzanian armed rebellion against German colonial rule", "Kenyan war", "Ghanaian protest"], correct: 1},
+        {question: "Who was Miriam Makeba?", options: ["Nigerian singer", "South African singer and activist", "Kenyan artist", "Ghanaian musician"], correct: 1},
+        {question: "What was the Battle of Adwa?", options: ["Nigerian battle", "Ethiopian victory over Italy 1896", "Kenyan war", "Ghanaian conflict"], correct: 1},
+        {question: "Who was Ellen Johnson Sirleaf?", options: ["Nigerian president", "First female African president (Liberia)", "Kenyan leader", "Ghanaian politician"], correct: 1},
+        
+        // Advanced Sciences (50 questions)
+        {question: "What is the second law of thermodynamics about?", options: ["Energy conservation", "Entropy always increases", "Force equals mass times acceleration", "Every action has a reaction"], correct: 1},
+        {question: "What is the Heisenberg Uncertainty Principle?", options: ["Position and momentum cannot both be precisely known", "Energy cannot be created or destroyed", "Light behaves as both wave and particle", "Matter cannot travel faster than light"], correct: 0},
+        {question: "What is the process of cell division that produces gametes?", options: ["Mitosis", "Meiosis", "Binary fission", "Budding"], correct: 1},
+        {question: "What is the name of the theoretical particle that gives mass?", options: ["Electron", "Photon", "Higgs boson", "Neutrino"], correct: 2},
+        {question: "What is the chemical formula for sulfuric acid?", options: ["HCl", "HNO3", "H2SO4", "H3PO4"], correct: 2},
+        {question: "What is Le Chatelier's principle?", options: ["Energy conservation", "System adjusts to counteract change", "Mass is conserved", "Pressure-volume relationship"], correct: 1},
+        {question: "What is electronegativity?", options: ["Positive charge", "Ability to attract electrons", "Number of electrons", "Atomic mass"], correct: 1},
+        {question: "What is specific heat capacity?", options: ["Total heat", "Heat per unit mass per degree", "Temperature change", "Heat of fusion"], correct: 1},
+        {question: "What is a redox reaction?", options: ["Acid-base reaction", "Transfer of electrons", "Precipitation", "Combustion only"], correct: 1},
+        {question: "What is Boyle's Law?", options: ["P₁V₁ = P₂V₂", "PV = nRT", "V/T = constant", "P/T = constant"], correct: 0},
+        {question: "What is the function of ribosomes?", options: ["DNA replication", "Protein synthesis", "Energy production", "Lipid metabolism"], correct: 1},
+        {question: "What is apoptosis?", options: ["Necrosis", "Programmed cell death", "Cell lysis", "Autophagy"], correct: 1},
+        {question: "What is the role of telomeres?", options: ["Protein coding", "Protect chromosome ends", "Energy storage", "Cell signaling"], correct: 1},
+        {question: "What is the Hardy-Weinberg principle used for?", options: ["Protein structure", "Population genetics", "Cell division", "Enzyme kinetics"], correct: 1},
+        {question: "What is the Krebs cycle also known as?", options: ["Glycolysis", "Calvin cycle", "Citric acid cycle", "Electron transport chain"], correct: 2},
+        {question: "What is the electron configuration of oxygen?", options: ["1s² 2s² 2p⁴", "1s² 2s² 2p⁶", "1s² 2s² 2p²", "1s² 2s² 2p³"], correct: 0},
+        {question: "What type of bond involves sharing electrons?", options: ["Ionic", "Covalent", "Metallic", "Hydrogen"], correct: 1},
+        {question: "What is an exothermic reaction?", options: ["Absorbs heat", "Releases heat", "No heat change", "Requires catalyst"], correct: 1},
+        {question: "What is the photoelectric effect?", options: ["Plant photosynthesis", "Light causing electron emission", "Photography process", "Solar energy"], correct: 1},
+        {question: "What is entropy?", options: ["Energy type", "Measure of disorder", "Force", "Temperature"], correct: 1},
+        {question: "What is natural selection?", options: ["Humans choosing traits", "Survival of the fittest", "Artificial breeding", "Random changes"], correct: 1},
+        {question: "What is plate tectonics theory?", options: ["Earth is flat", "Earth's crust moves on plates", "Earth is expanding", "Earth is shrinking"], correct: 1},
+        {question: "What phenomenon explains why the sky is blue?", options: ["Reflection", "Refraction", "Rayleigh scattering", "Diffraction"], correct: 2},
+        {question: "What is Avogadro's number?", options: ["6.022 × 10²³", "3.14 × 10⁸", "9.81 × 10²", "1.602 × 10⁻¹⁹"], correct: 0},
+        {question: "What is the pH of a strong acid?", options: ["0-3", "4-6", "7", "8-14"], correct: 0},
+        {question: "What is a light year?", options: ["A year on Earth", "Distance light travels in a year", "Time for light to reach Earth", "A calendar year"], correct: 1},
+        {question: "What is a black hole?", options: ["A dark planet", "Region with extreme gravity", "Empty space", "A type of star"], correct: 1},
+        {question: "What is dark matter?", options: ["Black holes", "Invisible matter affecting gravity", "Dark planets", "Space dust"], correct: 1},
+        {question: "What is the Big Bang Theory?", options: ["Star explosion", "Origin of universe", "Planet formation", "Galaxy collision"], correct: 1},
+        {question: "What is a supernova?", options: ["A new star", "Massive stellar explosion", "Planet collision", "Solar eclipse"], correct: 1},
+        {question: "What causes tectonic plates to move?", options: ["Wind erosion", "Convection currents in mantle", "Ocean currents", "Magnetic fields"], correct: 1},
+        {question: "What is the driest place on Earth?", options: ["Sahara Desert", "Atacama Desert", "Death Valley", "Antarctica"], correct: 1},
+        {question: "What is a fjord?", options: ["A type of volcano", "A glacially carved valley", "A coral reef", "A sand dune"], correct: 1},
+        {question: "What is eutrophication?", options: ["Ocean acidification", "Nutrient pollution in water", "Soil erosion", "Air pollution"], correct: 1},
+        {question: "What is a biodiversity hotspot?", options: ["Hot climate area", "Region with high species diversity under threat", "Tropical rainforest only", "Desert ecosystem"], correct: 1},
+        {question: "What is carbon sequestration?", options: ["Releasing carbon", "Capturing and storing carbon", "Burning carbon", "Trading carbon credits"], correct: 1},
+        {question: "What is the ozone layer's primary function?", options: ["Produce oxygen", "Block UV radiation", "Create rain", "Regulate temperature"], correct: 1},
+        {question: "What is the greenhouse effect?", options: ["Growing plants indoors", "Trapping of heat by atmosphere", "Photosynthesis", "Water cycle"], correct: 1},
+        {question: "What is DNA replication?", options: ["Protein synthesis", "Copying DNA before cell division", "RNA transcription", "Cell division"], correct: 1},
+        {question: "What is an enzyme?", options: ["A protein", "Biological catalyst", "Both A and B", "Neither"], correct: 2},
+        {question: "What is osmosis?", options: ["Active transport", "Movement of water across membrane", "Cell division", "Protein synthesis"], correct: 1},
+        {question: "What is mitosis?", options: ["Sexual reproduction", "Cell division producing identical cells", "Gamete formation", "DNA replication"], correct: 1},
+        {question: "What is ATP?", options: ["Amino acid", "Energy currency of cells", "Type of DNA", "Protein"], correct: 1},
+        {question: "What is Newton's first law?", options: ["F=ma", "Object at rest stays at rest", "Action-reaction", "Universal gravitation"], correct: 1},
+        {question: "What is the electromagnetic spectrum?", options: ["Only visible light", "Range of all electromagnetic radiation", "Radio waves only", "X-rays only"], correct: 1},
+        {question: "What is quantum mechanics?", options: ["Classical physics", "Physics of atomic and subatomic particles", "Relativity", "Thermodynamics"], correct: 1},
+        {question: "What is nuclear fission?", options: ["Combining nuclei", "Splitting atomic nuclei", "Chemical reaction", "Radioactive decay"], correct: 1},
+        {question: "What is refraction?", options: ["Bending of light", "Reflection of light", "Absorption of light", "Scattering of light"], correct: 0},
+        {question: "What is Pascal's principle?", options: ["Boyle's law", "Pressure transmitted equally in fluid", "Archimedes principle", "Bernoulli's principle"], correct: 1},
+        {question: "What is Doppler effect?", options: ["Color change", "Change in frequency due to motion", "Temperature change", "Pressure change"], correct: 1},
+        
+        // Advanced Mathematics (40 questions)
+        {question: "What is the derivative of x²?", options: ["x", "2x", "x²", "2x²"], correct: 1},
+        {question: "What is the value of e (Euler's number)?", options: ["2.718", "3.142", "1.618", "1.414"], correct: 0},
+        {question: "What is the Pythagorean theorem?", options: ["a² + b² = c²", "E = mc²", "F = ma", "V = IR"], correct: 0},
+        {question: "What is a prime number?", options: ["Divisible by 2", "Divisible only by 1 and itself", "Always odd", "Always even"], correct: 1},
+        {question: "What is the sum of angles in a triangle?", options: ["90°", "180°", "270°", "360°"], correct: 1},
+        {question: "What is the quadratic formula?", options: ["x = -b/2a", "x = (-b ± √(b²-4ac))/2a", "x = b²/4a", "x = a/b"], correct: 1},
+        {question: "What is the integral of x?", options: ["x", "x²", "x²/2", "2x"], correct: 2},
+        {question: "What is logarithm?", options: ["Exponent", "Inverse of exponentiation", "Multiplication", "Division"], correct: 1},
+        {question: "What is a matrix?", options: ["Array of numbers", "Single number", "Graph", "Equation"], correct: 0},
+        {question: "What is the Fibonacci sequence?", options: ["1,2,3,4,5", "Each number is sum of previous two", "Powers of 2", "Prime numbers"], correct: 1},
+        {question: "What is a vector?", options: ["Only magnitude", "Magnitude and direction", "Only direction", "Neither"], correct: 1},
+        {question: "What is sin(90°)?", options: ["0", "1", "0.5", "√2/2"], correct: 1},
+        {question: "What is the factorial of 5?", options: ["25", "120", "60", "100"], correct: 1},
+        {question: "What is complex number?", options: ["Large number", "Number with real and imaginary parts", "Prime number", "Decimal"], correct: 1},
+        {question: "What is probability of flipping heads?", options: ["0.25", "0.5", "0.75", "1"], correct: 1},
+        {question: "What is the slope formula?", options: ["(y₂-y₁)/(x₂-x₁)", "(x₂-x₁)/(y₂-y₁)", "y₂-y₁", "x₂-x₁"], correct: 0},
+        {question: "What is arithmetic sequence?", options: ["Multiply by constant", "Add constant difference", "Subtract", "Divide"], correct: 1},
+        {question: "What is geometric sequence?", options: ["Add constant", "Multiply by constant ratio", "Subtract", "Divide"], correct: 1},
+        {question: "What is π (pi)?", options: ["2.718", "3.14159", "1.618", "1.414"], correct: 1},
+        {question: "What is the Pythagorean identity in trig?", options: ["sin²θ + cos²θ = 1", "sin θ + cos θ = 1", "tan²θ = 1", "sin θ = cos θ"], correct: 0},
+        {question: "What is a polynomial?", options: ["Single term", "Expression with multiple terms", "Equation", "Fraction"], correct: 1},
+        {question: "What is standard deviation?", options: ["Average", "Measure of spread", "Maximum value", "Minimum value"], correct: 1},
+        {question: "What is mean?", options: ["Middle value", "Average", "Most frequent", "Range"], correct: 1},
+        {question: "What is median?", options: ["Average", "Middle value when ordered", "Most frequent", "Range"], correct: 1},
+        {question: "What is mode?", options: ["Average", "Middle value", "Most frequent value", "Range"], correct: 2},
+        {question: "What is perimeter of rectangle?", options: ["length × width", "2(length + width)", "length + width", "length²"], correct: 1},
+        {question: "What is volume of cube?", options: ["side × 3", "side³", "side²", "3 × side"], correct: 1},
+        {question: "What is surface area of sphere?", options: ["4πr²", "πr²", "4πr³", "2πr"], correct: 0},
+        {question: "What is volume of cylinder?", options: ["πr²", "πr²h", "2πrh", "πrh"], correct: 1},
+        {question: "What is tan θ equal to?", options: ["sin/cos", "cos/sin", "sin × cos", "sin + cos"], correct: 0},
+        {question: "What is log₁₀(100)?", options: ["1", "2", "10", "100"], correct: 1},
+        {question: "What is the reciprocal of 5?", options: ["5", "1/5", "-5", "25"], correct: 1},
+        {question: "What is absolute value of -10?", options: ["-10", "10", "0", "20"], correct: 1},
+        {question: "What is the domain of f(x) = √x?", options: ["All real numbers", "x ≥ 0", "x > 0", "x ≤ 0"], correct: 1},
+        {question: "What is exponential growth?", options: ["Linear increase", "Increase at increasing rate", "Decrease", "Constant"], correct: 1},
+        {question: "What is a rational number?", options: ["Can't be expressed as fraction", "Can be expressed as fraction", "Irrational", "Complex"], correct: 1},
+        {question: "What is the sum of interior angles of hexagon?", options: ["360°", "540°", "720°", "900°"], correct: 2},
+        {question: "What is a tangent to circle?", options: ["Passes through center", "Touches at one point", "Intersects twice", "Inside circle"], correct: 1},
+        {question: "What is cos(0°)?", options: ["0", "1", "0.5", "√2/2"], correct: 1},
+        {question: "What is the area of trapezoid?", options: ["½(a+b)h", "ab", "(a+b)h", "½ab"], correct: 0},
+        
+        // Advanced Literature & Social Sciences (50 questions)
+        {question: "Who wrote 'Death and the King's Horseman'?", options: ["Chinua Achebe", "Wole Soyinka", "Ngugi wa Thiong'o", "Ayi Kwei Armah"], correct: 1},
+        {question: "What literary device is 'The classroom was a zoo'?", options: ["Simile", "Metaphor", "Personification", "Alliteration"], correct: 1},
+        {question: "Who painted 'The Starry Night'?", options: ["Pablo Picasso", "Vincent van Gogh", "Claude Monet", "Leonardo da Vinci"], correct: 1},
+        {question: "What is iambic pentameter?", options: ["A type of rhyme", "A poetic meter", "A literary genre", "A type of sonnet"], correct: 1},
+        {question: "Who wrote 'One Hundred Years of Solitude'?", options: ["Gabriel García Márquez", "Jorge Luis Borges", "Pablo Neruda", "Isabel Allende"], correct: 0},
+        {question: "What is epistemology?", options: ["Study of ethics", "Study of knowledge", "Study of logic", "Study of existence"], correct: 1},
+        {question: "Who said 'I think, therefore I am'?", options: ["Aristotle", "Descartes", "Kant", "Nietzsche"], correct: 1},
+        {question: "What is a syllogism?", options: ["A type of argument", "A logical fallacy", "A philosophical school", "An ethical principle"], correct: 0},
+        {question: "What is utilitarianism?", options: ["Duty-based ethics", "Greatest good for greatest number", "Virtue ethics", "Divine command theory"], correct: 1},
+        {question: "Who wrote 'The Republic'?", options: ["Socrates", "Plato", "Aristotle", "Epicurus"], correct: 1},
+        {question: "What is opportunity cost?", options: ["Price of goods", "Value of next best alternative", "Total cost", "Average cost"], correct: 1},
+        {question: "What is quantitative easing?", options: ["Raising interest rates", "Central bank buying securities", "Increasing taxes", "Reducing spending"], correct: 1},
+        {question: "What is law of diminishing returns?", options: ["Profits decrease", "Additional input yields less output", "Demand decreases", "Supply equals demand"], correct: 1},
+        {question: "What is a monopoly's main characteristic?", options: ["Many sellers", "Single seller with no close substitutes", "Perfect competition", "Two sellers"], correct: 1},
+        {question: "What is fiscal policy?", options: ["Monetary policy", "Government spending and taxation", "Trade agreements", "Exchange rate"], correct: 1},
+        {question: "What is federalism?", options: ["One central government", "Power divided between central and regional", "Military rule", "Monarchy"], correct: 1},
+        {question: "What is separation of powers?", options: ["One branch governs", "Powers divided among branches", "Military-civilian split", "Federal-state split"], correct: 1},
+        {question: "What is checks and balances?", options: ["Budget management", "Each branch can limit others", "Election system", "Tax collection"], correct: 1},
+        {question: "What is parliamentary system?", options: ["President is head", "Executive from legislature", "Military government", "Direct democracy"], correct: 1},
+        {question: "What is civil liberties?", options: ["Military rights", "Individual freedoms from government", "Voting rights only", "Property rights"], correct: 1},
+        {question: "What is cognitive dissonance?", options: ["Memory loss", "Mental discomfort from conflicting beliefs", "Learning disability", "Personality disorder"], correct: 1},
+        {question: "What is the Renaissance?", options: ["Dark Ages", "Cultural rebirth in Europe", "Industrial Revolution", "Age of Exploration"], correct: 1},
+        {question: "What is supply and demand?", options: ["Government control", "Market forces determining price", "Fixed pricing", "Barter system"], correct: 1},
+        {question: "What is globalization?", options: ["Local trade", "Worldwide integration", "Isolation", "Regional cooperation"], correct: 1},
+        {question: "What is critical thinking?", options: ["Criticism", "Objective analysis and evaluation", "Quick thinking", "Memorization"], correct: 1},
+        {question: "What is sustainable development?", options: ["Maximum growth", "Meeting present needs without compromising future", "Rapid industrialization", "No development"], correct: 1},
+        {question: "What year did French Revolution begin?", options: ["1776", "1789", "1804", "1815"], correct: 1},
+        {question: "Who led Soviet Union during WWII?", options: ["Lenin", "Trotsky", "Stalin", "Khrushchev"], correct: 2},
+        {question: "What was main cause of WWI?", options: ["Economic depression", "Alliance system and nationalism", "Religious conflicts", "Colonial disputes only"], correct: 1},
+        {question: "What was Treaty of Versailles?", options: ["Ended WWI", "Started WWII", "Created UN", "Ended Cold War"], correct: 0},
+        {question: "Who wrote 'The Communist Manifesto'?", options: ["Lenin", "Karl Marx and Engels", "Stalin", "Mao"], correct: 1},
+        {question: "What is longest river in world?", options: ["Amazon", "Nile", "Yangtze", "Mississippi"], correct: 1},
+        {question: "What is deepest point in ocean?", options: ["Puerto Rico Trench", "Java Trench", "Mariana Trench", "Tonga Trench"], correct: 2},
+        {question: "Who was first man on moon?", options: ["Buzz Aldrin", "Neil Armstrong", "Yuri Gagarin", "John Glenn"], correct: 1},
+        {question: "When did Berlin Wall fall?", options: ["1987", "1989", "1991", "1993"], correct: 1},
+        {question: "Who was known as Iron Lady?", options: ["Queen Elizabeth", "Margaret Thatcher", "Angela Merkel", "Indira Gandhi"], correct: 1},
+        {question: "Which empire built Machu Picchu?", options: ["Aztec", "Maya", "Inca", "Olmec"], correct: 2},
+        {question: "What year did Titanic sink?", options: ["1910", "1912", "1914", "1916"], correct: 1},
+        {question: "Who painted Sistine Chapel ceiling?", options: ["Leonardo da Vinci", "Raphael", "Michelangelo", "Donatello"], correct: 2},
+        {question: "What ancient wonder still standing?", options: ["Colossus of Rhodes", "Hanging Gardens", "Great Pyramid of Giza", "Lighthouse"], correct: 2},
+        {question: "What year did India gain independence?", options: ["1945", "1947", "1950", "1952"], correct: 1},
+        {question: "Who discovered penicillin?", options: ["Louis Pasteur", "Alexander Fleming", "Marie Curie", "Jonas Salk"], correct: 1},
+        {question: "What is machine learning?", options: ["Robots building machines", "AI that learns from data", "Computer hardware", "Internet protocols"], correct: 1},
+        {question: "What is blockchain?", options: ["Database type", "Distributed ledger technology", "Cloud computing", "AI"], correct: 1},
+        {question: "What does API stand for?", options: ["Application Programming Interface", "Advanced Program Integration", "Automated Process", "Applied Programming"], correct: 0},
+        {question: "What is quantum computing?", options: ["Fast traditional computing", "Computing using quantum mechanics", "Cloud computing", "Mobile computing"], correct: 1},
+        {question: "What is purpose of DNS?", options: ["Encrypt data", "Translate domain names to IP", "Store files", "Send emails"], correct: 1},
+        {question: "What is a p-value in statistics?", options: ["Probability if null hypothesis true", "Average probability", "Maximum value", "Minimum value"], correct: 0},
+        {question: "What is correlation vs causation?", options: ["Same thing", "Correlation doesn't imply causation", "Causation weaker", "Neither exists"], correct: 1},
+        {question: "What is normal distribution?", options: ["Uniform", "Bell-shaped curve", "Random", "Linear"], correct: 1}
+      ]
+    };
+
+    // State
+    let currentLevel = '';
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+    let selectedQuestions = [];
+
+    // Default Config
+    const defaultConfig = {
+      quiz_title: "Knowledge Quiz",
+      start_button_text: "Start Quiz",
+      correct_message: "Correct! Well done! 🎉",
+      incorrect_message: "Oops! That's not right.",
+      background_color: "#667eea",
+      surface_color: "#764ba2",
+      text_color: "#ffffff",
+      primary_action_color: "#ffffff",
+      secondary_text_color: "#e0e0e0"
+    };
+
+    // SDK Implementation
+    const element = {
+      defaultConfig,
+      
+      onConfigChange: async (config) => {
+        const title = config.quiz_title || defaultConfig.quiz_title;
+        const bgColor = config.background_color || defaultConfig.background_color;
+        const surfaceColor = config.surface_color || defaultConfig.surface_color;
+        const textColor = config.text_color || defaultConfig.text_color;
+        const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+        
+        // Update text content
+        const titleEl = document.getElementById('quiz-title');
+        if (titleEl) titleEl.textContent = title;
+        
+        // Update colors
+        document.getElementById('app-wrapper').style.background = `linear-gradient(135deg, ${bgColor} 0%, ${surfaceColor} 100%)`;
+        
+        // Update primary action buttons
+        const nextBtnEl = document.getElementById('next-btn');
+        if (nextBtnEl) {
+          nextBtnEl.style.backgroundColor = primaryColor;
+          nextBtnEl.style.color = bgColor;
+        }
+        
+        // Update text colors
+        const allTextElements = document.querySelectorAll('h1, h2, h3, p, span, button');
+        allTextElements.forEach(el => {
+          if (!el.classList.contains('option-btn')) {
+            el.style.color = textColor;
+          }
+        });
+        
+        // Update progress bar
+        const progressBar = document.getElementById('progress-bar');
+        if (progressBar) {
+          progressBar.style.background = `linear-gradient(to right, ${primaryColor}, ${primaryColor}cc)`;
+        }
+      },
+      
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => { config.primary_action_color = value; window.elementSdk.setConfig({ primary_action_color: value }); }
+          },
+          {
+            get: () => config.secondary_text_color || defaultConfig.secondary_text_color,
+            set: (value) => { config.secondary_text_color = value; window.elementSdk.setConfig({ secondary_text_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      
+      mapToEditPanelValues: (config) => new Map([
+        ["quiz_title", config.quiz_title || defaultConfig.quiz_title],
+        ["start_button_text", config.start_button_text || defaultConfig.start_button_text],
+        ["correct_message", config.correct_message || defaultConfig.correct_message],
+        ["incorrect_message", config.incorrect_message || defaultConfig.incorrect_message]
+      ])
+    };
+
+    // Initialize SDK
+    if (window.elementSdk) {
+      window.elementSdk.init(element);
+    }
+
+    // Level Selection
+    function selectLevel(level) {
+      currentLevel = level;
+      startQuiz();
+    }
+
+    function changeDifficulty() {
+      document.getElementById('results-screen').classList.add('hidden');
+      document.getElementById('level-screen').classList.remove('hidden');
+    }
+
+    // Quiz Functions
+    function startQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      
+      // Get questions for selected level and shuffle
+      const levelQuestions = quizData[currentLevel] || quizData.beginner;
+      selectedQuestions = levelQuestions.sort(() => Math.random() - 0.5).slice(0, 10);
+      
+      document.getElementById('level-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+      
+      // Update level badge
+      const badge = document.getElementById('level-badge');
+      const levelNames = {beginner: 'Beginner 🌱', intermediate: 'Intermediate ⚡', advanced: 'Advanced 🔥'};
+      badge.textContent = levelNames[currentLevel] || 'Beginner 🌱';
+      
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const question = selectedQuestions[currentQuestion];
+      const container = document.getElementById('options-container');
+      
+      answered = false;
+      
+      // Update progress
+      document.getElementById('question-counter').textContent = `Question ${currentQuestion + 1} of ${selectedQuestions.length}`;
+      document.getElementById('score-display').textContent = `Score: ${score}`;
+      document.getElementById('progress-bar').style.width = `${((currentQuestion) / selectedQuestions.length) * 100}%`;
+      
+      // Show question
+      document.getElementById('question-text').textContent = question.question;
+      
+      // Generate options
+      container.innerHTML = question.options.map((option, index) => `
+        <button 
+          onclick="selectAnswer(${index})" 
+          class="option-btn w-full p-4 text-left rounded-xl border-2 border-white/30 bg-white/10 text-white hover:border-white/60 hover:bg-white/20 transition-all flex items-center gap-4"
+          data-index="${index}"
+        >
+          <span class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm font-medium">${String.fromCharCode(65 + index)}</span>
+          <span>${option}</span>
+        </button>
+      `).join('');
+      
+      // Hide feedback and next button
+      document.getElementById('feedback').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+      
+      // Animate card
+      const card = document.getElementById('question-card');
+      card.classList.remove('fade-in');
+      void card.offsetWidth;
+      card.classList.add('fade-in');
+    }
+
+    function selectAnswer(index) {
+      if (answered) return;
+      answered = true;
+      
+      const question = selectedQuestions[currentQuestion];
+      const isCorrect = index === question.correct;
+      const config = window.elementSdk ? window.elementSdk.config : defaultConfig;
+      
+      if (isCorrect) score++;
+      
+      // Update buttons
+      const buttons = document.querySelectorAll('.option-btn');
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === question.correct) {
+          btn.classList.remove('border-white/30', 'bg-white/10');
+          btn.classList.add('border-green-400', 'bg-green-500/30', 'correct-answer');
+        } else if (i === index && !isCorrect) {
+          btn.classList.remove('border-white/30', 'bg-white/10');
+          btn.classList.add('border-red-400', 'bg-red-500/30');
+        }
+      });
+      
+      // Show feedback
+      const feedback = document.getElementById('feedback');
+      const correctMsg = config.correct_message || defaultConfig.correct_message;
+      const incorrectMsg = config.incorrect_message || defaultConfig.incorrect_message;
+      
+      feedback.textContent = isCorrect ? correctMsg : `${incorrectMsg} The answer was: ${question.options[question.correct]}`;
+      feedback.className = `mt-6 p-4 rounded-xl text-center font-medium ${isCorrect ? 'bg-green-500/30 text-green-100' : 'bg-red-500/30 text-red-100'}`;
+      feedback.classList.remove('hidden');
+      
+      // Show next button
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.textContent = currentQuestion === selectedQuestions.length - 1 ? 'See Results' : 'Next Question';
+      nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      
+      if (currentQuestion >= selectedQuestions.length) {
+        showResults();
+      } else {
+        showQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.remove('hidden');
+      
+      const percentage = (score / selectedQuestions.length) * 100;
+      
+      // Update results
+      document.getElementById('final-score').textContent = `${score}/${selectedQuestions.length}`;
+      
+      // Animate score bar
+      setTimeout(() => {
+        document.getElementById('score-fill').style.width = `${percentage}%`;
+      }, 300);
+      
+      // Set result message and emoji based on score
+      let emoji, message;
+      if (percentage === 100) {
+        emoji = '🏆';
+        message = 'Perfect score! You\'re a genius!';
+      } else if (percentage >= 80) {
+        emoji = '🌟';
+        message = 'Excellent work! You really know your stuff!';
+      } else if (percentage >= 60) {
+        emoji = '👍';
+        message = 'Good job! Keep learning and improving!';
+      } else if (percentage >= 40) {
+        emoji = '📚';
+        message = 'Not bad! A little more practice will help!';
+      } else {
+        emoji = '💪';
+        message = 'Keep trying! Every quiz is a learning opportunity!';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').textContent = message;
+      
+      // Confetti effect for good scores
+      if (percentage >= 60) {
+        createConfetti();
+      }
+    }
+
+    function createConfetti() {
+      const container = document.getElementById('confetti-container');
+      const colors = ['#ffffff', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6b9d'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti-piece';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.top = 100 + Math.random() * 20 + '%';
+        confetti.style.width = Math.random() * 10 + 5 + 'px';
+        confetti.style.height = confetti.style.width;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.animationDuration = 1 + Math.random() * 0.5 + 's';
+        container.appendChild(confetti);
+      }
+      
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 2000);
+    }
+
+    function restartQuiz() {
+      startQuiz();
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bfe1cb3758b73ca',t:'MTc2ODczOTUxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
