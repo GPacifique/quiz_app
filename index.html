@@ -86,6 +86,13 @@
     .level-card:hover {
       transform: translateY(-5px);
     }
+    /* Responsive logo for small screens */
+    @media (max-width: 480px) {
+      #sharptech-logo {
+        height: 48px !important;
+        max-width: 90vw !important;
+      }
+    }
   </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
@@ -93,16 +100,17 @@
  <body class="h-full">
   <div id="app-wrapper" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"><!-- Level Selection Screen -->
    <div id="level-screen" class="h-full flex flex-col items-center justify-center p-6 fade-in">
-    <div class="text-center max-w-4xl w-full">
+    <div class="text-center max-w-4xl w-full px-2 sm:px-4">
      <div class="mb-8">
       <div class="flex justify-center mb-4">
-        <img src="images/sharptechlearners_logo.svg" alt="SharpTechLearners Logo" style="height:80px; width:auto; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.10); background:#fff2;" />
+        <img id="sharptech-logo" src="images/sharptechlearners_logo.svg" alt="SharpTechLearners Logo" class="rounded-xl shadow-md bg-white/10" style="height:80px; width:auto; max-width:320px;" />
       </div>
       <h1 id="quiz-title" class="text-5xl font-bold text-white mb-3">Knowledge Quiz</h1>
-      <p class="text-white/80 text-lg">Choose your difficulty level to begin</p>
-      <p class="text-white/90 text-xl font-semibold mt-2">Created by GPacifique</p>
+      <h1 id="quiz-title" class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">Knowledge Quiz</h1>
+      <p class="text-white/80 text-base sm:text-lg">Choose your difficulty level to begin</p>
+      <p class="text-white/90 text-base sm:text-xl font-semibold mt-2">Created by GPacifique</p>
      </div>
-     <div class="grid md:grid-cols-3 gap-6 mb-8"><!-- Beginner Level -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8"><!-- Beginner Level -->
       <div onclick="selectLevel('beginner')" class="level-card bg-white/10 backdrop-blur rounded-2xl p-8 border-2 border-white/20 hover:border-green-400 hover:bg-white/15">
        <div class="text-5xl mb-4">
         🌱
