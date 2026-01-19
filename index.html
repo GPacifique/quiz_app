@@ -148,8 +148,14 @@
    <div id="quiz-screen" class="h-full flex flex-col p-6 hidden"><!-- Progress Bar -->
     <div class="mb-6">
      <div class="flex justify-between text-sm text-white/80 mb-2">
-      <div class="flex items-center gap-2"><span id="level-badge" class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium"></span> <span id="question-counter">Question 1 of 10</span>
-      </div><span id="score-display">Score: 0</span>
+      <div class="flex items-center gap-2">
+        <span id="level-badge" class="px-3 py-1 bg-white/20 rounded-full text-xs font-medium"></span>
+        <span id="question-counter">Question 1 of 10</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span id="score-display">Score: 0</span>
+        <span id="timer-display" class="ml-4 px-3 py-1 bg-white/20 rounded-full text-xs font-medium">Time: 00:00</span>
+      </div>
      </div>
      <div class="h-2 bg-white/20 rounded-full overflow-hidden">
       <div id="progress-bar" class="h-full bg-gradient-to-r from-white to-white/80 progress-bar" style="width: 0%"></div>
@@ -966,7 +972,36 @@
       }
     }
 
+    // Timer variables
+    let timerInterval = null;
+    let timerSeconds = 0;
+
+    function startTimer() {
+      timerSeconds = 0;
+      updateTimerDisplay();
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timerSeconds++;
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    function updateTimerDisplay() {
+      const mins = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+      const secs = String(timerSeconds % 60).padStart(2, '0');
+      const timerEl = document.getElementById('timer-display');
+      if (timerEl) timerEl.textContent = `Time: ${mins}:${secs}`;
+    }
+
     function showResults() {
+      stopTimer();
       document.getElementById('quiz-screen').classList.add('hidden');
       document.getElementById('results-screen').classList.remove('hidden');
       
@@ -1034,6 +1069,18 @@
     function restartQuiz() {
       startQuiz();
     }
+
+    // Patch startQuiz to start timer
+    const _originalStartQuiz = typeof startQuiz === 'function' ? startQuiz : null;
+    window.addEventListener('DOMContentLoaded', () => {
+      // Patch startQuiz if it exists
+      if (typeof startQuiz === 'function') {
+        window.startQuiz = function() {
+          if (_originalStartQuiz) _originalStartQuiz();
+          startTimer();
+        }
+      }
+    });
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bfe1cb3758b73ca',t:'MTc2ODczOTUxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
