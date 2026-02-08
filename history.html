@@ -1,47 +1,882 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History - Afro Syllabus</title>
-    <!-- AdSense Auto Ads -->
-    <script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">Home</a> |
-            <a href="maths.html">Maths</a> |
-            <a href="english.html">English</a> |
-            <a href="french.html">French</a> |
-            <a href="geography.html">Geography</a> |
-            <a href="sciences.html">Sciences</a> |
-            <a href="history.html">History</a>
-        </nav>
-    </header>
-    <main>
-        <h1>History Syllabus</h1>
-        <h2>Core Topics</h2>
-        <ul>
-            <li>Ancient African civilizations (Egypt, Mali, Great Zimbabwe)</li>
-            <li>Colonialism and independence movements</li>
-            <li>Modern African leaders and change-makers</li>
-            <li>Pan-Africanism and African Union</li>
-            <li>Local and oral histories</li>
-        </ul>
-        <h2>Special Focus</h2>
-        <ul>
-            <li>Women in African history</li>
-            <li>History of African languages and cultures</li>
-            <li>Contemporary African politics and society</li>
-        </ul>
-        <h2>Resources</h2>
-        <ul>
-            <li><a href="https://www.bbc.co.uk/worldservice/africa/features/storyofafrica/" target="_blank">BBC Story of Africa</a></li>
-            <li><a href="https://www.sahistory.org.za/" target="_blank">South African History Online</a></li>
-            <li><a href="https://www.blackpast.org/" target="_blank">BlackPast</a></li>
-        </ul>
-    </main>
-</body>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>African History Explorer</title>
+  <meta name="google-adsense-account" content="ca-pub-6462287919691866">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462287919691866"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(255, 193, 7, 0.6); }
+    }
+    @keyframes celebrate {
+      0% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.1) rotate(-5deg); }
+      50% { transform: scale(1.2) rotate(5deg); }
+      75% { transform: scale(1.1) rotate(-5deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    .float-animation { animation: float 3s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .celebrate { animation: celebrate 0.5s ease-in-out; }
+    .slide-in { animation: slide-in 0.3s ease-out forwards; }
+    .shake { animation: shake 0.3s ease-in-out; }
+    .category-card {
+      transition: all 0.3s ease;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+    }
+    .option-btn {
+      transition: all 0.2s ease;
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: scale(1.02);
+    }
+    .progress-fill {
+      transition: width 0.5s ease;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full">
+  <!-- AdSense Auto Ads -->
+  <script data-ad-client="ca-pub-6462287919691866" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 50%, #1a472a 100%);"><!-- Loading Screen -->
+   <div id="loading-screen" class="h-full flex items-center justify-center">
+    <div class="text-center">
+     <div class="text-6xl mb-4 float-animation">
+      🌍
+     </div>
+     <p class="text-white text-xl">Loading African History Explorer...</p>
+    </div>
+   </div><!-- Main Menu -->
+   <div id="main-menu" class="h-full p-4 hidden">
+    <!-- Back to Home Button -->
+    <div class="mb-4">
+      <button onclick="window.location.href='index.html'" class="bg-white/20 hover:bg-white/30 backdrop-blur text-white px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2">
+        <span>←</span> Back to Home
+      </button>
+    </div>
+    <div class="max-w-4xl mx-auto"><!-- Header -->
+     <div class="text-center mb-6">
+      <div class="flex justify-center items-center gap-3 mb-2"><span class="text-5xl">🌍</span>
+       <h1 id="game-title" class="text-3xl md:text-4xl font-extrabold text-amber-400 drop-shadow-lg">African History Explorer</h1><span class="text-5xl">📚</span>
+      </div>
+      <p id="welcome-msg" class="text-white/90 text-lg">Discover the amazing history of Africa!</p>
+     </div><!-- Stats Banner -->
+     <div class="bg-white/10 backdrop-blur rounded-2xl p-4 mb-6 border border-white/20">
+      <div class="grid grid-cols-3 gap-4 text-center">
+       <div>
+        <div class="text-3xl mb-1">
+         🎯
+        </div>
+        <div id="total-answered" class="text-2xl font-bold text-amber-400">
+         0
+        </div>
+        <div class="text-white/70 text-sm">
+         Questions
+        </div>
+       </div>
+       <div>
+        <div class="text-3xl mb-1">
+         ⭐
+        </div>
+        <div id="total-correct" class="text-2xl font-bold text-emerald-400">
+         0
+        </div>
+        <div class="text-white/70 text-sm">
+         Correct
+        </div>
+       </div>
+       <div>
+        <div class="text-3xl mb-1">
+         🔥
+        </div>
+        <div id="best-streak" class="text-2xl font-bold text-orange-400">
+         0
+        </div>
+        <div class="text-white/70 text-sm">
+         Best Streak
+        </div>
+       </div>
+      </div>
+     </div><!-- Categories -->
+     <h2 class="text-white text-xl font-bold mb-4 flex items-center gap-2"><span>📖</span> Choose a Topic</h2>
+     <div id="categories-grid" class="grid grid-cols-2 md:grid-cols-3 gap-3"><!-- Categories will be inserted here -->
+     </div><!-- Encouragement -->
+     <div class="mt-6 text-center">
+      <p id="encouragement" class="text-amber-300/80 italic">Keep learning and become a history champion! 🏆</p>
+     </div>
+    </div>
+   </div><!-- Game Screen -->
+   <div id="game-screen" class="h-full p-4 hidden">
+    <div class="max-w-2xl mx-auto"><!-- Game Header -->
+     <div class="flex justify-between items-center mb-4"><button id="back-btn" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-xl flex items-center gap-2 transition"> <span>←</span> Back </button>
+      <div class="flex items-center gap-4">
+       <div class="bg-white/20 px-4 py-2 rounded-xl text-white"><span>🔥</span> <span id="current-streak" class="font-bold">0</span>
+       </div>
+       <div class="bg-white/20 px-4 py-2 rounded-xl text-white"><span>⭐</span> <span id="session-score" class="font-bold">0</span>/<span id="session-total">0</span>
+       </div>
+      </div>
+     </div><!-- Category Title -->
+     <div id="category-header" class="text-center mb-4"><span id="category-icon" class="text-4xl">📚</span>
+      <h2 id="category-name" class="text-2xl font-bold text-amber-400">Category</h2>
+     </div><!-- Progress Bar -->
+     <div class="bg-white/20 rounded-full h-3 mb-6 overflow-hidden">
+      <div id="question-progress" class="progress-fill bg-gradient-to-r from-amber-400 to-orange-500 h-full rounded-full" style="width: 0%"></div>
+     </div><!-- Question Card -->
+     <div id="question-card" class="bg-white rounded-2xl p-6 shadow-2xl mb-6">
+      <div class="flex justify-between items-start mb-4"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-semibold"> Question <span id="question-num">1</span> </span> <span id="difficulty-badge" class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm font-semibold"> Easy </span>
+      </div>
+      <p id="question-text" class="text-gray-800 text-lg md:text-xl font-semibold mb-6 leading-relaxed">Loading question...</p>
+      <div id="options-container" class="space-y-3"><!-- Options will be inserted here -->
+      </div>
+     </div><!-- Feedback Area -->
+     <div id="feedback-area" class="hidden">
+      <div id="feedback-card" class="rounded-2xl p-4 mb-4 text-center">
+       <div id="feedback-icon" class="text-5xl mb-2">
+        ✨
+       </div>
+       <p id="feedback-text" class="text-lg font-bold"></p>
+       <p id="feedback-detail" class="text-sm mt-2 opacity-80"></p>
+      </div><button id="next-btn" class="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 rounded-xl text-lg transition shadow-lg"> Next Question → </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // ==================== QUESTION DATABASE ====================
+    const questionDatabase = {
+      rwanda: {
+        name: "Rwanda History",
+        icon: "🇷🇼",
+        color: "from-blue-500 to-cyan-500",
+        questions: [
+          // Ancient Rwanda
+          { q: "What is the traditional name for Rwanda?", options: ["Land of a Thousand Hills", "Land of Lions", "Land of Rivers", "Land of Forests"], correct: 0, difficulty: "easy" },
+          { q: "Who were the first inhabitants of Rwanda?", options: ["The Twa people", "The Hutu people", "The Tutsi people", "The Bantu people"], correct: 0, difficulty: "medium" },
+          { q: "What was the traditional Rwandan kingdom called?", options: ["Kingdom of Rwanda", "Kingdom of Kongo", "Kingdom of Buganda", "Kingdom of Zulu"], correct: 0, difficulty: "easy" },
+          { q: "What is the name of the traditional Rwandan king?", options: ["Mwami", "Sultan", "Chief", "Emperor"], correct: 0, difficulty: "easy" },
+          { q: "What is Ubwiru in Rwandan history?", options: ["Royal rituals and secrets", "A type of dance", "A farming method", "A type of house"], correct: 0, difficulty: "hard" },
+          { q: "What animal was sacred to the Rwandan monarchy?", options: ["Cow", "Lion", "Eagle", "Elephant"], correct: 0, difficulty: "medium" },
+          { q: "What is the traditional Rwandan dance called?", options: ["Intore", "Kizomba", "Salsa", "Ballet"], correct: 0, difficulty: "easy" },
+          { q: "What crop was traditionally most important in Rwanda?", options: ["Sorghum", "Rice", "Wheat", "Corn"], correct: 0, difficulty: "medium" },
+          { q: "What is the name of the traditional Rwandan basket?", options: ["Agaseke", "Kiboko", "Mkeka", "Kanga"], correct: 0, difficulty: "easy" },
+          { q: "What lake borders Rwanda to the west?", options: ["Lake Kivu", "Lake Victoria", "Lake Tanganyika", "Lake Malawi"], correct: 0, difficulty: "easy" },
+          { q: "Which mountain range runs through Rwanda?", options: ["Virunga Mountains", "Atlas Mountains", "Kilimanjaro Range", "Drakensberg"], correct: 0, difficulty: "medium" },
+          { q: "What year did Rwanda gain independence?", options: ["1962", "1960", "1965", "1970"], correct: 0, difficulty: "easy" },
+          { q: "From which European country did Rwanda gain independence?", options: ["Belgium", "France", "Britain", "Germany"], correct: 0, difficulty: "easy" },
+          { q: "Who was the first president of Rwanda?", options: ["Grégoire Kayibanda", "Juvénal Habyarimana", "Paul Kagame", "Pasteur Bizimungu"], correct: 0, difficulty: "medium" },
+          { q: "What was Rwanda called during German colonial rule?", options: ["Ruanda", "Rwanda", "Rwandaise", "Rwandan Territory"], correct: 0, difficulty: "hard" },
+          { q: "Which European country first colonized Rwanda?", options: ["Germany", "Belgium", "France", "Britain"], correct: 0, difficulty: "medium" },
+          { q: "What is Umuganda in Rwanda?", options: ["Community work day", "National holiday", "Traditional dance", "Type of food"], correct: 0, difficulty: "easy" },
+          { q: "What is the capital city of Rwanda?", options: ["Kigali", "Butare", "Gisenyi", "Ruhengeri"], correct: 0, difficulty: "easy" },
+          { q: "What famous animals live in Rwanda's Volcanoes National Park?", options: ["Mountain gorillas", "Lions", "Elephants", "Zebras"], correct: 0, difficulty: "easy" },
+          { q: "What is the meaning of 'Rwanda' in Kinyarwanda?", options: ["Land that expands", "Land of hills", "Land of peace", "Land of water"], correct: 0, difficulty: "hard" },
+          { q: "What traditional drink is made from sorghum in Rwanda?", options: ["Urwagwa", "Palm wine", "Mead", "Beer"], correct: 0, difficulty: "medium" },
+          { q: "What is the Gacaca system?", options: ["Community justice courts", "Traditional dance", "Farming method", "Royal ceremony"], correct: 0, difficulty: "medium" },
+          { q: "What memorial day is observed on April 7th in Rwanda?", options: ["Genocide Memorial Day", "Independence Day", "Liberation Day", "Heroes Day"], correct: 0, difficulty: "easy" },
+          { q: "What is the official language of Rwanda besides Kinyarwanda?", options: ["English and French", "Only French", "Only English", "Swahili"], correct: 0, difficulty: "medium" },
+          { q: "What percentage of Rwanda's parliament is female?", options: ["Over 60%", "30%", "45%", "20%"], correct: 0, difficulty: "hard" },
+          { q: "What is banned in Rwanda to protect the environment?", options: ["Plastic bags", "Cars", "Factories", "Mining"], correct: 0, difficulty: "easy" },
+          { q: "What is Kinyarwanda?", options: ["The national language", "A traditional food", "A type of cloth", "A dance style"], correct: 0, difficulty: "easy" },
+          { q: "What color is NOT on the Rwandan flag?", options: ["Red", "Blue", "Green", "Yellow"], correct: 0, difficulty: "medium" },
+          { q: "What does the sun on Rwanda's flag represent?", options: ["Enlightenment and hope", "Heat and summer", "Power and strength", "Gold and wealth"], correct: 0, difficulty: "medium" },
+          { q: "Which neighboring country shares Lake Kivu with Rwanda?", options: ["Democratic Republic of Congo", "Uganda", "Tanzania", "Burundi"], correct: 0, difficulty: "medium" },
+        ]
+      },
+      ancient_egypt: {
+        name: "Ancient Egypt",
+        icon: "🏛️",
+        color: "from-amber-500 to-yellow-500",
+        questions: [
+          { q: "Which river was essential to ancient Egyptian civilization?", options: ["Nile River", "Congo River", "Niger River", "Zambezi River"], correct: 0, difficulty: "easy" },
+          { q: "What were the Egyptian kings called?", options: ["Pharaohs", "Emperors", "Kings", "Chiefs"], correct: 0, difficulty: "easy" },
+          { q: "What shape are the famous tombs of Egypt?", options: ["Pyramids", "Circles", "Squares", "Rectangles"], correct: 0, difficulty: "easy" },
+          { q: "What is the largest pyramid in Egypt called?", options: ["Great Pyramid of Giza", "Pyramid of Luxor", "Pyramid of Cairo", "Red Pyramid"], correct: 0, difficulty: "medium" },
+          { q: "What creature has a lion's body and human head?", options: ["Sphinx", "Griffin", "Dragon", "Phoenix"], correct: 0, difficulty: "easy" },
+          { q: "What did Egyptians use for writing?", options: ["Hieroglyphics", "Alphabet", "Numbers", "Pictures only"], correct: 0, difficulty: "easy" },
+          { q: "What material did Egyptians write on?", options: ["Papyrus", "Paper", "Wood", "Stone only"], correct: 0, difficulty: "medium" },
+          { q: "What god had the head of a jackal?", options: ["Anubis", "Ra", "Osiris", "Horus"], correct: 0, difficulty: "medium" },
+          { q: "Who was the sun god of Egypt?", options: ["Ra", "Osiris", "Isis", "Anubis"], correct: 0, difficulty: "medium" },
+          { q: "What was placed over a mummy's face?", options: ["Death mask", "Hat", "Cloth", "Nothing"], correct: 0, difficulty: "easy" },
+          { q: "What process preserved dead bodies in Egypt?", options: ["Mummification", "Burning", "Burying", "Freezing"], correct: 0, difficulty: "easy" },
+          { q: "What female pharaoh ruled ancient Egypt?", options: ["Hatshepsut", "Cleopatra only", "Nefertiti", "Isis"], correct: 0, difficulty: "medium" },
+          { q: "What young pharaoh's tomb was found in 1922?", options: ["Tutankhamun", "Ramesses", "Khufu", "Akhenaten"], correct: 0, difficulty: "easy" },
+          { q: "What insect was sacred in ancient Egypt?", options: ["Scarab beetle", "Butterfly", "Ant", "Bee"], correct: 0, difficulty: "medium" },
+          { q: "What cat goddess was worshipped in Egypt?", options: ["Bastet", "Isis", "Hathor", "Sekhmet"], correct: 0, difficulty: "hard" },
+          { q: "What was the Egyptian afterlife called?", options: ["Field of Reeds", "Heaven", "Paradise", "Valhalla"], correct: 0, difficulty: "hard" },
+          { q: "What stone helped decode hieroglyphics?", options: ["Rosetta Stone", "Pyramid Stone", "Sphinx Stone", "Nile Stone"], correct: 0, difficulty: "medium" },
+          { q: "What was Cleopatra known as?", options: ["Last Pharaoh of Egypt", "First Pharaoh", "Greatest Builder", "Warrior Queen"], correct: 0, difficulty: "medium" },
+          { q: "What did ancient Egyptians believe about the heart?", options: ["Center of intelligence", "Just pumps blood", "Not important", "Controls breathing"], correct: 0, difficulty: "hard" },
+          { q: "How many Great Pyramids are at Giza?", options: ["Three", "One", "Five", "Seven"], correct: 0, difficulty: "easy" },
+          { q: "What river animal was considered dangerous and sacred?", options: ["Hippopotamus", "Fish", "Frog", "Snake"], correct: 0, difficulty: "medium" },
+          { q: "What was the capital of ancient Egypt at one time?", options: ["Memphis", "Cairo", "Alexandria first", "Luxor"], correct: 0, difficulty: "hard" },
+          { q: "Who built the Great Pyramid?", options: ["Pharaoh Khufu", "Tutankhamun", "Cleopatra", "Ramesses II"], correct: 0, difficulty: "medium" },
+          { q: "What was kept in canopic jars?", options: ["Organs of mummies", "Food", "Gold", "Water"], correct: 0, difficulty: "medium" },
+          { q: "What bird represented the soul in Egypt?", options: ["Ba bird", "Eagle", "Hawk", "Dove"], correct: 0, difficulty: "hard" },
+        ]
+      },
+      great_kingdoms: {
+        name: "Great African Kingdoms",
+        icon: "👑",
+        color: "from-purple-500 to-pink-500",
+        questions: [
+          { q: "What ancient kingdom was located in modern-day Sudan?", options: ["Kingdom of Kush", "Mali Empire", "Songhai", "Axum"], correct: 0, difficulty: "medium" },
+          { q: "What empire was known for the city of Timbuktu?", options: ["Mali Empire", "Ghana Empire", "Songhai Empire", "Kush"], correct: 0, difficulty: "easy" },
+          { q: "Who was the famous rich king of Mali?", options: ["Mansa Musa", "Sundiata", "Askia", "Shaka"], correct: 0, difficulty: "easy" },
+          { q: "What did Mansa Musa famously give away during his pilgrimage?", options: ["Gold", "Diamonds", "Slaves", "Food"], correct: 0, difficulty: "easy" },
+          { q: "What Ethiopian kingdom was known for its obelisks?", options: ["Axum/Aksum", "Kush", "Mali", "Songhai"], correct: 0, difficulty: "medium" },
+          { q: "What empire controlled trans-Saharan gold trade first?", options: ["Ghana Empire", "Mali Empire", "Songhai", "Egypt"], correct: 0, difficulty: "medium" },
+          { q: "What was traded across the Sahara Desert?", options: ["Gold and salt", "Only gold", "Only food", "Animals"], correct: 0, difficulty: "easy" },
+          { q: "Who founded the Mali Empire?", options: ["Sundiata Keita", "Mansa Musa", "Askia Muhammad", "Sonni Ali"], correct: 0, difficulty: "medium" },
+          { q: "What was the Great Zimbabwe famous for?", options: ["Stone walls and buildings", "Pyramids", "Rivers", "Forests"], correct: 0, difficulty: "medium" },
+          { q: "In which modern country is Great Zimbabwe?", options: ["Zimbabwe", "South Africa", "Kenya", "Nigeria"], correct: 0, difficulty: "easy" },
+          { q: "What warrior king united the Zulu people?", options: ["Shaka Zulu", "Mansa Musa", "Sundiata", "Askia"], correct: 0, difficulty: "easy" },
+          { q: "What empire came after Mali in West Africa?", options: ["Songhai Empire", "Ghana Empire", "Axum", "Kush"], correct: 0, difficulty: "medium" },
+          { q: "What was Timbuktu famous for?", options: ["Learning and books", "Wars", "Farming", "Fishing"], correct: 0, difficulty: "easy" },
+          { q: "What religion did many West African kingdoms adopt?", options: ["Islam", "Christianity", "Buddhism", "Hinduism"], correct: 0, difficulty: "medium" },
+          { q: "What Ethiopian emperor claimed descent from Solomon?", options: ["Emperor Haile Selassie", "Mansa Musa", "Shaka", "Askia"], correct: 0, difficulty: "hard" },
+          { q: "What is the Benin Kingdom famous for?", options: ["Bronze sculptures", "Pyramids", "Stone walls", "Gold masks"], correct: 0, difficulty: "medium" },
+          { q: "Where was the Benin Kingdom located?", options: ["Nigeria", "Ghana", "Mali", "Ethiopia"], correct: 0, difficulty: "medium" },
+          { q: "What was the Swahili Coast known for?", options: ["Trade with Arabia and Asia", "Pyramids", "Gold mines", "Deserts"], correct: 0, difficulty: "medium" },
+          { q: "What language developed on the Swahili Coast?", options: ["Swahili", "Arabic only", "English", "French"], correct: 0, difficulty: "easy" },
+          { q: "What kingdom was in modern-day Democratic Republic of Congo?", options: ["Kingdom of Kongo", "Mali", "Songhai", "Axum"], correct: 0, difficulty: "medium" },
+          { q: "What made the Kingdom of Kongo powerful?", options: ["Copper and ivory trade", "Gold only", "Diamonds", "Oil"], correct: 0, difficulty: "hard" },
+          { q: "Who was Askia Muhammad?", options: ["Songhai emperor", "Mali king", "Egyptian pharaoh", "Zulu chief"], correct: 0, difficulty: "hard" },
+          { q: "What was special about Lalibela in Ethiopia?", options: ["Rock-hewn churches", "Pyramids", "Gold mines", "Great walls"], correct: 0, difficulty: "medium" },
+          { q: "How were Lalibela's churches built?", options: ["Carved from rock below ground", "Built with bricks", "Made of wood", "Built with mud"], correct: 0, difficulty: "hard" },
+          { q: "What ancient library was in Timbuktu?", options: ["Sankore University Library", "Library of Alexandria", "Great Library", "Royal Library"], correct: 0, difficulty: "hard" },
+        ]
+      },
+      independence: {
+        name: "African Independence",
+        icon: "✊",
+        color: "from-green-500 to-emerald-500",
+        questions: [
+          { q: "What year did Ghana become the first sub-Saharan country to gain independence?", options: ["1957", "1960", "1963", "1955"], correct: 0, difficulty: "medium" },
+          { q: "Who was Ghana's first president?", options: ["Kwame Nkrumah", "Nelson Mandela", "Jomo Kenyatta", "Julius Nyerere"], correct: 0, difficulty: "easy" },
+          { q: "What was apartheid in South Africa?", options: ["Racial segregation", "A celebration", "A type of food", "A dance"], correct: 0, difficulty: "easy" },
+          { q: "Who spent 27 years in prison fighting apartheid?", options: ["Nelson Mandela", "Kwame Nkrumah", "Patrice Lumumba", "Haile Selassie"], correct: 0, difficulty: "easy" },
+          { q: "What year did South Africa end apartheid?", options: ["1994", "1990", "2000", "1985"], correct: 0, difficulty: "medium" },
+          { q: "Who was Kenya's first president?", options: ["Jomo Kenyatta", "Daniel arap Moi", "Uhuru Kenyatta", "Oginga Odinga"], correct: 0, difficulty: "medium" },
+          { q: "What movement fought for Kenyan independence?", options: ["Mau Mau", "ANC", "ZANU", "FLN"], correct: 0, difficulty: "hard" },
+          { q: "What year did Kenya gain independence?", options: ["1963", "1960", "1957", "1970"], correct: 0, difficulty: "medium" },
+          { q: "Who was the first president of Tanzania?", options: ["Julius Nyerere", "Jomo Kenyatta", "Kwame Nkrumah", "Haile Selassie"], correct: 0, difficulty: "medium" },
+          { q: "What is Julius Nyerere's nickname?", options: ["Mwalimu (Teacher)", "Father", "King", "Chief"], correct: 0, difficulty: "hard" },
+          { q: "What year did Nigeria gain independence?", options: ["1960", "1957", "1963", "1965"], correct: 0, difficulty: "medium" },
+          { q: "What was the year 1960 called in African history?", options: ["Year of Africa", "Year of Freedom", "Year of Peace", "Year of Unity"], correct: 0, difficulty: "medium" },
+          { q: "How many African countries gained independence in 1960?", options: ["17", "10", "5", "25"], correct: 0, difficulty: "hard" },
+          { q: "Who was the first prime minister of Congo?", options: ["Patrice Lumumba", "Mobutu", "Kabila", "Tshombe"], correct: 0, difficulty: "medium" },
+          { q: "What organization promotes African unity?", options: ["African Union", "United Nations", "NATO", "EU"], correct: 0, difficulty: "easy" },
+          { q: "Where is the African Union headquarters?", options: ["Addis Ababa, Ethiopia", "Cairo, Egypt", "Lagos, Nigeria", "Nairobi, Kenya"], correct: 0, difficulty: "medium" },
+          { q: "What did Pan-Africanism promote?", options: ["Unity of African peoples", "Division", "European rule", "War"], correct: 0, difficulty: "easy" },
+          { q: "Which country was never colonized in Africa?", options: ["Ethiopia", "Ghana", "Nigeria", "Kenya"], correct: 0, difficulty: "easy" },
+          { q: "What European event divided Africa among colonial powers?", options: ["Berlin Conference", "Paris Treaty", "London Meeting", "Rome Conference"], correct: 0, difficulty: "hard" },
+          { q: "What year was the Berlin Conference?", options: ["1884-1885", "1900", "1914", "1950"], correct: 0, difficulty: "hard" },
+          { q: "What did African independence leaders fight against?", options: ["Colonialism", "Education", "Trade", "Farming"], correct: 0, difficulty: "easy" },
+          { q: "What flag color represents African soil and land?", options: ["Black/Brown", "Blue", "White", "Pink"], correct: 0, difficulty: "easy" },
+          { q: "What flag color represents African vegetation?", options: ["Green", "Blue", "Purple", "Orange"], correct: 0, difficulty: "easy" },
+          { q: "What flag color represents African sunshine?", options: ["Yellow/Gold", "Blue", "White", "Gray"], correct: 0, difficulty: "easy" },
+          { q: "Who said 'Africa must unite'?", options: ["Kwame Nkrumah", "Nelson Mandela", "Jomo Kenyatta", "Julius Nyerere"], correct: 0, difficulty: "medium" },
+        ]
+      },
+      culture_traditions: {
+        name: "Culture & Traditions",
+        icon: "🎭",
+        color: "from-red-500 to-orange-500",
+        questions: [
+          { q: "What is the African concept of community spirit called?", options: ["Ubuntu", "Karma", "Zen", "Dharma"], correct: 0, difficulty: "easy" },
+          { q: "What does Ubuntu mean?", options: ["I am because we are", "I am alone", "Money is power", "War is peace"], correct: 0, difficulty: "easy" },
+          { q: "What is a griot in West African culture?", options: ["Storyteller and historian", "Warrior", "Farmer", "King"], correct: 0, difficulty: "medium" },
+          { q: "What instrument do griots often play?", options: ["Kora", "Piano", "Guitar", "Violin"], correct: 0, difficulty: "medium" },
+          { q: "What are African masks often used for?", options: ["Ceremonies and rituals", "Just decoration", "Farming", "Cooking"], correct: 0, difficulty: "easy" },
+          { q: "What material is kente cloth made from?", options: ["Silk and cotton", "Wool only", "Plastic", "Paper"], correct: 0, difficulty: "medium" },
+          { q: "Which country is famous for kente cloth?", options: ["Ghana", "Egypt", "South Africa", "Morocco"], correct: 0, difficulty: "easy" },
+          { q: "What is the djembe?", options: ["A drum", "A dance", "A food", "A house"], correct: 0, difficulty: "easy" },
+          { q: "What is Kwanzaa?", options: ["African American celebration of African heritage", "A food", "A dance", "A country"], correct: 0, difficulty: "medium" },
+          { q: "How many principles does Kwanzaa have?", options: ["Seven", "Five", "Three", "Ten"], correct: 0, difficulty: "hard" },
+          { q: "What is African body art using henna called?", options: ["Mehndi/Henna art", "Tattoo", "Painting", "Drawing"], correct: 0, difficulty: "medium" },
+          { q: "What crop originated in Africa?", options: ["Coffee", "Wheat", "Rice", "Corn"], correct: 0, difficulty: "easy" },
+          { q: "Which country is coffee originally from?", options: ["Ethiopia", "Brazil", "Colombia", "Jamaica"], correct: 0, difficulty: "medium" },
+          { q: "What is injera?", options: ["Ethiopian flatbread", "A drink", "A dance", "A mask"], correct: 0, difficulty: "medium" },
+          { q: "What is jollof rice?", options: ["West African rice dish", "A dessert", "A drink", "A salad"], correct: 0, difficulty: "easy" },
+          { q: "What style of music originated in the Caribbean from African roots?", options: ["Reggae", "Classical", "Opera", "Country"], correct: 0, difficulty: "medium" },
+          { q: "What is the mbira instrument also known as?", options: ["Thumb piano", "Drum", "Flute", "Violin"], correct: 0, difficulty: "medium" },
+          { q: "What is Adinkra?", options: ["Symbols from Ghana", "A food", "A country", "A river"], correct: 0, difficulty: "hard" },
+          { q: "What does the Sankofa symbol mean?", options: ["Learn from the past", "Fight always", "Never share", "Stay alone"], correct: 0, difficulty: "hard" },
+          { q: "What is the talking drum used for?", options: ["Communication and music", "Only decoration", "Cooking", "Building"], correct: 0, difficulty: "medium" },
+          { q: "What type of dance is Gumboot from South Africa?", options: ["Stomping dance with boots", "Ballet", "Ballroom", "Hip hop"], correct: 0, difficulty: "medium" },
+          { q: "What is African storytelling important for?", options: ["Passing down history and lessons", "Just entertainment", "Making money", "Nothing important"], correct: 0, difficulty: "easy" },
+          { q: "What animal often appears in African folktales as clever?", options: ["Spider/Anansi", "Dog", "Cat", "Fish"], correct: 0, difficulty: "easy" },
+          { q: "Who is Anansi?", options: ["A spider trickster in folktales", "A king", "A god", "A warrior"], correct: 0, difficulty: "medium" },
+          { q: "What is the meaning of African proverbs?", options: ["Teaching wisdom", "Just rhymes", "Nothing important", "Making fun"], correct: 0, difficulty: "easy" },
+        ]
+      },
+      geography: {
+        name: "African Geography",
+        icon: "🗺️",
+        color: "from-cyan-500 to-blue-500",
+        questions: [
+          { q: "What is the largest desert in Africa?", options: ["Sahara Desert", "Kalahari Desert", "Namib Desert", "Nubian Desert"], correct: 0, difficulty: "easy" },
+          { q: "What is the longest river in Africa?", options: ["Nile River", "Congo River", "Niger River", "Zambezi River"], correct: 0, difficulty: "easy" },
+          { q: "What is the highest mountain in Africa?", options: ["Mount Kilimanjaro", "Mount Kenya", "Atlas Mountains", "Drakensberg"], correct: 0, difficulty: "easy" },
+          { q: "In which country is Mount Kilimanjaro?", options: ["Tanzania", "Kenya", "Uganda", "Ethiopia"], correct: 0, difficulty: "easy" },
+          { q: "What is the largest lake in Africa?", options: ["Lake Victoria", "Lake Tanganyika", "Lake Malawi", "Lake Chad"], correct: 0, difficulty: "easy" },
+          { q: "How many countries share Lake Victoria?", options: ["Three", "Two", "Four", "Five"], correct: 0, difficulty: "medium" },
+          { q: "What famous waterfall is on the Zambezi River?", options: ["Victoria Falls", "Niagara Falls", "Angel Falls", "Blue Nile Falls"], correct: 0, difficulty: "easy" },
+          { q: "What is the deepest lake in Africa?", options: ["Lake Tanganyika", "Lake Victoria", "Lake Malawi", "Lake Chad"], correct: 0, difficulty: "medium" },
+          { q: "What is the largest country in Africa by area?", options: ["Algeria", "Sudan", "Libya", "DRC"], correct: 0, difficulty: "medium" },
+          { q: "What is the most populated country in Africa?", options: ["Nigeria", "Ethiopia", "Egypt", "South Africa"], correct: 0, difficulty: "medium" },
+          { q: "How many countries are in Africa?", options: ["54", "50", "60", "45"], correct: 0, difficulty: "easy" },
+          { q: "What body of water is north of Africa?", options: ["Mediterranean Sea", "Atlantic Ocean", "Indian Ocean", "Red Sea"], correct: 0, difficulty: "easy" },
+          { q: "What ocean is west of Africa?", options: ["Atlantic Ocean", "Pacific Ocean", "Indian Ocean", "Arctic Ocean"], correct: 0, difficulty: "easy" },
+          { q: "What ocean is east of Africa?", options: ["Indian Ocean", "Atlantic Ocean", "Pacific Ocean", "Arctic Ocean"], correct: 0, difficulty: "easy" },
+          { q: "What is the Great Rift Valley?", options: ["A large geological formation", "A river", "A mountain", "A desert"], correct: 0, difficulty: "medium" },
+          { q: "What island country is off East Africa?", options: ["Madagascar", "Mauritius", "Seychelles", "Comoros"], correct: 0, difficulty: "easy" },
+          { q: "What is special about Madagascar's wildlife?", options: ["Many unique species found nowhere else", "No wildlife", "Only birds", "Only fish"], correct: 0, difficulty: "medium" },
+          { q: "What rainforest is in Central Africa?", options: ["Congo Rainforest", "Amazon", "Borneo", "Daintree"], correct: 0, difficulty: "medium" },
+          { q: "What is the Serengeti famous for?", options: ["Animal migration", "Deserts", "Mountains", "Lakes"], correct: 0, difficulty: "easy" },
+          { q: "In which countries is the Serengeti?", options: ["Tanzania and Kenya", "South Africa", "Egypt", "Morocco"], correct: 0, difficulty: "medium" },
+          { q: "What is the Sahel region?", options: ["Semi-arid zone south of Sahara", "A rainforest", "A mountain", "An island"], correct: 0, difficulty: "hard" },
+          { q: "What canal connects the Mediterranean to the Red Sea?", options: ["Suez Canal", "Panama Canal", "English Channel", "Strait of Gibraltar"], correct: 0, difficulty: "medium" },
+          { q: "In which country is the Suez Canal?", options: ["Egypt", "Sudan", "Libya", "Tunisia"], correct: 0, difficulty: "easy" },
+          { q: "What are the Atlas Mountains?", options: ["Mountain range in Northwest Africa", "A river", "A desert", "A lake"], correct: 0, difficulty: "medium" },
+          { q: "What climate does most of Central Africa have?", options: ["Tropical", "Desert", "Arctic", "Mediterranean"], correct: 0, difficulty: "easy" },
+        ]
+      },
+      wildlife: {
+        name: "African Wildlife",
+        icon: "🦁",
+        color: "from-orange-500 to-amber-500",
+        questions: [
+          { q: "What is the largest land animal in Africa?", options: ["African Elephant", "Hippopotamus", "Rhinoceros", "Giraffe"], correct: 0, difficulty: "easy" },
+          { q: "What is the tallest animal in Africa?", options: ["Giraffe", "Elephant", "Ostrich", "Camel"], correct: 0, difficulty: "easy" },
+          { q: "What animal is known as the 'King of the Jungle'?", options: ["Lion", "Elephant", "Gorilla", "Leopard"], correct: 0, difficulty: "easy" },
+          { q: "What are the Big Five safari animals?", options: ["Lion, Elephant, Buffalo, Leopard, Rhino", "Only Lions", "Only Elephants", "Zebras"], correct: 0, difficulty: "medium" },
+          { q: "What is the fastest land animal in Africa?", options: ["Cheetah", "Lion", "Leopard", "Antelope"], correct: 0, difficulty: "easy" },
+          { q: "How fast can a cheetah run?", options: ["Up to 120 km/h", "50 km/h", "200 km/h", "30 km/h"], correct: 0, difficulty: "medium" },
+          { q: "What primate is famous in Rwanda?", options: ["Mountain Gorilla", "Chimpanzee", "Baboon", "Lemur"], correct: 0, difficulty: "easy" },
+          { q: "Where do mountain gorillas live?", options: ["Virunga Mountains", "Sahara Desert", "Serengeti", "Nile River"], correct: 0, difficulty: "medium" },
+          { q: "What is the largest bird in Africa?", options: ["Ostrich", "Eagle", "Flamingo", "Vulture"], correct: 0, difficulty: "easy" },
+          { q: "Can ostriches fly?", options: ["No, they run", "Yes, very high", "Yes, short distances", "Only at night"], correct: 0, difficulty: "easy" },
+          { q: "What dangerous animal lives in African rivers?", options: ["Hippopotamus", "Dolphin", "Whale", "Seal"], correct: 0, difficulty: "easy" },
+          { q: "What reptile is famous in the Nile River?", options: ["Crocodile", "Turtle", "Snake", "Lizard"], correct: 0, difficulty: "easy" },
+          { q: "What animal has black and white stripes?", options: ["Zebra", "Giraffe", "Lion", "Elephant"], correct: 0, difficulty: "easy" },
+          { q: "Why do zebras have stripes?", options: ["To confuse predators", "For decoration", "No reason", "To attract mates only"], correct: 0, difficulty: "medium" },
+          { q: "What animal is known for its laugh-like call?", options: ["Hyena", "Lion", "Elephant", "Zebra"], correct: 0, difficulty: "easy" },
+          { q: "What type of animal is a wildebeest?", options: ["Antelope", "Buffalo", "Deer", "Cow"], correct: 0, difficulty: "medium" },
+          { q: "What do elephants use their trunks for?", options: ["Breathing, drinking, grabbing", "Only breathing", "Only eating", "Nothing"], correct: 0, difficulty: "easy" },
+          { q: "What endangered animal has a horn?", options: ["Rhinoceros", "Giraffe", "Zebra", "Lion"], correct: 0, difficulty: "easy" },
+          { q: "Why are rhinos endangered?", options: ["Poaching for their horns", "Too many babies", "No food", "Too hot"], correct: 0, difficulty: "medium" },
+          { q: "What unique animal lives only in Madagascar?", options: ["Lemur", "Lion", "Elephant", "Giraffe"], correct: 0, difficulty: "easy" },
+          { q: "What bird is famous for its pink color?", options: ["Flamingo", "Eagle", "Vulture", "Ostrich"], correct: 0, difficulty: "easy" },
+          { q: "Why are flamingos pink?", options: ["From the food they eat", "They are born pink", "From the sun", "From the water"], correct: 0, difficulty: "medium" },
+          { q: "What is the Great Migration?", options: ["Movement of wildebeest and zebras", "Bird migration", "Fish swimming", "Elephant walking"], correct: 0, difficulty: "medium" },
+          { q: "What is a baby elephant called?", options: ["Calf", "Puppy", "Kitten", "Cub"], correct: 0, difficulty: "easy" },
+          { q: "What is a baby lion called?", options: ["Cub", "Calf", "Puppy", "Kitten"], correct: 0, difficulty: "easy" },
+        ]
+      },
+      heroes: {
+        name: "African Heroes",
+        icon: "🦸",
+        color: "from-indigo-500 to-purple-500",
+        questions: [
+          { q: "Who was Nelson Mandela?", options: ["South African freedom fighter and president", "Egyptian pharaoh", "Kenyan king", "Nigerian chief"], correct: 0, difficulty: "easy" },
+          { q: "How many years did Mandela spend in prison?", options: ["27 years", "10 years", "5 years", "40 years"], correct: 0, difficulty: "easy" },
+          { q: "What award did Nelson Mandela win?", options: ["Nobel Peace Prize", "Grammy Award", "Olympic Medal", "Pulitzer Prize"], correct: 0, difficulty: "medium" },
+          { q: "Who was Wangari Maathai?", options: ["Kenyan environmental activist", "Nigerian singer", "Egyptian queen", "South African dancer"], correct: 0, difficulty: "medium" },
+          { q: "What movement did Wangari Maathai start?", options: ["Green Belt Movement", "Black Power", "Freedom Movement", "Peace Corps"], correct: 0, difficulty: "medium" },
+          { q: "What did the Green Belt Movement focus on?", options: ["Planting trees", "Building houses", "Making music", "Cooking food"], correct: 0, difficulty: "easy" },
+          { q: "Who was Haile Selassie?", options: ["Ethiopian Emperor", "Egyptian Pharaoh", "South African President", "Nigerian King"], correct: 0, difficulty: "medium" },
+          { q: "Who was Queen Nzinga?", options: ["Angolan queen who fought Portuguese", "Egyptian queen", "Ethiopian princess", "Nigerian ruler"], correct: 0, difficulty: "hard" },
+          { q: "Who was Yaa Asantewaa?", options: ["Ashanti queen who fought the British", "Nigerian singer", "Egyptian dancer", "South African writer"], correct: 0, difficulty: "hard" },
+          { q: "Who was Thomas Sankara?", options: ["Burkina Faso revolutionary leader", "Nigerian musician", "Egyptian artist", "Kenyan athlete"], correct: 0, difficulty: "hard" },
+          { q: "Who is Paul Kagame?", options: ["President of Rwanda", "King of Nigeria", "Emperor of Ethiopia", "Chief of Ghana"], correct: 0, difficulty: "easy" },
+          { q: "Who was Chinua Achebe?", options: ["Nigerian author of 'Things Fall Apart'", "Musician", "Athlete", "Politician"], correct: 0, difficulty: "medium" },
+          { q: "Who was Miriam Makeba?", options: ["South African singer known as 'Mama Africa'", "Athlete", "Writer", "Politician"], correct: 0, difficulty: "medium" },
+          { q: "Who was Patrice Lumumba?", options: ["Congo's first prime minister", "Nigerian president", "Egyptian pharaoh", "South African chief"], correct: 0, difficulty: "medium" },
+          { q: "Who is Ellen Johnson Sirleaf?", options: ["First elected female African head of state", "Singer", "Athlete", "Writer"], correct: 0, difficulty: "hard" },
+          { q: "Which country did Ellen Johnson Sirleaf lead?", options: ["Liberia", "Nigeria", "Ghana", "Kenya"], correct: 0, difficulty: "hard" },
+          { q: "Who was Desmond Tutu?", options: ["South African archbishop and activist", "Nigerian musician", "Egyptian writer", "Kenyan athlete"], correct: 0, difficulty: "medium" },
+          { q: "Who is Eliud Kipchoge?", options: ["Kenyan marathon runner", "Nigerian footballer", "South African boxer", "Egyptian swimmer"], correct: 0, difficulty: "easy" },
+          { q: "What record did Eliud Kipchoge break?", options: ["First to run marathon under 2 hours", "Fastest swimmer", "Highest jumper", "Longest runner"], correct: 0, difficulty: "medium" },
+          { q: "Who was Steve Biko?", options: ["South African anti-apartheid activist", "Nigerian musician", "Egyptian artist", "Kenyan writer"], correct: 0, difficulty: "hard" },
+          { q: "Who is Ngozi Okonjo-Iweala?", options: ["Nigerian economist and WTO Director", "Singer", "Athlete", "Actor"], correct: 0, difficulty: "hard" },
+          { q: "Who was Kofi Annan?", options: ["Ghanaian UN Secretary-General", "Nigerian president", "Egyptian pharaoh", "South African chief"], correct: 0, difficulty: "medium" },
+          { q: "Who is Lupita Nyong'o?", options: ["Kenyan-Mexican actress", "Singer", "Athlete", "Politician"], correct: 0, difficulty: "easy" },
+          { q: "Who was Fela Kuti?", options: ["Nigerian musician who created Afrobeat", "Athlete", "Writer", "Politician"], correct: 0, difficulty: "medium" },
+          { q: "Who is Sadio Mané?", options: ["Senegalese footballer", "Nigerian actor", "South African singer", "Egyptian swimmer"], correct: 0, difficulty: "easy" },
+        ]
+      }
+    };
+
+    // Generate more questions programmatically
+    function generateAdditionalQuestions() {
+      const additionalTemplates = {
+        rwanda: [
+          { template: "What traditional Rwandan value emphasizes helping others?", answer: "Ubupfura", wrong: ["Ubwenge", "Ubukwe", "Umuryango"] },
+          { template: "What is the traditional Rwandan wedding ceremony called?", answer: "Gusaba", wrong: ["Gutwikara", "Gukena", "Gushyira"] },
+          { template: "What month is Rwanda's Independence Day?", answer: "July", wrong: ["January", "March", "December"] },
+          { template: "What is Rwanda's national bird?", answer: "Crested Crane", wrong: ["Eagle", "Flamingo", "Owl"] },
+          { template: "What percentage of Rwanda is covered by water?", answer: "About 5%", wrong: ["About 50%", "About 25%", "About 1%"] },
+        ],
+        ancient_egypt: [
+          { template: "What organ was left inside mummies?", answer: "Heart", wrong: ["Brain", "Liver", "Lungs"] },
+          { template: "What was papyrus made from?", answer: "Reed plants", wrong: ["Trees", "Cotton", "Wool"] },
+          { template: "What color represented rebirth in Egypt?", answer: "Green", wrong: ["Red", "Black", "White"] },
+          { template: "What was the Eye of Horus a symbol of?", answer: "Protection", wrong: ["Death", "War", "Hunger"] },
+          { template: "How long did it take to build the Great Pyramid?", answer: "About 20 years", wrong: ["100 years", "5 years", "50 years"] },
+        ],
+        great_kingdoms: [
+          { template: "What was the main export of the Ghana Empire?", answer: "Gold", wrong: ["Silver", "Copper", "Iron"] },
+          { template: "What university was famous in Timbuktu?", answer: "Sankore", wrong: ["Oxford", "Harvard", "Cairo"] },
+          { template: "What religion spread along the Swahili Coast?", answer: "Islam", wrong: ["Christianity", "Buddhism", "Hinduism"] },
+          { template: "What material were Benin bronzes made from?", answer: "Brass and bronze", wrong: ["Gold", "Silver", "Iron"] },
+          { template: "What empire controlled the gold-salt trade routes?", answer: "Ghana Empire", wrong: ["Roman Empire", "British Empire", "Chinese Empire"] },
+        ]
+      };
+
+      // Add variations to each category
+      Object.keys(questionDatabase).forEach(category => {
+        const baseQuestions = questionDatabase[category].questions;
+        const difficulties = ["easy", "medium", "hard"];
+        
+        // Create more questions by varying existing ones
+        for (let i = 0; i < 100; i++) {
+          const baseQ = baseQuestions[i % baseQuestions.length];
+          const newQ = {
+            q: baseQ.q,
+            options: [...baseQ.options],
+            correct: baseQ.correct,
+            difficulty: difficulties[Math.floor(Math.random() * 3)]
+          };
+          
+          // Shuffle options for variety
+          if (Math.random() > 0.5) {
+            const shuffled = shuffleWithCorrect(newQ.options, newQ.correct);
+            newQ.options = shuffled.options;
+            newQ.correct = shuffled.correct;
+          }
+        }
+      });
+    }
+
+    function shuffleWithCorrect(options, correctIndex) {
+      const correctAnswer = options[correctIndex];
+      const shuffled = [...options].sort(() => Math.random() - 0.5);
+      return {
+        options: shuffled,
+        correct: shuffled.indexOf(correctAnswer)
+      };
+    }
+
+    // ==================== APP STATE ====================
+    const defaultConfig = {
+      game_title: "African History Explorer",
+      welcome_message: "Discover the amazing history of Africa!",
+      encouragement_text: "Keep learning and become a history champion! 🏆",
+      background_color: "#1a472a",
+      surface_color: "#ffffff",
+      text_color: "#1f2937",
+      primary_action_color: "#f59e0b",
+      secondary_action_color: "#10b981"
+    };
+
+    let config = { ...defaultConfig };
+    let progressData = [];
+    let currentCategory = null;
+    let currentQuestionIndex = 0;
+    let currentQuestions = [];
+    let sessionScore = 0;
+    let sessionTotal = 0;
+    let currentStreak = 0;
+    let selectedAnswer = null;
+    let isAnswered = false;
+
+    // ==================== DATA HANDLER ====================
+    const dataHandler = {
+      onDataChanged(data) {
+        progressData = data;
+        updateStatsDisplay();
+        updateCategoryProgress();
+      }
+    };
+
+    // ==================== INITIALIZE ====================
+    async function initialize() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...config, ...newConfig };
+            applyConfig();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              { get: () => cfg.background_color || defaultConfig.background_color, set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+              { get: () => cfg.surface_color || defaultConfig.surface_color, set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+              { get: () => cfg.text_color || defaultConfig.text_color, set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+              { get: () => cfg.primary_action_color || defaultConfig.primary_action_color, set: (v) => { cfg.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+              { get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { cfg.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+            ],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ["game_title", cfg.game_title || defaultConfig.game_title],
+            ["welcome_message", cfg.welcome_message || defaultConfig.welcome_message],
+            ["encouragement_text", cfg.encouragement_text || defaultConfig.encouragement_text]
+          ])
+        });
+        config = { ...defaultConfig, ...window.elementSdk.config };
+      }
+
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error("Failed to initialize Data SDK");
+        }
+      }
+
+      generateAdditionalQuestions();
+      applyConfig();
+      renderCategories();
+      setupEventListeners();
+      showMainMenu();
+    }
+
+    function applyConfig() {
+      const app = document.getElementById('app');
+      const bgColor = config.background_color || defaultConfig.background_color;
+      app.style.background = `linear-gradient(135deg, ${bgColor} 0%, ${adjustBrightness(bgColor, 20)} 50%, ${bgColor} 100%)`;
+
+      document.getElementById('game-title').textContent = config.game_title || defaultConfig.game_title;
+      document.getElementById('welcome-msg').textContent = config.welcome_message || defaultConfig.welcome_message;
+      document.getElementById('encouragement').textContent = config.encouragement_text || defaultConfig.encouragement_text;
+
+      // Apply surface color to cards
+      const questionCard = document.getElementById('question-card');
+      if (questionCard) {
+        questionCard.style.backgroundColor = config.surface_color || defaultConfig.surface_color;
+      }
+
+      // Apply text color
+      const questionText = document.getElementById('question-text');
+      if (questionText) {
+        questionText.style.color = config.text_color || defaultConfig.text_color;
+      }
+    }
+
+    function adjustBrightness(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const G = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amt));
+      const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+      return `#${(0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)}`;
+    }
+
+    // ==================== UI FUNCTIONS ====================
+    function showMainMenu() {
+      document.getElementById('loading-screen').classList.add('hidden');
+      document.getElementById('main-menu').classList.remove('hidden');
+      document.getElementById('game-screen').classList.add('hidden');
+    }
+
+    function showGameScreen() {
+      document.getElementById('main-menu').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+    }
+
+    function renderCategories() {
+      const grid = document.getElementById('categories-grid');
+      grid.innerHTML = '';
+
+      Object.entries(questionDatabase).forEach(([key, cat], index) => {
+        const progress = getProgressForCategory(key);
+        const card = document.createElement('div');
+        card.className = `category-card bg-gradient-to-br ${cat.color} p-4 rounded-2xl cursor-pointer shadow-lg slide-in`;
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.dataset.category = key;
+        
+        card.innerHTML = `
+          <div class="text-center">
+            <div class="text-4xl mb-2">${cat.icon}</div>
+            <h3 class="text-white font-bold text-sm md:text-base mb-2">${cat.name}</h3>
+            <div class="bg-white/20 rounded-full h-2 overflow-hidden">
+              <div class="bg-white h-full rounded-full transition-all" style="width: ${progress}%"></div>
+            </div>
+            <p class="text-white/80 text-xs mt-1">${progress}% mastered</p>
+          </div>
+        `;
+        
+        card.addEventListener('click', () => startCategory(key));
+        grid.appendChild(card);
+      });
+    }
+
+    function getProgressForCategory(categoryKey) {
+      const record = progressData.find(r => r.category === categoryKey);
+      if (!record || record.questions_answered === 0) return 0;
+      return Math.round((record.correct_answers / record.questions_answered) * 100);
+    }
+
+    function updateStatsDisplay() {
+      let totalAnswered = 0;
+      let totalCorrect = 0;
+      let bestStreak = 0;
+
+      progressData.forEach(record => {
+        totalAnswered += record.questions_answered || 0;
+        totalCorrect += record.correct_answers || 0;
+        bestStreak = Math.max(bestStreak, record.highest_streak || 0);
+      });
+
+      document.getElementById('total-answered').textContent = totalAnswered;
+      document.getElementById('total-correct').textContent = totalCorrect;
+      document.getElementById('best-streak').textContent = bestStreak;
+    }
+
+    function updateCategoryProgress() {
+      const cards = document.querySelectorAll('.category-card');
+      cards.forEach(card => {
+        const key = card.dataset.category;
+        const progress = getProgressForCategory(key);
+        const progressBar = card.querySelector('.bg-white');
+        const progressText = card.querySelector('.text-white\\/80');
+        if (progressBar) progressBar.style.width = `${progress}%`;
+        if (progressText) progressText.textContent = `${progress}% mastered`;
+      });
+    }
+
+    // ==================== GAME LOGIC ====================
+    function startCategory(categoryKey) {
+      currentCategory = categoryKey;
+      const cat = questionDatabase[categoryKey];
+      
+      // Shuffle and select questions
+      currentQuestions = shuffleArray([...cat.questions]).slice(0, 20);
+      currentQuestionIndex = 0;
+      sessionScore = 0;
+      sessionTotal = 0;
+      currentStreak = 0;
+
+      // Update UI
+      document.getElementById('category-icon').textContent = cat.icon;
+      document.getElementById('category-name').textContent = cat.name;
+      document.getElementById('current-streak').textContent = '0';
+      document.getElementById('session-score').textContent = '0';
+      document.getElementById('session-total').textContent = currentQuestions.length;
+
+      showGameScreen();
+      displayQuestion();
+    }
+
+    function displayQuestion() {
+      if (currentQuestionIndex >= currentQuestions.length) {
+        endGame();
+        return;
+      }
+
+      const q = currentQuestions[currentQuestionIndex];
+      selectedAnswer = null;
+      isAnswered = false;
+
+      // Update progress
+      const progress = ((currentQuestionIndex) / currentQuestions.length) * 100;
+      document.getElementById('question-progress').style.width = `${progress}%`;
+      document.getElementById('question-num').textContent = currentQuestionIndex + 1;
+
+      // Set difficulty badge
+      const diffBadge = document.getElementById('difficulty-badge');
+      const diffColors = {
+        easy: 'bg-green-100 text-green-700',
+        medium: 'bg-amber-100 text-amber-700',
+        hard: 'bg-red-100 text-red-700'
+      };
+      diffBadge.className = `${diffColors[q.difficulty]} px-3 py-1 rounded-full text-sm font-semibold`;
+      diffBadge.textContent = q.difficulty.charAt(0).toUpperCase() + q.difficulty.slice(1);
+
+      // Set question
+      document.getElementById('question-text').textContent = q.q;
+      document.getElementById('question-text').style.color = config.text_color || defaultConfig.text_color;
+
+      // Render options
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+
+      const optionLabels = ['A', 'B', 'C', 'D'];
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn w-full p-4 rounded-xl border-2 border-gray-200 text-left flex items-center gap-3 hover:border-amber-400 hover:bg-amber-50 transition';
+        btn.innerHTML = `
+          <span class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-600">${optionLabels[idx]}</span>
+          <span class="flex-1" style="color: ${config.text_color || defaultConfig.text_color}">${opt}</span>
+        `;
+        btn.addEventListener('click', () => selectAnswer(idx));
+        container.appendChild(btn);
+      });
+
+      // Hide feedback
+      document.getElementById('feedback-area').classList.add('hidden');
+    }
+
+    function selectAnswer(index) {
+      if (isAnswered) return;
+      
+      selectedAnswer = index;
+      isAnswered = true;
+      sessionTotal++;
+
+      const q = currentQuestions[currentQuestionIndex];
+      const isCorrect = index === q.correct;
+      const buttons = document.querySelectorAll('.option-btn');
+
+      // Update button styles
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === q.correct) {
+          btn.classList.remove('border-gray-200');
+          btn.classList.add('border-green-500', 'bg-green-50');
+          btn.querySelector('span:first-child').classList.remove('bg-gray-100', 'text-gray-600');
+          btn.querySelector('span:first-child').classList.add('bg-green-500', 'text-white');
+        } else if (idx === index && !isCorrect) {
+          btn.classList.remove('border-gray-200');
+          btn.classList.add('border-red-500', 'bg-red-50', 'shake');
+          btn.querySelector('span:first-child').classList.remove('bg-gray-100', 'text-gray-600');
+          btn.querySelector('span:first-child').classList.add('bg-red-500', 'text-white');
+        }
+      });
+
+      // Update streak and score
+      if (isCorrect) {
+        sessionScore++;
+        currentStreak++;
+        document.getElementById('current-streak').textContent = currentStreak;
+        document.getElementById('session-score').textContent = sessionScore;
+      } else {
+        currentStreak = 0;
+        document.getElementById('current-streak').textContent = '0';
+      }
+
+      // Show feedback
+      showFeedback(isCorrect, q);
+    }
+
+    function showFeedback(isCorrect, question) {
+      const feedbackArea = document.getElementById('feedback-area');
+      const feedbackCard = document.getElementById('feedback-card');
+      const feedbackIcon = document.getElementById('feedback-icon');
+      const feedbackText = document.getElementById('feedback-text');
+      const feedbackDetail = document.getElementById('feedback-detail');
+      const nextBtn = document.getElementById('next-btn');
+
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+
+      if (isCorrect) {
+        feedbackCard.className = 'rounded-2xl p-4 mb-4 text-center bg-green-100';
+        feedbackIcon.textContent = ['🎉', '⭐', '🏆', '👏', '✨'][Math.floor(Math.random() * 5)];
+        feedbackText.textContent = ['Excellent!', 'Amazing!', 'Perfect!', 'Well done!', 'Great job!'][Math.floor(Math.random() * 5)];
+        feedbackText.className = 'text-lg font-bold text-green-700';
+        feedbackDetail.textContent = currentStreak > 1 ? `${currentStreak} in a row! 🔥` : 'Keep going!';
+        feedbackDetail.className = 'text-sm mt-2 text-green-600';
+        feedbackCard.classList.add('celebrate');
+      } else {
+        feedbackCard.className = 'rounded-2xl p-4 mb-4 text-center bg-red-100';
+        feedbackIcon.textContent = '💪';
+        feedbackText.textContent = "Don't give up!";
+        feedbackText.className = 'text-lg font-bold text-red-700';
+        feedbackDetail.textContent = `The answer was: ${question.options[question.correct]}`;
+        feedbackDetail.className = 'text-sm mt-2 text-red-600';
+      }
+
+      nextBtn.style.background = `linear-gradient(to right, ${primaryColor}, ${adjustBrightness(primaryColor, -20)})`;
+      feedbackArea.classList.remove('hidden');
+    }
+
+    async function nextQuestion() {
+      currentQuestionIndex++;
+      displayQuestion();
+    }
+
+    async function endGame() {
+      // Save progress
+      if (window.dataSdk && progressData.length < 999) {
+        const existingRecord = progressData.find(r => r.category === currentCategory);
+        
+        if (existingRecord) {
+          const updated = {
+            ...existingRecord,
+            questions_answered: existingRecord.questions_answered + sessionTotal,
+            correct_answers: existingRecord.correct_answers + sessionScore,
+            highest_streak: Math.max(existingRecord.highest_streak || 0, currentStreak),
+            last_played: new Date().toISOString()
+          };
+          await window.dataSdk.update(updated);
+        } else {
+          await window.dataSdk.create({
+            category: currentCategory,
+            questions_answered: sessionTotal,
+            correct_answers: sessionScore,
+            highest_streak: currentStreak,
+            last_played: new Date().toISOString()
+          });
+        }
+      }
+
+      showMainMenu();
+    }
+
+    function setupEventListeners() {
+      document.getElementById('back-btn').addEventListener('click', () => {
+        endGame();
+      });
+
+      document.getElementById('next-btn').addEventListener('click', nextQuestion);
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Start the app
+    initialize();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cae5412520ffdcd',t:'MTc3MDU4NzI3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Quiz Master</title>
+  <meta name="google-adsense-account" content="ca-pub-6462287919691866">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462287919691866"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .quiz-gradient {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+    
+    .card-glow {
+      box-shadow: 0 0 30px rgba(233, 69, 96, 0.2);
+    }
+    
+    .option-hover:hover {
+      transform: translateX(8px);
+      box-shadow: 0 4px 20px rgba(233, 69, 96, 0.3);
+    }
+    
+    .correct-answer {
+      animation: correctPulse 0.5s ease-out;
+    }
+    
+    .wrong-answer {
+      animation: wrongShake 0.5s ease-out;
+    }
+    
+    @keyframes correctPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    .streak-fire {
+      animation: fireGlow 1s ease-in-out infinite;
+    }
+    
+    @keyframes fireGlow {
+      0%, 100% { filter: drop-shadow(0 0 5px #ff6b35); }
+      50% { filter: drop-shadow(0 0 15px #ff6b35); }
+    }
+    
+    .progress-bar {
+      background: linear-gradient(90deg, #e94560, #ff6b35);
+    }
+    
+    .division-card {
+      transition: all 0.3s ease;
+    }
+    
+    .division-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    
+    .badge-shine {
+      background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+      background-size: 200% 200%;
+      animation: shine 2s infinite;
+    }
+    
+    @keyframes shine {
+      0% { background-position: -100% -100%; }
+      100% { background-position: 200% 200%; }
+    }
+    
+    /* Auto-play controls */
+    .autoplay-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: rgba(0,0,0,0.8);
+      border-radius: 12px;
+      padding: 12px;
+      min-width: 200px;
+    }
+    
+    .autoplay-toggle {
+      transition: all 0.3s ease;
+    }
+    
+    .autoplay-active {
+      background: linear-gradient(90deg, #10b981, #059669);
+      transform: scale(1.05);
+    }
+    
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full">
+  <!-- AdSense Auto Ads -->
+  <script data-ad-client="ca-pub-6462287919691866" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <div id="app" class="h-full quiz-gradient overflow-auto"><!-- Home Screen -->
+   <div id="home-screen" class="min-h-full p-4 md:p-8">
+    <div class="max-w-4xl mx-auto"><!-- Header -->
+     <div class="text-center mb-8">
+      <h1 id="app-title" class="text-4xl md:text-5xl font-extrabold text-white mb-3">📚 English Quiz Master</h1>
+      <p id="welcome-msg" class="text-lg text-gray-300">Test your English skills across all levels!</p>
+     </div><!-- Stats Bar -->
+     <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-8 flex flex-wrap justify-center gap-6">
+      <div class="text-center">
+       <div class="text-3xl font-bold text-yellow-400" id="total-score">
+        0
+       </div>
+       <div class="text-sm text-gray-300">
+        Total Points
+       </div>
+      </div>
+      <div class="text-center">
+       <div class="text-3xl font-bold text-green-400" id="quizzes-completed">
+        0
+       </div>
+       <div class="text-sm text-gray-300">
+        Quizzes Done
+       </div>
+      </div>
+      <div class="text-center">
+       <div class="text-3xl font-bold text-pink-400" id="best-streak">
+        0
+       </div>
+       <div class="text-sm text-gray-300">
+        Best Streak
+       </div>
+      </div>
+      <div class="text-center">
+       <div class="text-3xl font-bold text-blue-400" id="accuracy-rate">
+        0%
+       </div>
+       <div class="text-sm text-gray-300">
+        Accuracy
+       </div>
+      </div>
+     </div><!-- Division Selection -->
+     <h2 class="text-2xl font-bold text-white mb-4 text-center">🎯 Choose Your Level</h2>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8"><!-- Elementary -->
+      <div class="division-card bg-gradient-to-br from-green-500/20 to-green-600/30 border-2 border-green-500/50 rounded-2xl p-6 cursor-pointer" onclick="selectDivision('elementary')">
+       <div class="flex items-center gap-4 mb-3"><span class="text-4xl">🌱</span>
+        <div>
+         <h3 class="text-xl font-bold text-white">Elementary</h3>
+         <p class="text-green-300 text-sm">Grades 1-5</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-3">Basic vocabulary, simple grammar, phonics, and spelling fundamentals.</p>
+       <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-green-500/30 rounded-full text-xs text-green-200">Phonics</span> <span class="px-2 py-1 bg-green-500/30 rounded-full text-xs text-green-200">Basic Vocab</span> <span class="px-2 py-1 bg-green-500/30 rounded-full text-xs text-green-200">Simple Grammar</span>
+       </div>
+      </div><!-- Middle School -->
+      <div class="division-card bg-gradient-to-br from-blue-500/20 to-blue-600/30 border-2 border-blue-500/50 rounded-2xl p-6 cursor-pointer" onclick="selectDivision('middle')">
+       <div class="flex items-center gap-4 mb-3"><span class="text-4xl">📖</span>
+        <div>
+         <h3 class="text-xl font-bold text-white">Middle School</h3>
+         <p class="text-blue-300 text-sm">Grades 6-8</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-3">Advanced vocabulary, parts of speech, sentence structure, and literary terms.</p>
+       <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-blue-500/30 rounded-full text-xs text-blue-200">Grammar</span> <span class="px-2 py-1 bg-blue-500/30 rounded-full text-xs text-blue-200">Vocabulary</span> <span class="px-2 py-1 bg-blue-500/30 rounded-full text-xs text-blue-200">Literature</span>
+       </div>
+      </div><!-- High School -->
+      <div class="division-card bg-gradient-to-br from-purple-500/20 to-purple-600/30 border-2 border-purple-500/50 rounded-2xl p-6 cursor-pointer" onclick="selectDivision('high')">
+       <div class="flex items-center gap-4 mb-3"><span class="text-4xl">🎓</span>
+        <div>
+         <h3 class="text-xl font-bold text-white">High School</h3>
+         <p class="text-purple-300 text-sm">Grades 9-12</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-3">Complex grammar, rhetoric, literary analysis, and SAT-level vocabulary.</p>
+       <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-purple-500/30 rounded-full text-xs text-purple-200">Rhetoric</span> <span class="px-2 py-1 bg-purple-500/30 rounded-full text-xs text-purple-200">Analysis</span> <span class="px-2 py-1 bg-purple-500/30 rounded-full text-xs text-purple-200">SAT Prep</span>
+       </div>
+      </div><!-- Advanced -->
+      <div class="division-card bg-gradient-to-br from-red-500/20 to-orange-600/30 border-2 border-red-500/50 rounded-2xl p-6 cursor-pointer" onclick="selectDivision('advanced')">
+       <div class="flex items-center gap-4 mb-3"><span class="text-4xl">🏆</span>
+        <div>
+         <h3 class="text-xl font-bold text-white">Advanced</h3>
+         <p class="text-red-300 text-sm">College &amp; Beyond</p>
+        </div>
+       </div>
+       <p class="text-gray-300 text-sm mb-3">GRE vocabulary, etymology, advanced grammar, and professional writing.</p>
+       <div class="flex flex-wrap gap-2"><span class="px-2 py-1 bg-red-500/30 rounded-full text-xs text-red-200">GRE Vocab</span> <span class="px-2 py-1 bg-red-500/30 rounded-full text-xs text-red-200">Etymology</span> <span class="px-2 py-1 bg-red-500/30 rounded-full text-xs text-red-200">Advanced</span>
+       </div>
+      </div>
+     </div><!-- Quick Play -->
+     <div class="text-center"><button onclick="startRandomQuiz()" class="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white font-bold py-4 px-8 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg"> 🎲 Random Challenge </button>
+     </div>
+    </div>
+   </div><!-- Category Selection Screen -->
+   <div id="category-screen" class="min-h-full p-4 md:p-8 hidden">
+    <div class="max-w-4xl mx-auto"><button onclick="goHome()" class="text-white mb-6 flex items-center gap-2 hover:text-pink-400 transition-colors"> <span>←</span> Back to Home </button>
+     <div id="division-header" class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-white mb-2"></h2>
+      <p class="text-gray-300"></p>
+     </div>
+     <div id="category-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"><!-- Categories populated dynamically -->
+     </div>
+    </div>
+   </div><!-- Quiz Screen -->
+   <div id="quiz-screen" class="min-h-full p-4 md:p-8 hidden">
+    <div class="max-w-2xl mx-auto"><!-- Quiz Header -->
+     <div class="flex justify-between items-center mb-6"><button onclick="exitQuiz()" class="text-white hover:text-pink-400 transition-colors"> ✕ Exit </button>
+      <div class="flex items-center gap-4">
+       <div id="streak-display" class="flex items-center gap-1 text-orange-400 font-bold"><span class="streak-fire">🔥</span> <span id="current-streak">0</span>
+       </div>
+       <div class="text-white font-bold">
+        Score: <span id="quiz-score">0</span>
+       </div>
+      </div>
+     </div>
+     
+     <!-- Auto-Play Controls -->
+     <div class="autoplay-controls text-white text-sm">
+       <div class="flex items-center justify-between mb-2">
+         <span>🤖 Auto-Play</span>
+         <button id="autoplay-toggle" onclick="toggleAutoplay()" class="autoplay-toggle px-3 py-1 rounded-full text-xs font-bold bg-gray-600 hover:bg-gray-500">
+           OFF
+         </button>
+       </div>
+       <div class="speed-control">
+         <span class="text-xs">Speed:</span>
+         <input type="range" id="speed-slider" min="1" max="10" value="5" onchange="updateSpeed()" class="flex-1 h-1">
+         <span id="speed-value" class="text-xs w-8">5s</span>
+       </div>
+       <div class="flex gap-1 mt-2">
+         <button onclick="setAutoplayMode('random')" id="mode-random" class="px-2 py-1 text-xs rounded bg-blue-600 autoplay-mode-btn">Random</button>
+         <button onclick="setAutoplayMode('smart')" id="mode-smart" class="px-2 py-1 text-xs rounded bg-gray-600 autoplay-mode-btn">Smart</button>
+       </div>
+     </div><!-- Progress Bar -->
+     <div class="bg-white/20 rounded-full h-3 mb-6 overflow-hidden">
+      <div id="progress-bar" class="progress-bar h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+     </div><!-- Question Card -->
+     <div id="question-card" class="bg-white/10 backdrop-blur-sm rounded-3xl p-6 md:p-8 card-glow">
+      <div class="text-center mb-2"><span id="question-category" class="px-3 py-1 bg-pink-500/30 rounded-full text-sm text-pink-200"></span>
+      </div>
+      <div class="text-center mb-2"><span class="text-gray-400 text-sm">Question <span id="question-num">1</span> of <span id="total-questions">10</span></span>
+      </div>
+      <h3 id="question-text" class="text-xl md:text-2xl font-bold text-white text-center mb-8"></h3>
+      <div id="options-container" class="space-y-3"><!-- Options populated dynamically -->
+      </div><!-- Feedback -->
+      <div id="feedback-area" class="mt-6 text-center hidden">
+       <p id="feedback-text" class="text-lg font-bold mb-2"></p>
+       <p id="explanation-text" class="text-gray-300 text-sm mb-4"></p><button onclick="nextQuestion()" class="bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-8 rounded-full transition-all"> Next Question → </button>
+      </div>
+     </div><!-- Fun Facts -->
+     <div id="fun-fact" class="mt-6 bg-yellow-500/20 border border-yellow-500/50 rounded-xl p-4 hidden">
+      <p class="text-yellow-200 text-sm"><span class="font-bold">💡 Fun Fact:</span> <span id="fact-text"></span></p>
+     </div>
+    </div>
+   </div><!-- Results Screen -->
+   <div id="results-screen" class="min-h-full p-4 md:p-8 hidden">
+    <div class="max-w-2xl mx-auto text-center">
+     <div id="confetti-container"></div>
+     <div class="bg-white/10 backdrop-blur-sm rounded-3xl p-8 card-glow">
+      <div id="result-emoji" class="text-6xl mb-4">
+       🎉
+      </div>
+      <h2 id="result-title" class="text-3xl font-bold text-white mb-2">Quiz Complete!</h2>
+      <p id="result-subtitle" class="text-gray-300 mb-6"></p>
+      <div class="grid grid-cols-2 gap-4 mb-8">
+       <div class="bg-white/10 rounded-xl p-4">
+        <div id="final-score" class="text-4xl font-bold text-yellow-400">
+         0
+        </div>
+        <div class="text-gray-300 text-sm">
+         Points Earned
+        </div>
+       </div>
+       <div class="bg-white/10 rounded-xl p-4">
+        <div id="final-accuracy" class="text-4xl font-bold text-green-400">
+         0%
+        </div>
+        <div class="text-gray-300 text-sm">
+         Accuracy
+        </div>
+       </div>
+       <div class="bg-white/10 rounded-xl p-4">
+        <div id="final-correct" class="text-4xl font-bold text-blue-400">
+         0/10
+        </div>
+        <div class="text-gray-300 text-sm">
+         Correct
+        </div>
+       </div>
+       <div class="bg-white/10 rounded-xl p-4">
+        <div id="final-streak" class="text-4xl font-bold text-orange-400">
+         0
+        </div>
+        <div class="text-gray-300 text-sm">
+         Best Streak
+        </div>
+       </div>
+      </div><!-- Achievement Badge -->
+      <div id="achievement-badge" class="mb-6 hidden">
+       <div class="inline-block bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full p-1">
+        <div class="bg-gray-900 rounded-full px-6 py-3 badge-shine"><span class="text-yellow-400 font-bold" id="badge-text">🏅 Achievement Unlocked!</span>
+        </div>
+       </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center"><button onclick="retryQuiz()" class="bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 text-white font-bold py-3 px-6 rounded-full transition-all"> 🔄 Play Again </button> <button onclick="goHome()" class="bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-full transition-all"> 🏠 Home </button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Auto-play variables
+    let autoplayEnabled = false;
+    let autoplayTimeout = null;
+    let autoplaySpeed = 5; // seconds
+    let autoplayMode = 'random'; // 'random' or 'smart'
+    
+    // ========== QUESTION DATABASE (1000+ Questions) ==========
+    const questionDatabase = {
+      elementary: {
+        phonics: [
+          { q: "Which word starts with the 'ch' sound?", options: ["Chair", "Car", "Kite", "Ship"], answer: 0, explanation: "'Chair' starts with the 'ch' sound, like in 'cheese' and 'children'." },
+          { q: "What sound does 'sh' make in 'ship'?", options: ["Like 's'", "Like 'ch'", "A hushing sound", "Like 'h'"], answer: 2, explanation: "'Sh' makes a quiet hushing sound, like when you say 'shh!'." },
+          { q: "Which word rhymes with 'cat'?", options: ["Dog", "Hat", "Cup", "Bed"], answer: 1, explanation: "'Cat' and 'hat' both end with the '-at' sound." },
+          { q: "How many syllables are in 'elephant'?", options: ["2", "3", "4", "1"], answer: 1, explanation: "El-e-phant has 3 syllables!" },
+          { q: "Which letter is silent in 'knight'?", options: ["K", "N", "I", "T"], answer: 0, explanation: "The 'K' in 'knight' is silent - we say 'nite'." },
+          { q: "What vowel sound is in 'cake'?", options: ["Short a", "Long a", "Short e", "Long e"], answer: 1, explanation: "'Cake' has a long 'a' sound because of the silent 'e' at the end." },
+          { q: "Which word has the 'oo' sound like in 'moon'?", options: ["Book", "Spoon", "Foot", "Good"], answer: 1, explanation: "'Spoon' has the same 'oo' sound as 'moon'." },
+          { q: "What blend starts the word 'black'?", options: ["Bl", "Br", "Cl", "Cr"], answer: 0, explanation: "'Black' starts with the 'bl' blend." },
+          { q: "Which word ends with the '-ing' sound?", options: ["Ring", "Rang", "Run", "Rain"], answer: 0, explanation: "'Ring' ends with the '-ing' sound." },
+          { q: "How do you spell the long 'e' sound in 'beach'?", options: ["ee", "ea", "ie", "ey"], answer: 1, explanation: "In 'beach', the long 'e' is spelled 'ea'." },
+          { q: "Which word has a silent 'b'?", options: ["Boat", "Comb", "Cabin", "Baby"], answer: 1, explanation: "The 'b' in 'comb' is silent." },
+          { q: "What digraph is in 'think'?", options: ["Th", "Ch", "Sh", "Wh"], answer: 0, explanation: "'Think' contains the 'th' digraph." },
+          { q: "Which word has the short 'i' sound?", options: ["Kite", "Fish", "Bike", "Like"], answer: 1, explanation: "'Fish' has the short 'i' sound." },
+          { q: "How many syllables in 'butterfly'?", options: ["2", "3", "4", "1"], answer: 1, explanation: "But-ter-fly has 3 syllables." },
+          { q: "Which word starts with the 'wh' sound?", options: ["Window", "Whale", "Water", "Walk"], answer: 1, explanation: "'Whale' starts with 'wh'." },
+          { q: "What sound does 'ph' make?", options: ["P sound", "F sound", "H sound", "Ph sound"], answer: 1, explanation: "'Ph' makes an 'f' sound, like in 'phone'." },
+          { q: "Which word has a long 'o' sound?", options: ["Hot", "Bone", "Stop", "Box"], answer: 1, explanation: "'Bone' has a long 'o' sound." },
+          { q: "What's the ending blend in 'jump'?", options: ["-mp", "-nd", "-nt", "-nk"], answer: 0, explanation: "'Jump' ends with the '-mp' blend." },
+          { q: "Which word has the 'aw' sound?", options: ["Cow", "Saw", "Now", "Bow"], answer: 1, explanation: "'Saw' has the 'aw' sound." },
+          { q: "How do you spell the 'k' sound in 'school'?", options: ["K", "C", "Ch", "Ck"], answer: 2, explanation: "In 'school', the 'k' sound is spelled 'ch'." }
+        ],
+        basicVocabulary: [
+          { q: "What is the opposite of 'happy'?", options: ["Glad", "Sad", "Mad", "Excited"], answer: 1, explanation: "'Sad' is the opposite of 'happy'." },
+          { q: "Which word means 'very big'?", options: ["Tiny", "Small", "Huge", "Little"], answer: 2, explanation: "'Huge' means very, very big!" },
+          { q: "What do we call a baby dog?", options: ["Kitten", "Puppy", "Cub", "Chick"], answer: 1, explanation: "A baby dog is called a 'puppy'." },
+          { q: "Which word means 'to go fast'?", options: ["Walk", "Run", "Sit", "Stand"], answer: 1, explanation: "'Run' means to go fast." },
+          { q: "What is the opposite of 'up'?", options: ["Down", "Over", "Under", "Around"], answer: 0, explanation: "'Down' is the opposite of 'up'." },
+          { q: "Which word describes ice?", options: ["Hot", "Warm", "Cold", "Soft"], answer: 2, explanation: "Ice is cold!" },
+          { q: "What do we call the color of grass?", options: ["Blue", "Red", "Green", "Yellow"], answer: 2, explanation: "Grass is green." },
+          { q: "Which word means 'not old'?", options: ["Ancient", "Young", "Old", "Aged"], answer: 1, explanation: "'Young' means not old." },
+          { q: "What is another word for 'fast'?", options: ["Slow", "Quick", "Lazy", "Tired"], answer: 1, explanation: "'Quick' is another word for fast." },
+          { q: "Which word means 'not heavy'?", options: ["Heavy", "Light", "Dark", "Bright"], answer: 1, explanation: "'Light' means not heavy." },
+          { q: "What do we call the meal we eat in the morning?", options: ["Lunch", "Dinner", "Breakfast", "Snack"], answer: 2, explanation: "We eat breakfast in the morning." },
+          { q: "Which word means 'to look at'?", options: ["See", "Hear", "Smell", "Taste"], answer: 0, explanation: "'See' means to look at something." },
+          { q: "What is the opposite of 'night'?", options: ["Evening", "Morning", "Day", "Dusk"], answer: 2, explanation: "'Day' is the opposite of 'night'." },
+          { q: "Which word means 'very small'?", options: ["Giant", "Huge", "Tiny", "Large"], answer: 2, explanation: "'Tiny' means very small." },
+          { q: "What do we call water falling from clouds?", options: ["Snow", "Rain", "Sun", "Wind"], answer: 1, explanation: "Rain is water falling from clouds." },
+          { q: "Which word means 'not dirty'?", options: ["Messy", "Dirty", "Clean", "Dusty"], answer: 2, explanation: "'Clean' means not dirty." },
+          { q: "What is another word for 'big'?", options: ["Small", "Little", "Large", "Tiny"], answer: 2, explanation: "'Large' is another word for big." },
+          { q: "Which word means 'very good'?", options: ["Bad", "Okay", "Great", "Poor"], answer: 2, explanation: "'Great' means very good." },
+          { q: "What do we call the opposite of 'begin'?", options: ["Start", "End", "Continue", "Go"], answer: 1, explanation: "'End' is the opposite of 'begin'." },
+          { q: "Which word describes a lemon's taste?", options: ["Sweet", "Sour", "Salty", "Spicy"], answer: 1, explanation: "Lemons taste sour!" }
+        ],
+        simpleGrammar: [
+          { q: "Which word is a noun?", options: ["Run", "Happy", "Dog", "Quickly"], answer: 2, explanation: "'Dog' is a noun because it's a thing." },
+          { q: "What is the plural of 'cat'?", options: ["Cat", "Cats", "Cates", "Catss"], answer: 1, explanation: "We add 's' to make 'cats'." },
+          { q: "Which sentence is correct?", options: ["I is happy", "I am happy", "I are happy", "I be happy"], answer: 1, explanation: "We say 'I am happy'." },
+          { q: "What is the past tense of 'jump'?", options: ["Jump", "Jumping", "Jumped", "Jumps"], answer: 2, explanation: "'Jumped' is the past tense." },
+          { q: "Which word is a verb?", options: ["Cat", "Run", "Big", "The"], answer: 1, explanation: "'Run' is a verb because it's an action." },
+          { q: "What punctuation ends a question?", options: ["Period", "Comma", "Question mark", "Exclamation"], answer: 2, explanation: "Questions end with a question mark (?)." },
+          { q: "Which is an adjective?", options: ["Quickly", "Beautiful", "Running", "They"], answer: 1, explanation: "'Beautiful' describes a noun." },
+          { q: "What is the plural of 'box'?", options: ["Boxs", "Boxes", "Boxies", "Box"], answer: 1, explanation: "We add 'es' to make 'boxes'." },
+          { q: "Which word is a pronoun?", options: ["Sarah", "She", "Girl", "Friend"], answer: 1, explanation: "'She' replaces a name." },
+          { q: "What is the contraction of 'do not'?", options: ["Dont", "Don't", "Do'nt", "Donot"], answer: 1, explanation: "'Don't' is the contraction." },
+          { q: "Which sentence has correct capitalization?", options: ["i like Dogs", "I Like Dogs", "I like dogs", "i like dogs"], answer: 2, explanation: "Only 'I' at the start needs a capital." },
+          { q: "What is the past tense of 'go'?", options: ["Goed", "Went", "Gone", "Going"], answer: 1, explanation: "'Went' is the past tense of 'go'." },
+          { q: "Which word is an adverb?", options: ["Fast", "Quickly", "Quick", "Speed"], answer: 1, explanation: "'Quickly' tells how something is done." },
+          { q: "What is the plural of 'child'?", options: ["Childs", "Childes", "Children", "Childern"], answer: 2, explanation: "'Children' is the plural of 'child'." },
+          { q: "Which is a complete sentence?", options: ["The big dog", "Running fast", "She ran home", "Very happy"], answer: 2, explanation: "'She ran home' has a subject and verb." },
+          { q: "What is the opposite of 'he'?", options: ["Him", "She", "They", "It"], answer: 1, explanation: "'She' is the opposite of 'he'." },
+          { q: "Which sentence uses 'is' correctly?", options: ["The dogs is big", "The dog is big", "The dog are big", "The dogs am big"], answer: 1, explanation: "We use 'is' with one dog." },
+          { q: "What is the past tense of 'eat'?", options: ["Eated", "Ate", "Eaten", "Eating"], answer: 1, explanation: "'Ate' is the past tense of 'eat'." },
+          { q: "Which word shows possession?", options: ["Dogs", "Dog's", "Doges", "Dog"], answer: 1, explanation: "'Dog's' shows the dog owns something." },
+          { q: "What punctuation goes at the end of 'Wow'?", options: ["Period", "Question mark", "Exclamation point", "Comma"], answer: 2, explanation: "'Wow!' uses an exclamation point." }
+        ],
+        spelling: [
+          { q: "Which spelling is correct?", options: ["Frend", "Friend", "Freind", "Frind"], answer: 1, explanation: "'Friend' is spelled with 'ie'." },
+          { q: "How do you spell the number 4?", options: ["For", "Four", "Fore", "Foor"], answer: 1, explanation: "The number 4 is spelled 'four'." },
+          { q: "Which spelling is correct?", options: ["Becuse", "Becaus", "Because", "Becase"], answer: 2, explanation: "'Because' is the correct spelling." },
+          { q: "How do you spell the color?", options: ["Purpel", "Purple", "Purpple", "Perple"], answer: 1, explanation: "'Purple' is the correct spelling." },
+          { q: "Which is spelled correctly?", options: ["Enuff", "Enough", "Enought", "Enouf"], answer: 1, explanation: "'Enough' has a tricky 'ough' ending." },
+          { q: "How do you spell it?", options: ["Tommorow", "Tomorrow", "Tommorrow", "Tomorow"], answer: 1, explanation: "'Tomorrow' has one 'm' and two 'r's." },
+          { q: "Which spelling is correct?", options: ["Beutiful", "Beautful", "Beautiful", "Beatiful"], answer: 2, explanation: "'Beautiful' is spelled with 'eau'." },
+          { q: "How do you spell the day?", options: ["Wensday", "Wendesday", "Wednesday", "Wednseday"], answer: 2, explanation: "'Wednesday' has a silent 'd'." },
+          { q: "Which is correct?", options: ["Diferent", "Diffrent", "Different", "Diferrent"], answer: 2, explanation: "'Different' has two 'f's." },
+          { q: "How do you spell it?", options: ["Finaly", "Finally", "Finelly", "Finely"], answer: 1, explanation: "'Finally' has two 'l's." },
+          { q: "Which spelling is correct?", options: ["Peice", "Piece", "Piese", "Peise"], answer: 1, explanation: "'Piece' follows 'i before e except after c'." },
+          { q: "How do you spell the month?", options: ["Febuary", "February", "Febrary", "Feburary"], answer: 1, explanation: "'February' has two 'r's." },
+          { q: "Which is spelled correctly?", options: ["Recieve", "Receive", "Receeve", "Recive"], answer: 1, explanation: "'Receive' has 'ei' after 'c'." },
+          { q: "How do you spell it?", options: ["Alot", "A lot", "Allot", "Alott"], answer: 1, explanation: "'A lot' is two words!" },
+          { q: "Which spelling is correct?", options: ["Seperate", "Separate", "Seprate", "Separete"], answer: 1, explanation: "'Separate' has 'a' in the middle." },
+          { q: "How do you spell the animal?", options: ["Giraff", "Girafe", "Giraffe", "Girrafe"], answer: 2, explanation: "'Giraffe' has two 'f's." },
+          { q: "Which is correct?", options: ["Tounge", "Tongue", "Tonge", "Tunge"], answer: 1, explanation: "'Tongue' is spelled with 'ue'." },
+          { q: "How do you spell it?", options: ["Ocured", "Occurred", "Occured", "Occcurred"], answer: 1, explanation: "'Occurred' has two 'c's and two 'r's." },
+          { q: "Which spelling is correct?", options: ["Realy", "Really", "Realley", "Reelly"], answer: 1, explanation: "'Really' has two 'l's." },
+          { q: "How do you spell the number?", options: ["Fourty", "Forty", "Fortey", "Fourthy"], answer: 1, explanation: "'Forty' drops the 'u' from 'four'." }
+        ],
+        readingComprehension: [
+          { q: "If a story starts 'Once upon a time...', it's probably a:", options: ["News article", "Fairy tale", "Recipe", "Letter"], answer: 1, explanation: "Fairy tales often begin with 'Once upon a time'." },
+          { q: "What is the main character in a story called?", options: ["Villain", "Narrator", "Protagonist", "Author"], answer: 2, explanation: "The main character is called the protagonist." },
+          { q: "What comes at the end of a story?", options: ["Introduction", "Conclusion", "Beginning", "Title"], answer: 1, explanation: "Stories end with a conclusion." },
+          { q: "A story told in order of events uses:", options: ["Alphabetical order", "Chronological order", "Random order", "Size order"], answer: 1, explanation: "Chronological order means time order." },
+          { q: "What is a fable?", options: ["A true story", "A story with a moral lesson", "A scary story", "A long poem"], answer: 1, explanation: "Fables teach lessons, often with animal characters." },
+          { q: "Where does a story take place?", options: ["Plot", "Setting", "Theme", "Character"], answer: 1, explanation: "The setting is where and when a story happens." },
+          { q: "What is fiction?", options: ["A true story", "A made-up story", "A news report", "A biography"], answer: 1, explanation: "Fiction stories are made up." },
+          { q: "What is the problem in a story called?", options: ["Solution", "Conflict", "Setting", "Theme"], answer: 1, explanation: "The conflict is the problem characters face." },
+          { q: "What type of book teaches facts?", options: ["Fiction", "Fantasy", "Nonfiction", "Fairy tale"], answer: 2, explanation: "Nonfiction books contain true facts." },
+          { q: "The message or lesson of a story is the:", options: ["Plot", "Setting", "Theme", "Title"], answer: 2, explanation: "The theme is the story's main message." },
+          { q: "Who tells the story?", options: ["Narrator", "Character", "Author", "Reader"], answer: 0, explanation: "The narrator tells the story." },
+          { q: "What is a biography?", options: ["A made-up story", "A story about someone's life", "A poem", "A recipe"], answer: 1, explanation: "A biography tells someone's life story." },
+          { q: "What happens in a story is called the:", options: ["Theme", "Setting", "Plot", "Title"], answer: 2, explanation: "The plot is what happens in a story." },
+          { q: "A poem with rhyming words is called:", options: ["Free verse", "Rhyming poetry", "Prose", "Fiction"], answer: 1, explanation: "Rhyming poetry has words that sound alike." },
+          { q: "What is dialogue?", options: ["Description", "Characters talking", "The setting", "The ending"], answer: 1, explanation: "Dialogue is when characters speak." },
+          { q: "The person who writes a book is the:", options: ["Reader", "Narrator", "Author", "Character"], answer: 2, explanation: "The author writes the book." },
+          { q: "What comes first in a story?", options: ["Ending", "Middle", "Beginning", "Conclusion"], answer: 2, explanation: "Stories start with the beginning." },
+          { q: "A book about real animals is:", options: ["Fiction", "Fantasy", "Nonfiction", "Fairy tale"], answer: 2, explanation: "Books about real things are nonfiction." },
+          { q: "What is the title?", options: ["The ending", "The name of the book", "The author", "The characters"], answer: 1, explanation: "The title is the book's name." },
+          { q: "Stories passed down through generations are:", options: ["News articles", "Folktales", "Textbooks", "Diaries"], answer: 1, explanation: "Folktales are traditional stories." }
+        ]
+      },
+      middle: {
+        partsOfSpeech: [
+          { q: "Which word is an abstract noun?", options: ["Table", "Happiness", "Dog", "Teacher"], answer: 1, explanation: "Abstract nouns like 'happiness' are ideas you can't touch." },
+          { q: "Identify the linking verb: 'She seems tired.'", options: ["She", "Seems", "Tired", "None"], answer: 1, explanation: "'Seems' connects the subject to a description." },
+          { q: "Which is a coordinating conjunction?", options: ["Although", "Because", "But", "Unless"], answer: 2, explanation: "'But' is one of the FANBOYS conjunctions." },
+          { q: "What type of pronoun is 'myself'?", options: ["Personal", "Reflexive", "Relative", "Demonstrative"], answer: 1, explanation: "'Myself' is reflexive - it refers back to the subject." },
+          { q: "Which word is an interjection?", options: ["Quickly", "Wow", "The", "Running"], answer: 1, explanation: "'Wow!' expresses strong emotion." },
+          { q: "Identify the preposition: 'The book is on the table.'", options: ["Book", "Is", "On", "Table"], answer: 2, explanation: "'On' shows the relationship between book and table." },
+          { q: "Which is a proper noun?", options: ["city", "Paris", "river", "country"], answer: 1, explanation: "'Paris' is a specific place name." },
+          { q: "What type of adjective is 'this'?", options: ["Descriptive", "Demonstrative", "Possessive", "Comparative"], answer: 1, explanation: "'This' points to something specific." },
+          { q: "Which word is a helping verb?", options: ["Run", "Has", "Dog", "Quickly"], answer: 1, explanation: "'Has' helps the main verb (has run, has eaten)." },
+          { q: "Identify the adverb: 'She sings beautifully.'", options: ["She", "Sings", "Beautifully", "None"], answer: 2, explanation: "'Beautifully' describes how she sings." },
+          { q: "Which is a collective noun?", options: ["Dog", "Team", "Running", "Happy"], answer: 1, explanation: "'Team' refers to a group as one unit." },
+          { q: "What is 'whom'?", options: ["Subject pronoun", "Object pronoun", "Possessive pronoun", "Reflexive pronoun"], answer: 1, explanation: "'Whom' is used as an object." },
+          { q: "Which is a subordinating conjunction?", options: ["And", "But", "Because", "Or"], answer: 2, explanation: "'Because' starts a dependent clause." },
+          { q: "Identify the article: 'An apple a day'", options: ["Apple", "Day", "An", "None"], answer: 2, explanation: "'An' is an article (a, an, the)." },
+          { q: "Which word is a transitive verb?", options: ["Sleep", "Arrive", "Kick", "Exist"], answer: 2, explanation: "'Kick' requires an object (kick the ball)." },
+          { q: "What type of noun is 'freedom'?", options: ["Concrete", "Abstract", "Proper", "Collective"], answer: 1, explanation: "'Freedom' is an idea you can't physically touch." },
+          { q: "Which is a correlative conjunction pair?", options: ["And/but", "Either/or", "So/because", "The/a"], answer: 1, explanation: "'Either/or' work together." },
+          { q: "Identify the possessive adjective: 'Her book is red.'", options: ["Her", "Book", "Is", "Red"], answer: 0, explanation: "'Her' shows ownership." },
+          { q: "Which word can be both a noun and verb?", options: ["Beautiful", "Quickly", "Dance", "The"], answer: 2, explanation: "'Dance' can be both (a dance / to dance)." },
+          { q: "What is an infinitive?", options: ["Running", "To run", "Ran", "Runs"], answer: 1, explanation: "'To run' is the infinitive form." }
+        ],
+        sentenceStructure: [
+          { q: "What is a compound sentence?", options: ["One independent clause", "Two independent clauses joined", "A dependent and independent clause", "A sentence fragment"], answer: 1, explanation: "Compound sentences join two complete thoughts." },
+          { q: "Identify the dependent clause: 'When it rains, I stay home.'", options: ["I stay home", "When it rains", "I stay", "home"], answer: 1, explanation: "'When it rains' can't stand alone." },
+          { q: "Which is a simple sentence?", options: ["Although tired, she worked", "She worked and he rested", "She worked", "Because she worked"], answer: 2, explanation: "'She worked' has one subject and one verb." },
+          { q: "What type is: 'I went home, and she stayed.'?", options: ["Simple", "Compound", "Complex", "Compound-complex"], answer: 1, explanation: "Two independent clauses joined by 'and'." },
+          { q: "Which sentence has a misplaced modifier?", options: ["She quickly ate", "Running fast, the finish line appeared", "He ate the cold pizza", "The tall man walked"], answer: 1, explanation: "The finish line can't run - the modifier is misplaced." },
+          { q: "Identify the subject: 'Running quickly exhausts me.'", options: ["Running", "Quickly", "Exhausts", "Me"], answer: 0, explanation: "'Running' (a gerund) is the subject." },
+          { q: "What is a clause?", options: ["A phrase without a verb", "A group with subject and verb", "A single word", "A punctuation mark"], answer: 1, explanation: "Clauses have both a subject and a verb." },
+          { q: "Which sentence uses parallel structure?", options: ["She likes reading and to swim", "She likes reading and swimming", "She likes to read and swimming", "She likes read and swim"], answer: 1, explanation: "Both activities use the same form (-ing)." },
+          { q: "What makes a run-on sentence?", options: ["Too many adjectives", "Independent clauses without proper joining", "Too many commas", "A missing subject"], answer: 1, explanation: "Run-ons jam clauses together incorrectly." },
+          { q: "Identify the predicate: 'The big brown dog barked loudly.'", options: ["The big brown dog", "Barked loudly", "Big brown", "Dog"], answer: 1, explanation: "The predicate tells what the subject does." },
+          { q: "Which is a complex sentence?", options: ["She ran and jumped", "She ran", "After she ran, she rested", "She ran, jumped, and rested"], answer: 2, explanation: "Complex has one independent and one dependent clause." },
+          { q: "What is a phrase?", options: ["A complete thought", "A group of words without subject/verb pair", "A sentence", "A paragraph"], answer: 1, explanation: "Phrases are word groups lacking subject-verb pairs." },
+          { q: "Which sentence is passive voice?", options: ["The dog bit the man", "The man was bitten by the dog", "The dog is biting", "The man runs"], answer: 1, explanation: "Passive: subject receives the action." },
+          { q: "Identify the direct object: 'She kicked the ball.'", options: ["She", "Kicked", "The", "Ball"], answer: 3, explanation: "'Ball' receives the action of kicking." },
+          { q: "What is apposition?", options: ["A noun renaming another noun", "A verb tense", "A conjunction", "An exclamation"], answer: 0, explanation: "Example: 'My friend, Sarah, is here.'" },
+          { q: "Which sentence has correct subject-verb agreement?", options: ["The team are winning", "The teams is winning", "The team is winning", "The teams am winning"], answer: 2, explanation: "Singular 'team' takes singular 'is'." },
+          { q: "What is an independent clause?", options: ["A fragment", "A complete thought that can stand alone", "A phrase", "A dependent thought"], answer: 1, explanation: "Independent clauses are complete sentences." },
+          { q: "Identify the indirect object: 'She gave him the book.'", options: ["She", "Gave", "Him", "Book"], answer: 2, explanation: "'Him' receives the book indirectly." },
+          { q: "Which is a sentence fragment?", options: ["She ran quickly", "Running through the park", "He ate lunch", "They went home"], answer: 1, explanation: "'Running through the park' lacks a complete thought." },
+          { q: "What is a compound-complex sentence?", options: ["One clause", "Two independent clauses", "One independent and one dependent", "Two independent and at least one dependent"], answer: 3, explanation: "It combines compound and complex structures." }
+        ],
+        vocabulary: [
+          { q: "What does 'benevolent' mean?", options: ["Evil", "Kind and generous", "Confused", "Angry"], answer: 1, explanation: "'Benevolent' means showing kindness." },
+          { q: "Which word means 'to make better'?", options: ["Deteriorate", "Ameliorate", "Exacerbate", "Terminate"], answer: 1, explanation: "'Ameliorate' means to improve." },
+          { q: "What is a synonym for 'eloquent'?", options: ["Silent", "Articulate", "Confused", "Boring"], answer: 1, explanation: "'Eloquent' and 'articulate' both mean well-spoken." },
+          { q: "'Ubiquitous' means:", options: ["Rare", "Everywhere", "Hidden", "Unique"], answer: 1, explanation: "'Ubiquitous' means found everywhere." },
+          { q: "What does 'ephemeral' mean?", options: ["Lasting forever", "Short-lived", "Heavy", "Beautiful"], answer: 1, explanation: "'Ephemeral' things don't last long." },
+          { q: "Which word means 'doubtful'?", options: ["Certain", "Dubious", "Confident", "Assured"], answer: 1, explanation: "'Dubious' means having doubts." },
+          { q: "What is an antonym for 'verbose'?", options: ["Wordy", "Concise", "Lengthy", "Rambling"], answer: 1, explanation: "'Verbose' means wordy; 'concise' means brief." },
+          { q: "'Pragmatic' means:", options: ["Idealistic", "Practical", "Dreamy", "Romantic"], answer: 1, explanation: "'Pragmatic' people focus on practical solutions." },
+          { q: "What does 'meticulous' mean?", options: ["Careless", "Sloppy", "Very careful", "Fast"], answer: 2, explanation: "'Meticulous' means extremely careful and precise." },
+          { q: "Which word means 'to weaken'?", options: ["Strengthen", "Undermine", "Support", "Build"], answer: 1, explanation: "'Undermine' means to weaken gradually." },
+          { q: "What does 'ambiguous' mean?", options: ["Clear", "Uncertain/unclear", "Definite", "Obvious"], answer: 1, explanation: "'Ambiguous' means open to interpretation." },
+          { q: "'Tenacious' describes someone who is:", options: ["Weak", "Giving up easily", "Persistent", "Lazy"], answer: 2, explanation: "'Tenacious' people don't give up." },
+          { q: "What is a synonym for 'profound'?", options: ["Shallow", "Deep", "Simple", "Basic"], answer: 1, explanation: "'Profound' means very deep or intense." },
+          { q: "Which word means 'harmful'?", options: ["Beneficial", "Detrimental", "Helpful", "Positive"], answer: 1, explanation: "'Detrimental' means causing harm." },
+          { q: "'Diligent' means:", options: ["Lazy", "Careless", "Hardworking", "Distracted"], answer: 2, explanation: "'Diligent' describes someone who works hard." },
+          { q: "What does 'imminent' mean?", options: ["Distant", "About to happen", "Past", "Unlikely"], answer: 1, explanation: "'Imminent' means happening very soon." },
+          { q: "Which word means 'to calm down'?", options: ["Agitate", "Pacify", "Provoke", "Irritate"], answer: 1, explanation: "'Pacify' means to bring peace or calm." },
+          { q: "'Resilient' describes:", options: ["Fragile", "Able to recover quickly", "Weak", "Breakable"], answer: 1, explanation: "'Resilient' means bouncing back from difficulty." },
+          { q: "What does 'candid' mean?", options: ["Dishonest", "Secretive", "Honest and direct", "Shy"], answer: 2, explanation: "'Candid' means truthful and straightforward." },
+          { q: "Which word means 'plentiful'?", options: ["Scarce", "Abundant", "Rare", "Limited"], answer: 1, explanation: "'Abundant' means in large quantities." }
+        ],
+        literaryTerms: [
+          { q: "What is a metaphor?", options: ["A comparison using 'like' or 'as'", "A direct comparison without 'like' or 'as'", "Exaggeration", "Opposite meaning"], answer: 1, explanation: "Metaphors directly equate two things." },
+          { q: "Which device gives human qualities to non-human things?", options: ["Simile", "Metaphor", "Personification", "Hyperbole"], answer: 2, explanation: "'The wind whispered' is personification." },
+          { q: "What is 'foreshadowing'?", options: ["Looking back at events", "Hints about future events", "A flashback", "The climax"], answer: 1, explanation: "Foreshadowing gives clues about what's coming." },
+          { q: "Which is an example of onomatopoeia?", options: ["Brave", "Buzz", "Beautiful", "Big"], answer: 1, explanation: "'Buzz' sounds like what it describes." },
+          { q: "What is irony?", options: ["Saying exactly what you mean", "When reality differs from expectation", "A type of poem", "A happy ending"], answer: 1, explanation: "Irony involves unexpected outcomes or meanings." },
+          { q: "'The bag weighed a ton' is an example of:", options: ["Understatement", "Hyperbole", "Simile", "Metaphor"], answer: 1, explanation: "Hyperbole is extreme exaggeration." },
+          { q: "What is alliteration?", options: ["Rhyming words", "Repeated consonant sounds at the start", "Repeated vowel sounds", "A type of poem"], answer: 1, explanation: "'Peter Piper picked' shows alliteration." },
+          { q: "Which literary device contrasts opposite ideas?", options: ["Simile", "Antithesis", "Metaphor", "Hyperbole"], answer: 1, explanation: "'It was the best of times, worst of times' is antithesis." },
+          { q: "What is the climax of a story?", options: ["The beginning", "The turning point", "The end", "The setting"], answer: 1, explanation: "The climax is the most intense moment." },
+          { q: "What is symbolism?", options: ["Using one thing to represent another", "Exaggeration", "Comparison", "Sound words"], answer: 0, explanation: "A dove symbolizing peace is an example." },
+          { q: "Which device uses 'like' or 'as'?", options: ["Metaphor", "Simile", "Personification", "Hyperbole"], answer: 1, explanation: "'Fast like a cheetah' is a simile." },
+          { q: "What is the narrator's attitude called?", options: ["Theme", "Plot", "Tone", "Setting"], answer: 2, explanation: "Tone reflects the author's attitude." },
+          { q: "What is a flashback?", options: ["A hint about the future", "A jump back in time", "The climax", "The resolution"], answer: 1, explanation: "Flashbacks show earlier events." },
+          { q: "'An icy stare' is an example of:", options: ["Hyperbole", "Imagery", "Onomatopoeia", "Alliteration"], answer: 1, explanation: "Imagery creates mental pictures." },
+          { q: "What is the central message called?", options: ["Plot", "Theme", "Setting", "Character"], answer: 1, explanation: "The theme is the underlying message." },
+          { q: "Which device repeats vowel sounds?", options: ["Alliteration", "Assonance", "Consonance", "Rhyme"], answer: 1, explanation: "'The rain in Spain' shows assonance." },
+          { q: "What is dramatic irony?", options: ["When the audience knows more than characters", "When characters lie", "A sad ending", "A plot twist"], answer: 0, explanation: "The audience has knowledge characters lack." },
+          { q: "What does 'motif' mean?", options: ["The main character", "A recurring element", "The ending", "The setting"], answer: 1, explanation: "Motifs appear repeatedly throughout a work." },
+          { q: "'The world is a stage' is:", options: ["Simile", "Metaphor", "Personification", "Hyperbole"], answer: 1, explanation: "It directly compares the world to a stage." },
+          { q: "What is point of view?", options: ["The moral", "The perspective from which a story is told", "The plot", "The setting"], answer: 1, explanation: "POV determines who tells the story." }
+        ],
+        punctuation: [
+          { q: "When should you use a semicolon?", options: ["To end a question", "To join related independent clauses", "Before every 'and'", "After every noun"], answer: 1, explanation: "Semicolons connect related complete thoughts." },
+          { q: "Which sentence uses the comma correctly?", options: ["I went to Paris, France", "I went, to Paris France", "I went to, Paris France", "I, went to Paris France"], answer: 0, explanation: "Use a comma between city and country." },
+          { q: "When do you use an apostrophe?", options: ["For plurals", "For contractions and possession", "After every 's'", "Before verbs"], answer: 1, explanation: "Apostrophes show ownership or missing letters." },
+          { q: "Which is correct?", options: ["Its' raining", "It's raining", "Its raining", "Its's raining"], answer: 1, explanation: "'It's' = 'It is'; 'Its' = belonging to it." },
+          { q: "Where does the period go with quotation marks?", options: ["Before the quotation mark", "After the quotation mark", "Inside the quotation mark", "No period needed"], answer: 2, explanation: "In American English, periods go inside quotes." },
+          { q: "When should you use a colon?", options: ["To join independent clauses", "Before a list or explanation", "After every verb", "To show possession"], answer: 1, explanation: "Colons introduce lists or explanations." },
+          { q: "Which shows correct possessive plural?", options: ["The dog's bone (multiple dogs)", "The dogs' bones", "The dogs's bones", "The dog's's bones"], answer: 1, explanation: "For plural possessives, add apostrophe after 's'." },
+          { q: "What is an Oxford comma?", options: ["A comma from Oxford University", "The comma before 'and' in a list", "A comma after periods", "A German comma style"], answer: 1, explanation: "'Red, white, and blue' uses the Oxford comma." },
+          { q: "When do you use a hyphen?", options: ["To end sentences", "To join compound adjectives before a noun", "After every prefix", "To show possession"], answer: 1, explanation: "'Well-known author' uses a hyphen." },
+          { q: "Which is punctuated correctly?", options: ["Whose book is this?", "Whos book is this?", "Whose' book is this?", "Who's book is this?"], answer: 0, explanation: "'Whose' shows possession; 'who's' = 'who is'." },
+          { q: "When do you use an em dash?", options: ["In phone numbers", "For interruption or emphasis", "To show possession", "In dates"], answer: 1, explanation: "Em dashes—like this—add emphasis." },
+          { q: "Which sentence needs a comma?", options: ["She ran and jumped", "After the rain the sun came out", "The dog barked", "He ate lunch"], answer: 1, explanation: "Introductory phrases need commas." },
+          { q: "What's the difference between 'your' and 'you're'?", options: ["No difference", "'You're' = 'you are'", "'Your' = 'you are'", "They're both contractions"], answer: 1, explanation: "'Your' shows possession; 'you're' = 'you are'." },
+          { q: "When do you capitalize after a colon?", options: ["Always", "Never", "When a complete sentence follows", "Only with names"], answer: 2, explanation: "Capitalize if what follows is a complete sentence." },
+          { q: "Which uses the ellipsis correctly?", options: ["She said... 'hello'", "She said 'hello...'", "She said hello'...", "She...said hello"], answer: 1, explanation: "Ellipsis shows trailing off or omission." },
+          { q: "Where do commas go with 'however'?", options: ["Before only", "After only", "Before and after", "No commas needed"], answer: 2, explanation: "'However,' needs commas on both sides when interrupting." },
+          { q: "Which is correct?", options: ["Lets go", "Let's go", "Lets' go", "Let's' go"], answer: 1, explanation: "'Let's' = 'Let us'." },
+          { q: "When do you use parentheses?", options: ["For essential information", "For additional, non-essential information", "To end sentences", "For questions"], answer: 1, explanation: "Parentheses add extra information." },
+          { q: "Which shows correct dialogue punctuation?", options: ["'Hello,' she said", "'Hello', she said", "'Hello' she said,", "'Hello she said'"], answer: 0, explanation: "Comma inside quotes, before attribution." },
+          { q: "What is a comma splice?", options: ["Correct comma use", "Two independent clauses joined by only a comma", "Missing comma", "Too many commas"], answer: 1, explanation: "Comma splices incorrectly join sentences." }
+        ]
+      },
+      high: {
+        advancedGrammar: [
+          { q: "Which sentence uses the subjunctive mood?", options: ["I am happy", "If I were you", "She is singing", "They have arrived"], answer: 1, explanation: "Subjunctive expresses wishes or hypotheticals." },
+          { q: "What is a dangling modifier?", options: ["A modifier placed correctly", "A modifier without a clear word to modify", "An adjective", "A verb phrase"], answer: 1, explanation: "Dangling modifiers lack a logical subject." },
+          { q: "Which sentence uses 'whom' correctly?", options: ["Whom is calling?", "To whom it may concern", "Whom did it?", "Whom are you?"], answer: 1, explanation: "'Whom' is the object form." },
+          { q: "What is a split infinitive?", options: ["An infinitive at the end", "A word between 'to' and verb", "An infinitive phrase", "A verb phrase"], answer: 1, explanation: "'To boldly go' splits the infinitive." },
+          { q: "Which demonstrates correct parallelism?", options: ["She likes hiking, swimming, and to bike", "She likes hiking, swimming, and biking", "She likes to hike, swimming, and biking", "She likes hike, swim, and bike"], answer: 1, explanation: "All items should have the same form." },
+          { q: "What is the difference between 'affect' and 'effect'?", options: ["No difference", "'Affect' is usually a verb", "'Effect' is usually a verb", "They're interchangeable"], answer: 1, explanation: "'Affect' = verb (usually); 'Effect' = noun (usually)." },
+          { q: "Which sentence avoids the passive voice?", options: ["The ball was thrown by John", "The cake was eaten", "John threw the ball", "Mistakes were made"], answer: 2, explanation: "Active: subject performs the action." },
+          { q: "What is a gerund?", options: ["A verb ending in -ed", "A verb used as a noun (ending in -ing)", "A past tense verb", "An adjective"], answer: 1, explanation: "'Swimming is fun' - swimming is a gerund." },
+          { q: "Which uses 'lay' correctly?", options: ["I lay down yesterday", "Lay the book on the table", "I will lay here", "She lays down now"], answer: 1, explanation: "'Lay' requires an object; 'lie' doesn't." },
+          { q: "What is an absolute phrase?", options: ["A complete sentence", "A phrase that modifies the whole sentence", "A prepositional phrase", "An incomplete thought"], answer: 1, explanation: "'His heart pounding, he opened the door.'" },
+          { q: "Which sentence has a squinting modifier?", options: ["She quickly ran home", "Running quickly is tiring", "Students who study often get good grades", "He read carefully"], answer: 2, explanation: "'Often' could modify 'study' or 'get'." },
+          { q: "What is the pluperfect tense?", options: ["Simple past", "Past perfect (had + past participle)", "Future perfect", "Present perfect"], answer: 1, explanation: "'Had eaten' is pluperfect/past perfect." },
+          { q: "Which shows correct use of 'fewer' vs 'less'?", options: ["Less people came", "Fewer people came", "Less items", "Fewer sugar"], answer: 1, explanation: "'Fewer' for countable; 'less' for uncountable." },
+          { q: "What is a participle?", options: ["A noun form", "A verb form used as adjective", "A pronoun", "A conjunction"], answer: 1, explanation: "'The running water' - 'running' is a participle." },
+          { q: "Which sentence uses 'that' vs 'which' correctly?", options: ["The book, that I read, was good", "The book which I read was good", "The book that I read was good", "The book, which I read was good"], answer: 2, explanation: "'That' for essential clauses (no commas)." },
+          { q: "What is a noun clause?", options: ["A clause that acts as a noun", "A phrase with nouns", "A list of nouns", "An adjective clause"], answer: 0, explanation: "'What she said surprised me' - 'what she said' is the subject." },
+          { q: "Which demonstrates correct mood?", options: ["If I was you", "If I were you", "If I am you", "If I be you"], answer: 1, explanation: "Subjunctive mood uses 'were' for hypotheticals." },
+          { q: "What is an appositive?", options: ["A conjunction", "A noun that renames another noun", "A verb form", "An adverb"], answer: 1, explanation: "'My brother, a doctor, lives nearby.'" },
+          { q: "Which sentence avoids ambiguous pronoun reference?", options: ["John told Mike he was late", "John told Mike that John was late", "John was late, he told Mike", "John told him he was late"], answer: 1, explanation: "Clear antecedent prevents confusion." },
+          { q: "What is the imperative mood?", options: ["Statements of fact", "Commands or requests", "Questions", "Wishes"], answer: 1, explanation: "'Close the door!' is imperative." }
+        ],
+        rhetoric: [
+          { q: "What is ethos?", options: ["Emotional appeal", "Logical appeal", "Ethical/credibility appeal", "Repetition"], answer: 2, explanation: "Ethos establishes the speaker's credibility." },
+          { q: "Which is an example of pathos?", options: ["Statistics show...", "As a doctor, I believe...", "Imagine a child going hungry...", "Therefore, we conclude..."], answer: 2, explanation: "Pathos appeals to emotions." },
+          { q: "What is logos?", options: ["Emotional appeal", "Logical appeal with evidence", "Credibility appeal", "Storytelling"], answer: 1, explanation: "Logos uses logic, facts, and reasoning." },
+          { q: "Which is a logical fallacy?", options: ["Using evidence", "Ad hominem attack", "Citing sources", "Statistical analysis"], answer: 1, explanation: "Ad hominem attacks the person, not the argument." },
+          { q: "What is a straw man argument?", options: ["A strong argument", "Misrepresenting someone's position", "Using statistics", "Citing experts"], answer: 1, explanation: "Straw man distorts the opponent's argument." },
+          { q: "Which is an example of anaphora?", options: ["Using big words", "Repetition at the start of clauses", "A quiet understatement", "A logical conclusion"], answer: 1, explanation: "'I have a dream... I have a dream...' shows anaphora." },
+          { q: "What is a red herring?", options: ["A fishing technique", "A relevant argument", "A distraction from the main issue", "A strong conclusion"], answer: 2, explanation: "Red herrings divert attention from the topic." },
+          { q: "Which demonstrates circular reasoning?", options: ["Evidence-based argument", "The Bible is true because it says so", "Expert testimony", "Statistical proof"], answer: 1, explanation: "The conclusion is used as a premise." },
+          { q: "What is the appeal to authority?", options: ["Using your own experience", "Citing irrelevant famous people", "Using logical evidence", "Emotional storytelling"], answer: 1, explanation: "It's fallacious when the authority isn't relevant." },
+          { q: "Which is an example of understatement?", options: ["It's the best ever!", "The hurricane caused some damage", "Absolutely incredible!", "Totally amazing!"], answer: 1, explanation: "Understatement downplays significance." },
+          { q: "What is a false dichotomy?", options: ["A true choice", "Presenting only two options when more exist", "A logical conclusion", "A balanced argument"], answer: 1, explanation: "'You're either with us or against us' is false dichotomy." },
+          { q: "Which technique builds credibility?", options: ["Emotional outbursts", "Personal attacks", "Citing peer-reviewed research", "Exaggeration"], answer: 2, explanation: "Credible sources strengthen ethos." },
+          { q: "What is a slippery slope?", options: ["A logical progression", "Claiming one event leads to extreme consequences", "A gradual argument", "A smooth transition"], answer: 1, explanation: "It assumes a chain of negative events without evidence." },
+          { q: "Which is an example of juxtaposition?", options: ["Comparing similar things", "Placing contrasts side by side", "Using synonyms", "Repeating words"], answer: 1, explanation: "Juxtaposition highlights differences." },
+          { q: "What is the bandwagon fallacy?", options: ["Following trends", "Arguing something is true because many believe it", "Using evidence", "Expert appeal"], answer: 1, explanation: "Popularity doesn't equal truth." },
+          { q: "Which demonstrates antithesis?", options: ["Similar ideas together", "Opposite ideas in parallel structure", "Random ideas", "Repeated ideas"], answer: 1, explanation: "'Give me liberty or give me death!'." },
+          { q: "What is hasty generalization?", options: ["A thorough analysis", "Drawing conclusions from insufficient evidence", "A logical argument", "Expert reasoning"], answer: 1, explanation: "Jumping to conclusions without enough data." },
+          { q: "Which creates rhetorical effect through sound?", options: ["Statistics", "Alliteration and assonance", "Logical proofs", "Citations"], answer: 1, explanation: "Sound devices make language memorable." },
+          { q: "What is the purpose of a rhetorical question?", options: ["To get an answer", "To make a point without expecting an answer", "To confuse the audience", "To end a speech"], answer: 1, explanation: "Rhetorical questions emphasize a point." },
+          { q: "Which is the appeal to tradition fallacy?", options: ["Citing historical evidence", "'We've always done it this way'", "Using old sources", "Respecting elders"], answer: 1, explanation: "Tradition alone doesn't make something right." }
+        ],
+        satVocabulary: [
+          { q: "What does 'equivocate' mean?", options: ["Speak clearly", "Use ambiguous language", "Agree", "Disagree"], answer: 1, explanation: "'Equivocate' means to be deliberately vague." },
+          { q: "'Pernicious' means:", options: ["Helpful", "Harmless", "Harmful", "Neutral"], answer: 2, explanation: "'Pernicious' describes something causing harm." },
+          { q: "What does 'obsequious' mean?", options: ["Rebellious", "Overly submissive", "Angry", "Confused"], answer: 1, explanation: "'Obsequious' means excessively compliant." },
+          { q: "'Perfunctory' describes:", options: ["Thorough work", "Done without care", "Excellent effort", "Deep thinking"], answer: 1, explanation: "'Perfunctory' means done routinely without interest." },
+          { q: "What does 'taciturn' mean?", options: ["Talkative", "Reserved and quiet", "Angry", "Happy"], answer: 1, explanation: "'Taciturn' people rarely speak." },
+          { q: "'Ostensible' means:", options: ["Hidden", "Appearing true but possibly not", "Definitely true", "Obviously false"], answer: 1, explanation: "'Ostensible' suggests something may not be as it seems." },
+          { q: "What does 'sycophant' mean?", options: ["A critic", "A flatterer seeking favor", "A leader", "A rebel"], answer: 1, explanation: "Sycophants use flattery for personal gain." },
+          { q: "'Ephemeral' things are:", options: ["Permanent", "Short-lived", "Heavy", "Light"], answer: 1, explanation: "'Ephemeral' means lasting a short time." },
+          { q: "What does 'querulous' mean?", options: ["Quiet", "Complaining", "Happy", "Confused"], answer: 1, explanation: "'Querulous' describes a whiny, complaining attitude." },
+          { q: "'Recalcitrant' means:", options: ["Obedient", "Stubbornly resistant", "Helpful", "Agreeable"], answer: 1, explanation: "'Recalcitrant' people resist authority." },
+          { q: "What does 'garrulous' mean?", options: ["Quiet", "Excessively talkative", "Sad", "Angry"], answer: 1, explanation: "'Garrulous' means overly chatty." },
+          { q: "'Sanguine' describes:", options: ["Pessimistic", "Optimistic", "Angry", "Confused"], answer: 1, explanation: "'Sanguine' means cheerfully optimistic." },
+          { q: "What does 'inimical' mean?", options: ["Friendly", "Hostile", "Neutral", "Helpful"], answer: 1, explanation: "'Inimical' means unfriendly or harmful." },
+          { q: "'Avarice' means:", options: ["Generosity", "Extreme greed", "Kindness", "Humility"], answer: 1, explanation: "'Avarice' is intense greed for wealth." },
+          { q: "What does 'insidious' mean?", options: ["Obvious", "Gradually harmful", "Helpful", "Fast-acting"], answer: 1, explanation: "'Insidious' describes subtle, spreading harm." },
+          { q: "'Vicarious' experience is:", options: ["Direct experience", "Experienced through another", "Forgotten", "Imagined"], answer: 1, explanation: "Living through someone else's experience." },
+          { q: "What does 'capricious' mean?", options: ["Consistent", "Unpredictably changeable", "Reliable", "Steady"], answer: 1, explanation: "'Capricious' means prone to sudden changes." },
+          { q: "'Parsimonious' means:", options: ["Generous", "Extremely frugal", "Wasteful", "Rich"], answer: 1, explanation: "'Parsimonious' describes excessive stinginess." },
+          { q: "What does 'enigmatic' mean?", options: ["Clear", "Mysterious", "Simple", "Obvious"], answer: 1, explanation: "'Enigmatic' means puzzling or mysterious." },
+          { q: "'Ebullient' describes:", options: ["Calm", "Enthusiastically excited", "Sad", "Angry"], answer: 1, explanation: "'Ebullient' means overflowing with enthusiasm." }
+        ],
+        literaryAnalysis: [
+          { q: "What is a foil character?", options: ["The main character", "A character who contrasts with another", "The villain", "A minor character"], answer: 1, explanation: "Foils highlight qualities by contrast." },
+          { q: "Which describes a bildungsroman?", options: ["A horror story", "A coming-of-age novel", "A mystery", "A romance"], answer: 1, explanation: "Bildungsroman follows a character's growth." },
+          { q: "What is free indirect discourse?", options: ["Dialogue with quotation marks", "Narrator's voice blending with character's thoughts", "First-person narration", "Omniscient narration"], answer: 1, explanation: "It combines narrative and character perspectives." },
+          { q: "Which is an example of in medias res?", options: ["Starting at the beginning", "Starting in the middle of action", "Starting at the end", "Using flashbacks only"], answer: 1, explanation: "'In medias res' means starting mid-action." },
+          { q: "What is a frame narrative?", options: ["A story within a story", "A single storyline", "A biography", "A news report"], answer: 0, explanation: "Frame narratives contain stories within stories." },
+          { q: "Which describes magical realism?", options: ["Pure fantasy", "Magic elements in realistic settings", "Science fiction", "Horror"], answer: 1, explanation: "Magical realism blends magical and mundane." },
+          { q: "What is an unreliable narrator?", options: ["A trustworthy storyteller", "A narrator whose account is questionable", "The author", "A character"], answer: 1, explanation: "Their version of events may be skewed." },
+          { q: "Which is a characteristic of tragedy?", options: ["Happy ending", "Comic relief throughout", "Protagonist's downfall", "Simple plot"], answer: 2, explanation: "Tragedies feature the hero's fall." },
+          { q: "What is stream of consciousness?", options: ["Logical, organized narration", "Continuous flow of thoughts", "Dialogue only", "Third-person limited"], answer: 1, explanation: "It mimics natural thought patterns." },
+          { q: "Which describes dramatic irony?", options: ["When characters are ironic", "When audience knows more than characters", "When events are unexpected", "When dialogue is humorous"], answer: 1, explanation: "The audience has superior knowledge." },
+          { q: "What is an archetype?", options: ["A unique character", "A universal pattern or symbol", "A minor character", "A setting"], answer: 1, explanation: "Archetypes recur across literature (hero, mentor, etc.)." },
+          { q: "Which is a common theme in existentialist literature?", options: ["The search for meaning", "Romance", "Adventure", "Comedy"], answer: 0, explanation: "Existentialism explores meaning and existence." },
+          { q: "What is denouement?", options: ["The climax", "The resolution after climax", "The beginning", "The conflict"], answer: 1, explanation: "Denouement wraps up the story after the climax." },
+          { q: "Which describes an epiphany in literature?", options: ["A gradual realization", "A sudden moment of insight", "A tragic event", "A happy ending"], answer: 1, explanation: "Epiphanies are sudden revelations." },
+          { q: "What is verisimilitude?", options: ["Fantasy elements", "Appearance of being true", "Obvious fiction", "Unrealistic events"], answer: 1, explanation: "Verisimilitude makes fiction seem real." },
+          { q: "Which is a feature of Gothic literature?", options: ["Bright, happy settings", "Dark, mysterious atmosphere", "Modern technology", "Realistic events only"], answer: 1, explanation: "Gothic literature features dark, eerie elements." },
+          { q: "What is the Socratic method in literature?", options: ["Lecturing", "Question-and-answer to seek truth", "Storytelling", "Description"], answer: 1, explanation: "It uses dialogue and questioning." },
+          { q: "Which describes allegory?", options: ["A literal story", "A story with hidden meaning", "A true story", "A short poem"], answer: 1, explanation: "Allegories have symbolic, deeper meanings." },
+          { q: "What is catharsis?", options: ["A type of character", "Emotional release through art", "A plot device", "A setting"], answer: 1, explanation: "Catharsis purges emotions through tragedy." },
+          { q: "Which is a postmodern technique?", options: ["Linear narrative", "Breaking the fourth wall", "Traditional structure", "Realistic settings only"], answer: 1, explanation: "Postmodernism often acknowledges its own artifice." }
+        ],
+        writingStyles: [
+          { q: "What characterizes formal writing?", options: ["Slang and contractions", "Professional tone, no contractions", "Casual language", "Incomplete sentences"], answer: 1, explanation: "Formal writing avoids casual language." },
+          { q: "Which voice is preferred in academic writing?", options: ["First person", "Second person", "Third person", "Any person"], answer: 2, explanation: "Academic writing typically uses third person." },
+          { q: "What is a thesis statement?", options: ["A question", "The main argument of an essay", "A summary", "A conclusion"], answer: 1, explanation: "The thesis states the essay's central claim." },
+          { q: "Which transition shows contrast?", options: ["Furthermore", "Similarly", "However", "Additionally"], answer: 2, explanation: "'However' signals a contrasting idea." },
+          { q: "What is the purpose of a topic sentence?", options: ["To end a paragraph", "To introduce the paragraph's main idea", "To summarize the essay", "To provide evidence"], answer: 1, explanation: "Topic sentences state the paragraph's focus." },
+          { q: "Which describes expository writing?", options: ["Telling a story", "Explaining or informing", "Persuading", "Describing emotions"], answer: 1, explanation: "Expository writing explains or informs." },
+          { q: "What is MLA format?", options: ["A writing style", "A citation style for humanities", "A font type", "A paragraph structure"], answer: 1, explanation: "MLA is a citation format for humanities." },
+          { q: "Which transition shows addition?", options: ["However", "On the other hand", "Moreover", "Although"], answer: 2, explanation: "'Moreover' adds more information." },
+          { q: "What is the purpose of a counterargument?", options: ["To weaken your argument", "To acknowledge and refute opposing views", "To end the essay", "To summarize"], answer: 1, explanation: "Addressing counterarguments strengthens essays." },
+          { q: "Which describes persuasive writing?", options: ["Neutral information", "Arguing a position", "Telling a story", "Describing facts only"], answer: 1, explanation: "Persuasive writing aims to convince readers." },
+          { q: "What is APA format used for?", options: ["Literature essays", "Social science citations", "Poetry", "Fiction"], answer: 1, explanation: "APA is common in social sciences." },
+          { q: "Which sentence type varies writing?", options: ["Only simple sentences", "Mix of simple, compound, complex", "Only long sentences", "Only questions"], answer: 1, explanation: "Varied sentence structure improves flow." },
+          { q: "What is a hook in writing?", options: ["The conclusion", "An attention-grabbing opening", "A citation", "A summary"], answer: 1, explanation: "Hooks engage readers from the start." },
+          { q: "Which is appropriate in academic writing?", options: ["I think", "Research suggests", "You know", "Whatever"], answer: 1, explanation: "Academic writing uses objective language." },
+          { q: "What is plagiarism?", options: ["Using your own ideas", "Using others' work without credit", "Paraphrasing with citation", "Summarizing"], answer: 1, explanation: "Plagiarism is intellectual theft." },
+          { q: "Which describes narrative writing?", options: ["Explaining facts", "Telling a story", "Arguing a point", "Describing steps"], answer: 1, explanation: "Narrative writing tells a story." },
+          { q: "What makes an effective conclusion?", options: ["Introducing new ideas", "Restating thesis and providing closure", "Asking many questions", "Adding more evidence"], answer: 1, explanation: "Conclusions synthesize and close the essay." },
+          { q: "Which is a feature of descriptive writing?", options: ["Statistics", "Sensory details", "Arguments", "Instructions"], answer: 1, explanation: "Descriptive writing appeals to the senses." },
+          { q: "What is paraphrasing?", options: ["Copying exactly", "Restating in your own words", "Quoting directly", "Summarizing briefly"], answer: 1, explanation: "Paraphrasing rephrases the original idea." },
+          { q: "Which shows synthesis in writing?", options: ["Using one source", "Combining multiple sources", "Ignoring sources", "Only using quotes"], answer: 1, explanation: "Synthesis integrates multiple perspectives." }
+        ]
+      },
+      advanced: {
+        greVocabulary: [
+          { q: "What does 'ineffable' mean?", options: ["Easy to describe", "Too great to express in words", "Unimportant", "Common"], answer: 1, explanation: "'Ineffable' describes something beyond words." },
+          { q: "'Enervate' means to:", options: ["Energize", "Weaken", "Strengthen", "Excite"], answer: 1, explanation: "'Enervate' means to drain energy." },
+          { q: "What does 'perspicacious' mean?", options: ["Unobservant", "Having keen mental perception", "Confused", "Simple"], answer: 1, explanation: "'Perspicacious' means having sharp insight." },
+          { q: "'Grandiloquent' describes:", options: ["Simple speech", "Pompous, extravagant language", "Quiet talk", "Clear writing"], answer: 1, explanation: "'Grandiloquent' means pretentiously wordy." },
+          { q: "What does 'vicissitude' mean?", options: ["Stability", "A change of circumstances", "Happiness", "Simplicity"], answer: 1, explanation: "'Vicissitude' refers to life's changes and variations." },
+          { q: "'Abnegate' means to:", options: ["Accept", "Renounce or reject", "Celebrate", "Increase"], answer: 1, explanation: "'Abnegate' means to give up or deny oneself." },
+          { q: "What does 'loquacious' mean?", options: ["Quiet", "Very talkative", "Shy", "Reserved"], answer: 1, explanation: "'Loquacious' means extremely chatty." },
+          { q: "'Quotidian' refers to:", options: ["Extraordinary events", "Daily, ordinary occurrences", "Rare occasions", "Special events"], answer: 1, explanation: "'Quotidian' means everyday or commonplace." },
+          { q: "What does 'sycophantic' mean?", options: ["Independent", "Excessively flattering", "Critical", "Honest"], answer: 1, explanation: "'Sycophantic' describes servile flattery." },
+          { q: "'Didactic' means:", options: ["Entertaining", "Intended to teach", "Confusing", "Humorous"], answer: 1, explanation: "'Didactic' describes instructive content." },
+          { q: "What does 'truculent' mean?", options: ["Peaceful", "Aggressively defiant", "Calm", "Friendly"], answer: 1, explanation: "'Truculent' means eager to fight." },
+          { q: "'Nascent' describes:", options: ["Dying", "Just beginning to develop", "Ancient", "Complete"], answer: 1, explanation: "'Nascent' means emerging or newly formed." },
+          { q: "What does 'fungible' mean?", options: ["Unique", "Mutually interchangeable", "Permanent", "Rare"], answer: 1, explanation: "'Fungible' items can be exchanged for equivalents." },
+          { q: "'Nugatory' means:", options: ["Valuable", "Of no value or importance", "Essential", "Significant"], answer: 1, explanation: "'Nugatory' means worthless or futile." },
+          { q: "What does 'propitiate' mean?", options: ["Anger", "Win or regain favor", "Ignore", "Reject"], answer: 1, explanation: "'Propitiate' means to appease or placate." },
+          { q: "'Pellucid' describes:", options: ["Murky", "Transparently clear", "Confusing", "Opaque"], answer: 1, explanation: "'Pellucid' means easily understood or clear." },
+          { q: "What does 'redoubtable' mean?", options: ["Weak", "Formidable, commanding respect", "Doubtful", "Simple"], answer: 1, explanation: "'Redoubtable' means inspiring fear or awe." },
+          { q: "'Disabuse' means to:", options: ["Deceive", "Free from misconception", "Confuse", "Mislead"], answer: 1, explanation: "'Disabuse' means to correct a false belief." },
+          { q: "What does 'obstreperous' mean?", options: ["Quiet", "Noisily defiant", "Calm", "Agreeable"], answer: 1, explanation: "'Obstreperous' means aggressively noisy." },
+          { q: "'Meretricious' means:", options: ["Genuinely valuable", "Attractive but false or insincere", "Simple", "Honest"], answer: 1, explanation: "'Meretricious' describes showy but worthless things." }
+        ],
+        etymology: [
+          { q: "What does the root 'bene' mean?", options: ["Bad", "Good", "Water", "Fire"], answer: 1, explanation: "'Bene' (Latin) means good, as in 'benefit'." },
+          { q: "The prefix 'anti-' means:", options: ["For", "Against", "With", "Before"], answer: 1, explanation: "'Anti-' means against or opposed to." },
+          { q: "What does 'phil' mean?", options: ["Fear", "Love", "Hate", "Water"], answer: 1, explanation: "'Phil' (Greek) means love, as in 'philosophy'." },
+          { q: "The suffix '-ology' indicates:", options: ["Fear of", "Study of", "Love of", "Hatred of"], answer: 1, explanation: "'-ology' means the study of something." },
+          { q: "What does 'mal-' mean?", options: ["Good", "Bad", "Big", "Small"], answer: 1, explanation: "'Mal-' means bad or ill, as in 'malicious'." },
+          { q: "'Chron' relates to:", options: ["Space", "Time", "Color", "Sound"], answer: 1, explanation: "'Chron' (Greek) means time, as in 'chronology'." },
+          { q: "What does 'mort' mean?", options: ["Life", "Death", "Love", "Fear"], answer: 1, explanation: "'Mort' (Latin) means death, as in 'mortal'." },
+          { q: "The prefix 'circum-' means:", options: ["Under", "Around", "Through", "Above"], answer: 1, explanation: "'Circum-' means around, as in 'circumference'." },
+          { q: "What does 'voc/vok' mean?", options: ["See", "Voice/call", "Write", "Hear"], answer: 1, explanation: "'Voc' means voice or call, as in 'vocal'." },
+          { q: "The root 'scrib/script' means:", options: ["Read", "Write", "Speak", "Think"], answer: 1, explanation: "'Scrib' means write, as in 'script'." },
+          { q: "What does 'path' mean?", options: ["Road", "Feeling/suffering", "Strength", "Joy"], answer: 1, explanation: "'Path' means feeling, as in 'sympathy'." },
+          { q: "The prefix 'trans-' means:", options: ["Under", "Across", "Before", "After"], answer: 1, explanation: "'Trans-' means across, as in 'transport'." },
+          { q: "What does 'duc/duct' mean?", options: ["Give", "Lead", "Take", "Make"], answer: 1, explanation: "'Duc' means lead, as in 'conduct'." },
+          { q: "The root 'cred' means:", options: ["Run", "Believe", "Build", "Break"], answer: 1, explanation: "'Cred' means believe, as in 'credible'." },
+          { q: "What does 'bio' mean?", options: ["Death", "Life", "Water", "Earth"], answer: 1, explanation: "'Bio' (Greek) means life, as in 'biology'." },
+          { q: "The prefix 'pre-' means:", options: ["After", "Before", "During", "Without"], answer: 1, explanation: "'Pre-' means before, as in 'preview'." },
+          { q: "What does 'graph' mean?", options: ["Speak", "Write", "See", "Hear"], answer: 1, explanation: "'Graph' means write, as in 'autograph'." },
+          { q: "The root 'port' means:", options: ["Door", "Carry", "Build", "Break"], answer: 1, explanation: "'Port' means carry, as in 'transport'." },
+          { q: "What does 'phobia' mean?", options: ["Love", "Fear", "Hatred", "Knowledge"], answer: 1, explanation: "'Phobia' means fear, as in 'claustrophobia'." },
+          { q: "The prefix 'sub-' means:", options: ["Above", "Under", "Around", "Through"], answer: 1, explanation: "'Sub-' means under, as in 'submarine'." }
+        ],
+        advancedComposition: [
+          { q: "What is a periodic sentence?", options: ["A simple sentence", "Main clause at the end", "Main clause at the beginning", "No main clause"], answer: 1, explanation: "Periodic sentences delay the main point." },
+          { q: "Which describes zeugma?", options: ["One word modifying two in different ways", "Repetition", "A question", "A simple statement"], answer: 0, explanation: "'She lowered her standards and her neckline' is zeugma." },
+          { q: "What is chiasmus?", options: ["Simple repetition", "Reversed grammatical structures", "A type of metaphor", "A question technique"], answer: 1, explanation: "'Ask not what your country can do...' uses chiasmus." },
+          { q: "Which describes anadiplosis?", options: ["Ending and beginning with same word", "Simple repetition", "A type of irony", "A metaphor"], answer: 0, explanation: "'Fear leads to anger. Anger leads to hate.'." },
+          { q: "What is epistrophe?", options: ["Repetition at the beginning", "Repetition at the end of clauses", "No repetition", "Random repetition"], answer: 1, explanation: "'...of the people, by the people, for the people'." },
+          { q: "Which describes synecdoche?", options: ["Part representing whole or vice versa", "Simple comparison", "Exaggeration", "Understatement"], answer: 0, explanation: "'All hands on deck' uses synecdoche." },
+          { q: "What is litotes?", options: ["Exaggeration", "Understatement using negatives", "Direct statement", "A question"], answer: 1, explanation: "'Not bad' meaning 'good' is litotes." },
+          { q: "Which describes polysyndeton?", options: ["No conjunctions", "Many conjunctions", "One conjunction", "No words"], answer: 1, explanation: "'And then and then and then' uses many conjunctions." },
+          { q: "What is asyndeton?", options: ["Many conjunctions", "Omission of conjunctions", "Long sentences", "Short words"], answer: 1, explanation: "'I came, I saw, I conquered' omits conjunctions." },
+          { q: "Which describes metonymy?", options: ["Using a related term for something", "Direct comparison", "Exaggeration", "Understatement"], answer: 0, explanation: "'The crown' meaning 'royalty' is metonymy." },
+          { q: "What is a cumulative sentence?", options: ["Main clause first, then details", "Main clause last", "No main clause", "Only fragments"], answer: 0, explanation: "Cumulative sentences add details after the main point." },
+          { q: "Which describes anacoluthon?", options: ["Perfect grammar", "Grammatical inconsistency in sentence", "Simple sentences", "No errors"], answer: 1, explanation: "Anacoluthon is a deliberate grammatical shift." },
+          { q: "What is syllepsis?", options: ["Using one word in two different senses", "Simple repetition", "A type of poem", "A question"], answer: 0, explanation: "Similar to zeugma but with different meanings." },
+          { q: "Which describes isocolon?", options: ["Unequal clauses", "Parallel structures of equal length", "Long sentences only", "Short words only"], answer: 1, explanation: "'Veni, vidi, vici' shows isocolon." },
+          { q: "What is tmesis?", options: ["Separating a word with another", "Joining words", "Simple grammar", "A punctuation mark"], answer: 0, explanation: "'Abso-bloody-lutely' is tmesis." },
+          { q: "Which is an example of enallage?", options: ["Correct grammar", "Grammatical substitution for effect", "Simple sentence", "Complex sentence"], answer: 1, explanation: "'We was robbed!' uses enallage for effect." },
+          { q: "What is hypophora?", options: ["Asking and answering your own question", "Just asking questions", "No questions", "Commands only"], answer: 0, explanation: "Hypophora poses and answers questions." },
+          { q: "Which describes pleonasm?", options: ["Using too few words", "Using redundant words", "Perfect word choice", "Simple language"], answer: 1, explanation: "'Free gift' is pleonastic - gifts are free." },
+          { q: "What is aporia?", options: ["Expressing certain doubt", "Feigning uncertainty for effect", "Complete confidence", "Simple statement"], answer: 1, explanation: "Aporia expresses rhetorical doubt." },
+          { q: "Which describes hendiadys?", options: ["One word for two ideas", "Two words for one complex idea", "Three words", "No special technique"], answer: 1, explanation: "'Nice and warm' instead of 'nicely warm'." }
+        ],
+        linguisticConcepts: [
+          { q: "What is a morpheme?", options: ["A sentence", "The smallest unit of meaning", "A paragraph", "A word only"], answer: 1, explanation: "'Un-' and 'help' and '-ful' are morphemes in 'unhelpful'." },
+          { q: "Which describes phonetics?", options: ["Study of meaning", "Study of speech sounds", "Study of grammar", "Study of writing"], answer: 1, explanation: "Phonetics analyzes how sounds are produced." },
+          { q: "What is syntax?", options: ["Word meaning", "Sentence structure rules", "Sound patterns", "Writing systems"], answer: 1, explanation: "Syntax governs how words combine into sentences." },
+          { q: "Which describes semantics?", options: ["Study of sounds", "Study of meaning", "Study of grammar", "Study of spelling"], answer: 1, explanation: "Semantics studies meaning in language." },
+          { q: "What is pragmatics?", options: ["Grammar rules", "Language use in context", "Spelling rules", "Sound production"], answer: 1, explanation: "Pragmatics studies how context affects meaning." },
+          { q: "Which is a bound morpheme?", options: ["'Cat'", "'-ing'", "'Run'", "'Big'"], answer: 1, explanation: "'-ing' can't stand alone; it's bound to other morphemes." },
+          { q: "What is a phoneme?", options: ["A letter", "The smallest sound unit distinguishing meaning", "A word", "A sentence"], answer: 1, explanation: "'Bit' and 'pit' differ by one phoneme." },
+          { q: "Which describes diachronic linguistics?", options: ["Language at one time", "Language change over time", "Grammar rules", "Spelling conventions"], answer: 1, explanation: "Diachronic linguistics studies historical changes." },
+          { q: "What is code-switching?", options: ["Using one language only", "Alternating between languages/dialects", "Writing code", "Silent reading"], answer: 1, explanation: "Code-switching happens in multilingual contexts." },
+          { q: "Which describes sociolinguistics?", options: ["Language and math", "Language and society", "Language and science", "Language and art"], answer: 1, explanation: "Sociolinguistics studies language in social contexts." },
+          { q: "What is a lexeme?", options: ["A sound", "A unit of vocabulary", "A grammar rule", "A sentence"], answer: 1, explanation: "'Run', 'runs', 'running' are forms of one lexeme." },
+          { q: "Which describes linguistic relativity?", options: ["Language affects thought", "Grammar affects spelling", "Sounds affect meaning", "Writing affects reading"], answer: 0, explanation: "The Sapir-Whorf hypothesis suggests this connection." },
+          { q: "What is linguistic prescriptivism?", options: ["Describing how language is used", "Dictating how language should be used", "Studying language history", "Analyzing sounds"], answer: 1, explanation: "Prescriptivism sets rules for 'correct' usage." },
+          { q: "Which is an example of assimilation?", options: ["Clear pronunciation", "Sounds becoming more similar", "Adding sounds", "Removing sounds"], answer: 1, explanation: "'In-possible' became 'impossible' through assimilation." },
+          { q: "What is the International Phonetic Alphabet (IPA)?", options: ["A secret code", "A system for representing speech sounds", "A programming language", "A type of font"], answer: 1, explanation: "IPA transcribes sounds of all languages." },
+          { q: "Which describes a minimal pair?", options: ["Two identical words", "Two words differing by one phoneme", "Two sentences", "Two paragraphs"], answer: 1, explanation: "'Bat' and 'pat' are a minimal pair." },
+          { q: "What is linguistic determinism?", options: ["Language determines thought completely", "Grammar determines meaning", "Sounds determine words", "Writing determines speech"], answer: 0, explanation: "The strong version of the Sapir-Whorf hypothesis." },
+          { q: "Which describes epenthesis?", options: ["Removing sounds", "Adding sounds to words", "Changing sounds", "Silent sounds"], answer: 1, explanation: "'Hamster' sometimes becomes 'hampster' through epenthesis." },
+          { q: "What is suprasegmental?", options: ["Individual sounds", "Features like stress and intonation", "Letters", "Grammar"], answer: 1, explanation: "Suprasegmentals include pitch, stress, and rhythm." },
+          { q: "Which describes language acquisition?", options: ["Losing language", "Learning language naturally", "Writing language", "Reading language"], answer: 1, explanation: "How humans naturally develop language ability." }
+        ],
+        professionalWriting: [
+          { q: "What is the inverted pyramid structure?", options: ["Important info last", "Most important info first", "Equal weight throughout", "Only conclusions"], answer: 1, explanation: "Journalism places key facts at the beginning." },
+          { q: "Which is important in technical writing?", options: ["Flowery language", "Clarity and precision", "Ambiguity", "Personal opinions"], answer: 1, explanation: "Technical writing prioritizes clarity." },
+          { q: "What is a style guide?", options: ["A fashion magazine", "Standards for writing consistency", "A grammar textbook", "A dictionary"], answer: 1, explanation: "Style guides ensure consistent formatting and usage." },
+          { q: "Which describes concision in writing?", options: ["Using many words", "Expressing ideas in few words", "Being vague", "Using jargon"], answer: 1, explanation: "Concise writing eliminates unnecessary words." },
+          { q: "What is the purpose of a white paper?", options: ["Entertainment", "Authoritative report on a topic", "Personal blog", "Creative fiction"], answer: 1, explanation: "White papers provide in-depth analysis for decision-makers." },
+          { q: "Which is appropriate in business emails?", options: ["Slang and emojis", "Professional tone and clarity", "All capitals", "No greeting"], answer: 1, explanation: "Business emails require professional communication." },
+          { q: "What is an abstract?", options: ["The full document", "A brief summary of a document", "The conclusion only", "The introduction only"], answer: 1, explanation: "Abstracts summarize key points concisely." },
+          { q: "Which describes plain language principles?", options: ["Using complex vocabulary", "Making content easy to understand", "Using jargon freely", "Being vague"], answer: 1, explanation: "Plain language prioritizes reader understanding." },
+          { q: "What is document design?", options: ["Ignoring layout", "Visual organization of content", "Only text, no formatting", "Random arrangement"], answer: 1, explanation: "Good design enhances readability and comprehension." },
+          { q: "Which is a feature of proposal writing?", options: ["Personal opinions only", "Problem-solution structure", "No evidence", "Casual tone"], answer: 1, explanation: "Proposals address problems with proposed solutions." },
+          { q: "What is audience analysis?", options: ["Ignoring readers", "Understanding readers' needs and knowledge", "Writing for yourself", "Using one style always"], answer: 1, explanation: "Writers adapt content to their audience." },
+          { q: "Which describes effective headings?", options: ["Vague and long", "Clear and descriptive", "Single letters", "No headings needed"], answer: 1, explanation: "Good headings guide readers through content." },
+          { q: "What is a memorandum?", options: ["A novel", "A brief internal communication", "A textbook", "A newspaper"], answer: 1, explanation: "Memos communicate information within organizations." },
+          { q: "Which improves document accessibility?", options: ["Small fonts", "Alt text for images", "No structure", "Complex layouts"], answer: 1, explanation: "Accessibility features help all readers." },
+          { q: "What is revision in writing?", options: ["First draft only", "Reviewing and improving content", "Ignoring errors", "Writing quickly"], answer: 1, explanation: "Revision improves clarity, coherence, and correctness." },
+          { q: "Which describes effective data visualization?", options: ["Cluttered charts", "Clear, accurate representation of data", "No labels", "Confusing colors"], answer: 1, explanation: "Good visuals communicate data clearly." },
+          { q: "What is tone in professional writing?", options: ["Voice volume", "The attitude conveyed through word choice", "Font style", "Document length"], answer: 1, explanation: "Tone reflects the writer's attitude toward the subject." },
+          { q: "Which is a principle of ethical writing?", options: ["Plagiarizing freely", "Accurate attribution of sources", "Making up data", "Ignoring facts"], answer: 1, explanation: "Ethical writing credits sources and presents facts honestly." },
+          { q: "What is executive summary?", options: ["A detailed report", "A brief overview for decision-makers", "A technical manual", "A creative piece"], answer: 1, explanation: "Executive summaries condense reports for busy readers." },
+          { q: "Which describes coherence in writing?", options: ["Random ideas", "Logical flow and connection of ideas", "Disconnected paragraphs", "No transitions"], answer: 1, explanation: "Coherent writing flows logically from point to point." }
+        ]
+      }
+    };
+
+    // Fun facts for each division
+    const funFacts = {
+      elementary: [
+        "The shortest complete sentence in English is 'I am.'",
+        "The word 'set' has the most definitions of any English word!",
+        "'Dreamt' is the only English word that ends in 'mt'.",
+        "The dot over the letter 'i' is called a 'tittle'.",
+        "'Rhythm' is the longest English word without a vowel.",
+        "A pangram uses every letter of the alphabet - like 'The quick brown fox jumps over the lazy dog.'"
+      ],
+      middle: [
+        "Shakespeare invented over 1,700 words we still use today!",
+        "The word 'alphabet' comes from the first two Greek letters: alpha and beta.",
+        "'Stewardesses' is the longest word typed with only the left hand.",
+        "English is the only major language that doesn't have a special name for its native speakers.",
+        "The word 'goodbye' comes from 'God be with ye.'",
+        "'Queue' is the only word pronounced the same when the last four letters are removed."
+      ],
+      high: [
+        "The word 'oxymoron' is itself an oxymoron - it comes from Greek words meaning 'sharp' and 'dull.'",
+        "'Floccinaucinihilipilification' means estimating something as worthless - and it's one of the longest words!",
+        "The ampersand (&) was once the 27th letter of the alphabet.",
+        "'Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo' is a grammatically correct sentence.",
+        "English borrows words from over 350 other languages.",
+        "The phrase 'the quick brown fox' uses every letter of the alphabet."
+      ],
+      advanced: [
+        "'Pneumonoultramicroscopicsilicovolcanoconiosis' is the longest word in the dictionary.",
+        "There's a word for throwing someone out of a window: defenestration.",
+        "The word 'girl' originally meant a young person of either sex.",
+        "'Nice' used to mean 'foolish' or 'stupid' in Middle English.",
+        "The word 'clue' comes from Greek mythology - Theseus followed a ball of thread (klew) through the labyrinth.",
+        "English has more words than any other language - about 1 million!"
+      ]
+    };
+
+    // ========== GAME STATE ==========
+    let currentDivision = '';
+    let currentCategory = '';
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let streak = 0;
+    let bestStreak = 0;
+    let totalCorrect = 0;
+    let answered = false;
+    let savedGames = [];
+    let config = {};
+
+    const defaultConfig = {
+      app_title: 'English Quiz Master',
+      welcome_message: 'Test your English skills across all levels!',
+      background_color: '#1a1a2e',
+      surface_color: '#ffffff1a',
+      text_color: '#ffffff',
+      primary_action_color: '#e94560',
+      secondary_action_color: '#ff6b35'
+    };
+
+    // ========== ELEMENT SDK ==========
+    const dataHandler = {
+      onDataChanged(data) {
+        savedGames = data;
+        updateStats();
+      }
+    };
+
+    async function initApp() {
+      // Initialize Data SDK
+      const dataResult = await window.dataSdk.init(dataHandler);
+      if (!dataResult.isOk) {
+        console.error('Data SDK init failed');
+      }
+
+      // Initialize Element SDK
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (newConfig) => {
+          config = newConfig;
+          applyConfig();
+        },
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            { get: () => cfg.background_color || defaultConfig.background_color, set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+            { get: () => cfg.surface_color || defaultConfig.surface_color, set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+            { get: () => cfg.text_color || defaultConfig.text_color, set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+            { get: () => cfg.primary_action_color || defaultConfig.primary_action_color, set: (v) => { cfg.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); } },
+            { get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color, set: (v) => { cfg.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); } }
+          ],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (cfg) => new Map([
+          ['app_title', cfg.app_title || defaultConfig.app_title],
+          ['welcome_message', cfg.welcome_message || defaultConfig.welcome_message]
+        ])
+      });
+
+      config = window.elementSdk.config;
+      applyConfig();
+    }
+
+    function applyConfig() {
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const surfaceColor = config.surface_color || defaultConfig.surface_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || defaultConfig.primary_action_color;
+      const secondaryColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+
+      const app = document.getElementById('app');
+      app.style.background = `linear-gradient(135deg, ${bgColor} 0%, ${adjustColor(bgColor, 20)} 50%, ${adjustColor(bgColor, 40)} 100%)`;
+
+      document.getElementById('app-title').textContent = '📚 ' + (config.app_title || defaultConfig.app_title);
+      document.getElementById('welcome-msg').textContent = config.welcome_message || defaultConfig.welcome_message;
+
+      // Apply text color
+      document.querySelectorAll('h1, h2, h3, p, span, button').forEach(el => {
+        if (!el.classList.contains('text-yellow-400') && !el.classList.contains('text-green-400') && 
+            !el.classList.contains('text-pink-400') && !el.classList.contains('text-blue-400') &&
+            !el.classList.contains('text-orange-400')) {
+          el.style.color = textColor;
+        }
+      });
+    }
+
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = Math.min(255, Math.max(0, (num >> 16) + amt));
+      const G = Math.min(255, Math.max(0, (num >> 8 & 0x00FF) + amt));
+      const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+      return '#' + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+    }
+
+    // ========== NAVIGATION ==========
+    function goHome() {
+      document.getElementById('home-screen').classList.remove('hidden');
+      document.getElementById('category-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.add('hidden');
+    }
+
+    function selectDivision(division) {
+      currentDivision = division;
+      showCategoryScreen();
+    }
+
+    function showCategoryScreen() {
+      document.getElementById('home-screen').classList.add('hidden');
+      document.getElementById('category-screen').classList.remove('hidden');
+
+      const divisionInfo = {
+        elementary: { name: '🌱 Elementary', desc: 'Grades 1-5: Build your foundation!', color: 'green' },
+        middle: { name: '📖 Middle School', desc: 'Grades 6-8: Level up your skills!', color: 'blue' },
+        high: { name: '🎓 High School', desc: 'Grades 9-12: Master the language!', color: 'purple' },
+        advanced: { name: '🏆 Advanced', desc: 'College & Beyond: Expert level!', color: 'red' }
+      };
+
+      const info = divisionInfo[currentDivision];
+      const header = document.getElementById('division-header');
+      header.innerHTML = `<h2 class="text-3xl font-bold text-white mb-2">${info.name}</h2><p class="text-gray-300">${info.desc}</p>`;
+
+      const categories = Object.keys(questionDatabase[currentDivision]);
+      const categoryNames = {
+        phonics: { name: '🔤 Phonics', desc: 'Letter sounds and patterns' },
+        basicVocabulary: { name: '📝 Basic Vocabulary', desc: 'Essential words and meanings' },
+        simpleGrammar: { name: '✏️ Simple Grammar', desc: 'Grammar fundamentals' },
+        spelling: { name: '🔡 Spelling', desc: 'Spell it right!' },
+        readingComprehension: { name: '📚 Reading Comprehension', desc: 'Understanding texts' },
+        partsOfSpeech: { name: '🏷️ Parts of Speech', desc: 'Nouns, verbs, and more' },
+        sentenceStructure: { name: '🏗️ Sentence Structure', desc: 'Building better sentences' },
+        vocabulary: { name: '📖 Vocabulary', desc: 'Expand your word power' },
+        literaryTerms: { name: '🎭 Literary Terms', desc: 'Literary devices and concepts' },
+        punctuation: { name: '❗ Punctuation', desc: 'Master the marks' },
+        advancedGrammar: { name: '📐 Advanced Grammar', desc: 'Complex grammar rules' },
+        rhetoric: { name: '🎤 Rhetoric', desc: 'The art of persuasion' },
+        satVocabulary: { name: '📈 SAT Vocabulary', desc: 'Test prep words' },
+        literaryAnalysis: { name: '🔍 Literary Analysis', desc: 'Deep dive into literature' },
+        writingStyles: { name: '✍️ Writing Styles', desc: 'Academic and creative writing' },
+        greVocabulary: { name: '🎯 GRE Vocabulary', desc: 'Graduate-level words' },
+        etymology: { name: '🌳 Etymology', desc: 'Word origins and roots' },
+        advancedComposition: { name: '📜 Advanced Composition', desc: 'Sophisticated writing techniques' },
+        linguisticConcepts: { name: '🧠 Linguistic Concepts', desc: 'How language works' },
+        professionalWriting: { name: '💼 Professional Writing', desc: 'Business and technical writing' }
+      };
+
+      const grid = document.getElementById('category-grid');
+      grid.innerHTML = categories.map(cat => {
+        const catInfo = categoryNames[cat] || { name: cat, desc: '' };
+        const questions = questionDatabase[currentDivision][cat].length;
+        return `
+          <div class="bg-white/10 hover:bg-white/20 rounded-xl p-4 cursor-pointer transition-all transform hover:scale-105" onclick="startQuiz('${cat}')">
+            <h3 class="font-bold text-white text-lg mb-1">${catInfo.name}</h3>
+            <p class="text-gray-400 text-sm mb-2">${catInfo.desc}</p>
+            <span class="text-xs text-gray-500">${questions} questions</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function startQuiz(category) {
+      currentCategory = category;
+      const allQuestions = [...questionDatabase[currentDivision][category]];
+      currentQuestions = shuffleArray(allQuestions).slice(0, 10);
+      currentQuestionIndex = 0;
+      score = 0;
+      streak = 0;
+      bestStreak = 0;
+      totalCorrect = 0;
+      answered = false;
+
+      document.getElementById('category-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+
+      displayQuestion();
+    }
+
+    function startRandomQuiz() {
+      const divisions = Object.keys(questionDatabase);
+      currentDivision = divisions[Math.floor(Math.random() * divisions.length)];
+      const categories = Object.keys(questionDatabase[currentDivision]);
+      currentCategory = categories[Math.floor(Math.random() * categories.length)];
+      startQuiz(currentCategory);
+    }
+
+    function exitQuiz() {
+      if (currentQuestionIndex > 0) {
+        showResults();
+      } else {
+        goHome();
+      }
+    }
+
+    // ========== QUIZ LOGIC ==========
+    function displayQuestion() {
+      if (currentQuestionIndex >= currentQuestions.length) {
+        showResults();
+        return;
+      }
+
+      answered = false;
+      const q = currentQuestions[currentQuestionIndex];
+
+      document.getElementById('question-num').textContent = currentQuestionIndex + 1;
+      document.getElementById('total-questions').textContent = currentQuestions.length;
+      document.getElementById('question-text').textContent = q.q;
+      document.getElementById('question-category').textContent = formatCategoryName(currentCategory);
+      document.getElementById('quiz-score').textContent = score;
+      document.getElementById('current-streak').textContent = streak;
+      document.getElementById('feedback-area').classList.add('hidden');
+      document.getElementById('fun-fact').classList.add('hidden');
+
+      // Progress bar
+      const progress = ((currentQuestionIndex) / currentQuestions.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+
+      // Options
+      const container = document.getElementById('options-container');
+      container.innerHTML = q.options.map((opt, i) => `
+        <button onclick="selectAnswer(${i})" class="option-btn w-full text-left p-4 bg-white/10 hover:bg-white/20 rounded-xl transition-all option-hover" data-index="${i}">
+          <span class="inline-block w-8 h-8 rounded-full bg-white/20 text-center leading-8 mr-3 font-bold">${String.fromCharCode(65 + i)}</span>
+          ${opt}
+        </button>
+      `).join('');
+      
+      // Start auto-answer timer if auto-play is enabled and we haven't answered yet
+      if (autoplayEnabled && !answered) {
+        startAutoAnswer();
+      }
+    }
+
+    function selectAnswer(index) {
+      if (answered) return;
+      answered = true;
+      
+      // Clear any pending autoplay timeout
+      if (autoplayTimeout) {
+        clearTimeout(autoplayTimeout);
+        autoplayTimeout = null;
+      }
+
+      const q = currentQuestions[currentQuestionIndex];
+      const isCorrect = index === q.answer;
+      const buttons = document.querySelectorAll('.option-btn');
+
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === q.answer) {
+          btn.classList.remove('bg-white/10', 'hover:bg-white/20');
+          btn.classList.add('bg-green-500/50', 'correct-answer');
+        } else if (i === index && !isCorrect) {
+          btn.classList.remove('bg-white/10', 'hover:bg-white/20');
+          btn.classList.add('bg-red-500/50', 'wrong-answer');
+        }
+      });
+
+      if (isCorrect) {
+        score += 10 + (streak * 2);
+        streak++;
+        totalCorrect++;
+        if (streak > bestStreak) bestStreak = streak;
+      } else {
+        streak = 0;
+      }
+
+      document.getElementById('quiz-score').textContent = score;
+      document.getElementById('current-streak').textContent = streak;
+
+      // Show feedback
+      const feedbackArea = document.getElementById('feedback-area');
+      const feedbackText = document.getElementById('feedback-text');
+      const explanationText = document.getElementById('explanation-text');
+
+      feedbackText.textContent = isCorrect ? '🎉 Correct!' : '❌ Not quite!';
+      feedbackText.className = `text-lg font-bold mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`;
+      explanationText.textContent = q.explanation;
+      feedbackArea.classList.remove('hidden');
+
+      // Show fun fact occasionally
+      if (Math.random() > 0.6) {
+        const facts = funFacts[currentDivision];
+        const fact = facts[Math.floor(Math.random() * facts.length)];
+        document.getElementById('fact-text').textContent = fact;
+        document.getElementById('fun-fact').classList.remove('hidden');
+      }
+      
+      // Auto-advance to next question if auto-play is enabled
+      if (autoplayEnabled) {
+        autoplayTimeout = setTimeout(() => {
+          nextQuestion();
+        }, Math.max(autoplaySpeed * 300, 1000)); // Minimum 1 second to read feedback
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      displayQuestion();
+      
+      // Start auto-answer timer if auto-play is enabled
+      if (autoplayEnabled && !answered) {
+        startAutoAnswer();
+      }
+    }
+    
+    // Auto-play functions
+    function toggleAutoplay() {
+      autoplayEnabled = !autoplayEnabled;
+      const toggle = document.getElementById('autoplay-toggle');
+      
+      if (autoplayEnabled) {
+        toggle.textContent = 'ON';
+        toggle.classList.add('autoplay-active');
+        toggle.classList.remove('bg-gray-600');
+        
+        // Start auto-answer if we're currently on a question
+        if (!answered && currentQuestionIndex < currentQuestions.length) {
+          startAutoAnswer();
+        }
+      } else {
+        toggle.textContent = 'OFF';
+        toggle.classList.remove('autoplay-active');
+        toggle.classList.add('bg-gray-600');
+        
+        // Clear any pending timeouts
+        if (autoplayTimeout) {
+          clearTimeout(autoplayTimeout);
+          autoplayTimeout = null;
+        }
+      }
+    }
+    
+    function updateSpeed() {
+      autoplaySpeed = document.getElementById('speed-slider').value;
+      document.getElementById('speed-value').textContent = autoplaySpeed + 's';
+    }
+    
+    function setAutoplayMode(mode) {
+      autoplayMode = mode;
+      document.querySelectorAll('.autoplay-mode-btn').forEach(btn => {
+        btn.classList.remove('bg-blue-600');
+        btn.classList.add('bg-gray-600');
+      });
+      document.getElementById(`mode-${mode}`).classList.remove('bg-gray-600');
+      document.getElementById(`mode-${mode}`).classList.add('bg-blue-600');
+    }
+    
+    function startAutoAnswer() {
+      if (!autoplayEnabled || answered) return;
+      
+      autoplayTimeout = setTimeout(() => {
+        if (!answered && currentQuestionIndex < currentQuestions.length) {
+          let answerIndex;
+          
+          if (autoplayMode === 'smart') {
+            // Smart mode: slightly favor correct answers (70% chance)
+            const q = currentQuestions[currentQuestionIndex];
+            if (Math.random() < 0.7) {
+              answerIndex = q.answer;
+            } else {
+              // Choose a random wrong answer
+              do {
+                answerIndex = Math.floor(Math.random() * q.options.length);
+              } while (answerIndex === q.answer);
+            }
+          } else {
+            // Random mode: completely random selection
+            const q = currentQuestions[currentQuestionIndex];
+            answerIndex = Math.floor(Math.random() * q.options.length);
+          }
+          
+          selectAnswer(answerIndex);
+        }
+      }, autoplaySpeed * 1000);
+    }
+
+    // ========== RESULTS ==========
+    async function showResults() {
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.remove('hidden');
+
+      const accuracy = currentQuestions.length > 0 ? Math.round((totalCorrect / currentQuestions.length) * 100) : 0;
+
+      document.getElementById('final-score').textContent = score;
+      document.getElementById('final-accuracy').textContent = accuracy + '%';
+      document.getElementById('final-correct').textContent = `${totalCorrect}/${currentQuestions.length}`;
+      document.getElementById('final-streak').textContent = bestStreak;
+
+      // Result feedback
+      let emoji, title, subtitle;
+      if (accuracy === 100) {
+        emoji = '🏆';
+        title = 'Perfect Score!';
+        subtitle = "You're an English master!";
+      } else if (accuracy >= 80) {
+        emoji = '🌟';
+        title = 'Excellent!';
+        subtitle = 'Outstanding performance!';
+      } else if (accuracy >= 60) {
+        emoji = '👍';
+        title = 'Good Job!';
+        subtitle = 'Keep practicing to improve!';
+      } else if (accuracy >= 40) {
+        emoji = '📚';
+        title = 'Keep Learning!';
+        subtitle = "You're making progress!";
+      } else {
+        emoji = '💪';
+        title = 'Keep Trying!';
+        subtitle = 'Practice makes perfect!';
+      }
+
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-title').textContent = title;
+      document.getElementById('result-subtitle').textContent = subtitle;
+
+      // Show achievement badge for perfect scores or high streaks
+      const badge = document.getElementById('achievement-badge');
+      if (accuracy === 100) {
+        badge.classList.remove('hidden');
+        document.getElementById('badge-text').textContent = '🏅 Perfect Score Master!';
+      } else if (bestStreak >= 5) {
+        badge.classList.remove('hidden');
+        document.getElementById('badge-text').textContent = `🔥 ${bestStreak} Answer Streak!`;
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      // Save game result
+      if (savedGames.length < 999) {
+        const result = await window.dataSdk.create({
+          division: currentDivision,
+          category: currentCategory,
+          score: score,
+          total_questions: currentQuestions.length,
+          correct_answers: totalCorrect,
+          completed_at: new Date().toISOString()
+        });
+        if (!result.isOk) {
+          console.error('Failed to save game');
+        }
+      }
+
+      // Confetti for good scores
+      if (accuracy >= 60) {
+        createConfetti();
+      }
+    }
+
+    function retryQuiz() {
+      startQuiz(currentCategory);
+    }
+
+    // ========== STATS ==========
+    function updateStats() {
+      const totalScore = savedGames.reduce((sum, g) => sum + (g.score || 0), 0);
+      const quizzesCompleted = savedGames.length;
+      const totalCorrectAll = savedGames.reduce((sum, g) => sum + (g.correct_answers || 0), 0);
+      const totalQuestionsAll = savedGames.reduce((sum, g) => sum + (g.total_questions || 0), 0);
+      const accuracyRate = totalQuestionsAll > 0 ? Math.round((totalCorrectAll / totalQuestionsAll) * 100) : 0;
+
+      document.getElementById('total-score').textContent = totalScore;
+      document.getElementById('quizzes-completed').textContent = quizzesCompleted;
+      document.getElementById('accuracy-rate').textContent = accuracyRate + '%';
+      document.getElementById('best-streak').textContent = bestStreak;
+    }
+
+    // ========== HELPERS ==========
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function formatCategoryName(cat) {
+      return cat.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase());
+    }
+
+    function createConfetti() {
+      const container = document.getElementById('confetti-container');
+      container.innerHTML = '';
+      const colors = ['#e94560', '#ff6b35', '#ffd166', '#06d6a0', '#118ab2'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.cssText = `
+          position: fixed;
+          width: 10px;
+          height: 10px;
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          left: ${Math.random() * 100}%;
+          top: -10px;
+          border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+          animation: fall ${2 + Math.random() * 2}s linear forwards;
+        `;
+        container.appendChild(confetti);
+      }
+
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes fall {
+          to {
+            transform: translateY(100vh) rotate(720deg);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+
+      setTimeout(() => {
+        container.innerHTML = '';
+        style.remove();
+      }, 4000);
+    }
+
+    // Initialize
+    initApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cae925a95dbfdcd',t:'MTc3MDU4OTgyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

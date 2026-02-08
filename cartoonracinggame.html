@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartoon Racing Game</title>
+  <meta name="google-adsense-account" content="ca-pub-6462287919691866">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462287919691866"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&amp;family=Comfortaa:wght@400;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Comfortaa', cursive;
+    }
+    html, body, #game-container {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #game-container {
+      overflow: hidden;
+      background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+    }
+    .game-title {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+    }
+    .game-ui {
+      font-family: 'Comfortaa', cursive;
+    }
+    #gameCanvas {
+      display: block;
+      margin: 0 auto;
+      background: linear-gradient(180deg, #87CEEB 0%, #90EE90 50%, #228B22 100%);
+      border: 4px solid #333;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .game-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0,0,0,0.7);
+      z-index: 100;
+      border-radius: 8px;
+    }
+    .overlay-content {
+      text-align: center;
+      color: white;
+    }
+    .overlay-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .overlay-content p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .overlay-btn {
+      background: linear-gradient(135deg, #FF6B6B, #FF8E72);
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      font-size: 1.1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      font-family: 'Comfortaa', cursive;
+    }
+    .overlay-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    }
+    .high-score {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      border: 2px solid #FFD700;
+    }
+    .high-score p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+    }
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full">
+  <!-- AdSense Auto Ads -->
+  <script data-ad-client="ca-pub-6462287919691866" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <div id="game-container" class="relative">
+   <canvas id="gameCanvas"></canvas><!-- Game HUD -->
+   <div class="absolute top-4 left-4 right-4 game-ui text-white z-10">
+    <div class="flex justify-between items-center bg-black/50 px-6 py-3 rounded-xl backdrop-blur">
+     <div>
+      <p class="text-sm opacity-75">Score</p>
+      <p class="text-2xl font-bold" id="score">0</p>
+     </div>
+     <div class="text-center">
+      <p id="game-title" class="game-title text-2xl">Cartoon Racing</p>
+     </div>
+     <div class="text-right">
+      <p class="text-sm opacity-75">Distance</p>
+      <p class="text-2xl font-bold" id="distance">0m</p>
+     </div>
+    </div>
+   </div><!-- Game Over Screen -->
+   <div id="gameOverScreen" class="game-overlay" style="display: none;">
+    <div class="overlay-content">
+     <h2>🏁 GAME OVER!</h2>
+     <p id="finalScore">Final Score: 0</p>
+     <p id="finalDistance">Distance: 0m</p><button class="overlay-btn" onclick="location.reload()">Play Again</button>
+     <button class="overlay-btn" onclick="window.location.href='index.html'" style="background: #666; margin-left: 10px;">🏠 Home</button>
+     <div class="high-score">
+      <p id="high-score-text">High Score: 0</p>
+     </div>
+    </div>
+   </div><!-- Start Screen -->
+   <div id="startScreen" class="game-overlay">
+    <!-- Back to Home Button -->
+    <button onclick="window.location.href='index.html'" class="absolute top-4 left-4 bg-white/20 hover:bg-white/30 backdrop-blur text-white px-3 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 text-sm z-20">
+      <span>←</span> Home
+    </button>
+    <div class="overlay-content">
+     <h2 style="font-size: 3rem;">🏎️ CARTOON RACING</h2>
+     <p style="font-size: 1.3rem;">Avoid obstacles and score points!</p>
+     <div style="margin: 2rem 0; font-size: 1.1rem; background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; border: 2px solid #FFD700;">
+      <p style="margin-bottom: 0.5rem;">⬅️ ➡️ or A/D - Move</p>
+      <p>ESC - Pause</p>
+     </div><button class="overlay-btn" onclick="startGame()" style="font-size: 1.3rem; padding: 15px 40px;">Start Racing!</button>
+    </div>
+   </div><!-- Pause Screen -->
+   <div id="pauseScreen" class="game-overlay" style="display: none;">
+    <div class="overlay-content">
+     <h2>⏸️ PAUSED</h2>
+     <p style="font-size: 1.2rem;">Score: <span id="pauseScore">0</span></p><button class="overlay-btn" onclick="resumeGame()" style="margin: 1rem;">Resume</button> <button class="overlay-btn" onclick="location.reload()" style="background: linear-gradient(135deg, #4CAF50, #45a049);">Quit Game</button>
+     <button class="overlay-btn" onclick="window.location.href='index.html'" style="background: #666; margin-top: 10px;">🏠 Back to Home</button>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      game_title: 'Cartoon Racing',
+      player_name: 'Player',
+      primary_color: '#FF6B6B',
+      accent_color: '#FFD700'
+    };
+
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const startScreen = document.getElementById('startScreen');
+    const pauseScreen = document.getElementById('pauseScreen');
+    const gameOverScreen = document.getElementById('gameOverScreen');
+    const scoreDisplay = document.getElementById('score');
+    const distanceDisplay = document.getElementById('distance');
+    const gameTitle = document.getElementById('game-title');
+
+    // Set canvas size
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Game variables
+    let gameState = 'start'; // start, playing, paused, gameOver
+    let score = 0;
+    let distance = 0;
+    let highScore = 0;
+    let playerName = defaultConfig.player_name;
+
+    // Player car
+    const player = {
+      x: canvas.width / 2 - 20,
+      y: canvas.height - 100,
+      width: 40,
+      height: 60,
+      speed: 0,
+      maxSpeed: 8,
+      acceleration: 0.3,
+      friction: 0.9,
+      moveLeft: false,
+      moveRight: false
+    };
+
+    // Obstacles
+    let obstacles = [];
+    let coins = [];
+    let roadY = 0;
+    let spawnRate = 60;
+    let spawnCounter = 0;
+    let gameSpeed = 3;
+    let maxGameSpeed = 8;
+    let speedIncrement = 0.0001;
+
+    // Input handling
+    const keys = {};
+    window.addEventListener('keydown', (e) => {
+      keys[e.key.toLowerCase()] = true;
+      if (e.key === 'Escape') togglePause();
+    });
+    window.addEventListener('keyup', (e) => {
+      keys[e.key.toLowerCase()] = false;
+    });
+
+    function drawCar(x, y, color = '#FF6B6B') {
+      // Car body
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, 40, 60);
+      
+      // Car windows
+      ctx.fillStyle = '#87CEEB';
+      ctx.fillRect(x + 5, y + 8, 30, 15);
+      ctx.fillRect(x + 5, y + 28, 30, 15);
+      
+      // Car lights
+      ctx.fillStyle = '#FFD700';
+      ctx.fillRect(x + 3, y + 50, 8, 8);
+      ctx.fillRect(x + 29, y + 50, 8, 8);
+    }
+
+    function drawObstacle(obstacle) {
+      ctx.fillStyle = '#FF4444';
+      ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+      
+      // Angry eyes
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(obstacle.x + 8, obstacle.y + 8, 8, 8);
+      ctx.fillRect(obstacle.x + obstacle.width - 16, obstacle.y + 8, 8, 8);
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(obstacle.x + 10, obstacle.y + 10, 4, 4);
+      ctx.fillRect(obstacle.x + obstacle.width - 14, obstacle.y + 10, 4, 4);
+    }
+
+    function drawCoin(coin) {
+      ctx.fillStyle = '#FFD700';
+      ctx.beginPath();
+      ctx.arc(coin.x, coin.y, 8, 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.strokeStyle = '#FFA500';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      
+      ctx.fillStyle = '#FFA500';
+      ctx.font = 'bold 10px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('$', coin.x, coin.y);
+    }
+
+    function drawRoad() {
+      ctx.fillStyle = '#333333';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Road lanes
+      ctx.strokeStyle = '#FFD700';
+      ctx.lineWidth = 3;
+      ctx.setLineDash([20, 20]);
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 3 * (i + 1), roadY % canvas.height);
+        ctx.lineTo(canvas.width / 3 * (i + 1), (roadY % canvas.height) + canvas.height);
+        ctx.stroke();
+      }
+      ctx.setLineDash([]);
+    }
+
+    function spawnObstacle() {
+      const lanes = [canvas.width / 3 - 20, canvas.width * 2 / 3 - 20, canvas.width / 2 - 20];
+      const randomLane = lanes[Math.floor(Math.random() * lanes.length)];
+      
+      obstacles.push({
+        x: randomLane,
+        y: -60,
+        width: 40,
+        height: 60,
+        hit: false
+      });
+    }
+
+    function spawnCoin() {
+      const lanes = [canvas.width / 3 - 10, canvas.width * 2 / 3 - 10, canvas.width / 2 - 10];
+      const randomLane = lanes[Math.floor(Math.random() * lanes.length)];
+      
+      coins.push({
+        x: randomLane,
+        y: -15,
+        radius: 8,
+        collected: false
+      });
+    }
+
+    function update() {
+      if (gameState !== 'playing') return;
+
+      // Handle player input
+      player.moveLeft = keys['arrowleft'] || keys['a'];
+      player.moveRight = keys['arrowright'] || keys['d'];
+
+      if (player.moveLeft && player.x > 0) player.x -= 6;
+      if (player.moveRight && player.x < canvas.width - player.width) player.x += 6;
+
+      // Increase game speed
+      if (gameSpeed < maxGameSpeed) {
+        gameSpeed += speedIncrement;
+      }
+
+      // Spawn obstacles
+      spawnCounter++;
+      if (spawnCounter > spawnRate) {
+        spawnObstacle();
+        if (Math.random() > 0.7) spawnCoin();
+        spawnCounter = 0;
+        if (spawnRate > 30) spawnRate -= 0.5; // Increase difficulty
+      }
+
+      // Update obstacles
+      obstacles.forEach((obstacle, index) => {
+        obstacle.y += gameSpeed;
+
+        // Check collision
+        if (!obstacle.hit &&
+            player.x < obstacle.x + obstacle.width &&
+            player.x + player.width > obstacle.x &&
+            player.y < obstacle.y + obstacle.height &&
+            player.y + player.height > obstacle.y) {
+          gameState = 'gameOver';
+          endGame();
+        }
+
+        if (obstacle.y > canvas.height) {
+          obstacles.splice(index, 1);
+          score += 10;
+        }
+      });
+
+      // Update coins
+      coins.forEach((coin, index) => {
+        coin.y += gameSpeed;
+
+        // Check collection
+        const dx = player.x + player.width / 2 - coin.x;
+        const dy = player.y + player.height / 2 - coin.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 30) {
+          coins.splice(index, 1);
+          score += 50;
+        }
+
+        if (coin.y > canvas.height) {
+          coins.splice(index, 1);
+        }
+      });
+
+      // Update distance
+      distance += Math.floor(gameSpeed / 10);
+      roadY += gameSpeed;
+
+      scoreDisplay.textContent = score;
+      distanceDisplay.textContent = Math.floor(distance) + 'm';
+    }
+
+    function draw() {
+      drawRoad();
+
+      // Draw obstacles
+      obstacles.forEach(obstacle => drawObstacle(obstacle));
+
+      // Draw coins
+      coins.forEach(coin => drawCoin(coin));
+
+      // Draw player
+      drawCar(player.x, player.y, '#FF6B6B');
+    }
+
+    function gameLoop() {
+      update();
+      draw();
+      requestAnimationFrame(gameLoop);
+    }
+
+    function startGame() {
+      gameState = 'playing';
+      startScreen.style.display = 'none';
+      score = 0;
+      distance = 0;
+      gameSpeed = 3;
+      spawnRate = 60;
+      obstacles = [];
+      coins = [];
+      player.x = canvas.width / 2 - 20;
+    }
+
+    function togglePause() {
+      if (gameState === 'playing') {
+        gameState = 'paused';
+        pauseScreen.style.display = 'flex';
+        document.getElementById('pauseScore').textContent = score;
+      } else if (gameState === 'paused') {
+        resumeGame();
+      }
+    }
+
+    function resumeGame() {
+      gameState = 'playing';
+      pauseScreen.style.display = 'none';
+    }
+
+    async function endGame() {
+      gameOverScreen.style.display = 'flex';
+      document.getElementById('finalScore').textContent = `Final Score: ${score}`;
+      document.getElementById('finalDistance').textContent = `Distance: ${Math.floor(distance)}m`;
+
+      if (score > highScore) {
+        highScore = score;
+        document.getElementById('high-score-text').textContent = `New High Score: ${highScore}`;
+
+        // Save to sheet
+        const result = await window.dataSdk.create({
+          player_name: playerName,
+          score: score,
+          game_date: new Date().toISOString()
+        });
+      } else {
+        document.getElementById('high-score-text').textContent = `High Score: ${highScore}`;
+      }
+    }
+
+    // Element SDK Integration
+    async function onConfigChange(config) {
+      gameTitle.textContent = config.game_title || defaultConfig.game_title;
+      playerName = config.player_name || defaultConfig.player_name;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['game_title', config.game_title || defaultConfig.game_title],
+        ['player_name', config.player_name || defaultConfig.player_name]
+      ]);
+    }
+
+    // Initialize SDKs
+    async function initializeApp() {
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+      }
+
+      const dataResult = await window.dataSdk.init({
+        onDataChanged(data) {
+          if (data.length > 0) {
+            const scores = data.map(item => item.score).sort((a, b) => b - a);
+            highScore = scores[0] || 0;
+          }
+        }
+      });
+    }
+
+    initializeApp();
+    gameLoop();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cae141f41894ec8',t:'MTc3MDU4NDY1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

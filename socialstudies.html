@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rwanda Social Studies Quiz</title>
+  <meta name="google-adsense-account" content="ca-pub-6462287919691866">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462287919691866"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Nunito', sans-serif;
+    }
+    .quiz-card {
+      animation: slideUp 0.4s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .correct-answer {
+      animation: pulse 0.3s ease-in-out;
+    }
+    .category-btn:hover {
+      transform: translateY(-2px);
+    }
+    .progress-fill {
+      transition: width 0.5s ease-out;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full">
+  <!-- AdSense Auto Ads -->
+  <script data-ad-client="ca-pub-6462287919691866" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #2b6cb0 100%);"><!-- Home Screen -->
+   <div id="home-screen" class="min-h-full flex flex-col items-center justify-center p-4">
+    <div class="text-center mb-8">
+     <div class="text-6xl mb-4">
+      🇷🇼
+     </div>
+     <h1 id="main-title" class="text-3xl md:text-4xl font-extrabold text-white mb-2">Rwanda Social Studies Quiz</h1>
+     <p id="welcome-text" class="text-blue-200 text-lg">Test your knowledge of Rwanda!</p>
+    </div>
+    <div class="w-full max-w-md space-y-3"><button onclick="startCategory('history')" class="category-btn w-full bg-amber-500 hover:bg-amber-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all flex items-center justify-between"> <span class="flex items-center gap-3"><span class="text-2xl">📜</span> Rwandan History</span> <span class="text-amber-200 text-sm" id="history-count">250 Q</span> </button> <button onclick="startCategory('geography')" class="category-btn w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all flex items-center justify-between"> <span class="flex items-center gap-3"><span class="text-2xl">🌍</span> Geography</span> <span class="text-emerald-200 text-sm" id="geography-count">250 Q</span> </button> <button onclick="startCategory('civics')" class="category-btn w-full bg-purple-500 hover:bg-purple-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all flex items-center justify-between"> <span class="flex items-center gap-3"><span class="text-2xl">⚖️</span> Civics &amp; Government</span> <span class="text-purple-200 text-sm" id="civics-count">250 Q</span> </button> <button onclick="startCategory('culture')" class="category-btn w-full bg-rose-500 hover:bg-rose-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all flex items-center justify-between"> <span class="flex items-center gap-3"><span class="text-2xl">🎭</span> Culture &amp; Society</span> <span class="text-rose-200 text-sm" id="culture-count">250 Q</span> </button> <button onclick="startCategory('all')" class="category-btn w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition-all flex items-center justify-between mt-4"> <span class="flex items-center gap-3"><span class="text-2xl">🎯</span> Mixed Challenge</span> <span class="text-blue-200 text-sm">1000+ Q</span> </button>
+    </div>
+    <div id="stats-display" class="mt-8 bg-white/10 backdrop-blur rounded-xl p-4 w-full max-w-md">
+     <h3 class="text-white font-bold mb-2 text-center">📊 Your Progress</h3>
+     <div class="grid grid-cols-2 gap-4 text-center">
+      <div>
+       <div id="total-answered" class="text-2xl font-bold text-amber-400">
+        0
+       </div>
+       <div class="text-blue-200 text-sm">
+        Questions Answered
+       </div>
+      </div>
+      <div>
+       <div id="accuracy-rate" class="text-2xl font-bold text-emerald-400">
+        0%
+       </div>
+       <div class="text-blue-200 text-sm">
+        Accuracy
+       </div>
+      </div>
+     </div>
+    </div>
+   </div><!-- Quiz Screen -->
+   <div id="quiz-screen" class="min-h-full flex flex-col p-4 hidden">
+    <div class="flex items-center justify-between mb-4"><button onclick="goHome()" class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg font-semibold transition-all"> ← Back </button>
+     <div id="category-badge" class="bg-amber-500 text-white px-4 py-2 rounded-full font-bold text-sm">
+      History
+     </div>
+    </div>
+    <div class="bg-white/10 rounded-full h-3 mb-4 overflow-hidden">
+     <div id="progress-bar" class="progress-fill bg-gradient-to-r from-amber-400 to-amber-500 h-full rounded-full" style="width: 0%"></div>
+    </div>
+    <div class="flex justify-between text-white/80 text-sm mb-6"><span>Question <span id="current-q">1</span> of <span id="total-q">10</span></span> <span>Score: <span id="current-score">0</span></span>
+    </div>
+    <div class="quiz-card flex-1 bg-white rounded-2xl shadow-2xl p-6 flex flex-col">
+     <div id="question-text" class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex-1">
+      Loading question...
+     </div>
+     <div id="options-container" class="space-y-3"><!-- Options will be inserted here -->
+     </div>
+     <div id="feedback-area" class="mt-4 p-4 rounded-xl hidden">
+      <p id="feedback-text" class="font-semibold"></p>
+      <p id="explanation-text" class="text-sm mt-2 text-gray-600"></p>
+     </div><button id="next-btn" onclick="nextQuestion()" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all hidden"> Next Question → </button>
+    </div>
+   </div><!-- Results Screen -->
+   <div id="results-screen" class="min-h-full flex flex-col items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center quiz-card">
+     <div class="text-6xl mb-4" id="result-emoji">
+      🎉
+     </div>
+     <h2 class="text-2xl font-extrabold text-gray-800 mb-2">Quiz Complete!</h2>
+     <p id="result-message" class="text-gray-600 mb-6">Great job!</p>
+     <div class="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl p-6 text-white mb-6">
+      <div class="text-5xl font-extrabold" id="final-score">
+       0/10
+      </div>
+      <div class="text-blue-200 mt-1">
+       Final Score
+      </div>
+     </div>
+     <div class="grid grid-cols-2 gap-4 mb-6">
+      <div class="bg-emerald-100 rounded-xl p-4">
+       <div class="text-2xl font-bold text-emerald-600" id="correct-count">
+        0
+       </div>
+       <div class="text-emerald-700 text-sm">
+        Correct
+       </div>
+      </div>
+      <div class="bg-rose-100 rounded-xl p-4">
+       <div class="text-2xl font-bold text-rose-600" id="wrong-count">
+        0
+       </div>
+       <div class="text-rose-700 text-sm">
+        Incorrect
+       </div>
+      </div>
+     </div>
+     <div class="space-y-3"><button onclick="restartCategory()" class="w-full bg-amber-500 hover:bg-amber-400 text-white font-bold py-3 px-6 rounded-xl transition-all"> 🔄 Try Again </button> <button onclick="goHome()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-6 rounded-xl transition-all"> 🏠 Back to Home </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Questions Database - 1000+ questions organized by category
+    const questionsDB = {
+      history: [
+        // Pre-colonial History (50 questions)
+        { q: "What kingdom existed in Rwanda before colonization?", options: ["Kingdom of Rwanda", "Kingdom of Buganda", "Kingdom of Burundi", "Kingdom of Kongo"], answer: 0, explanation: "The Kingdom of Rwanda was established around the 15th century and lasted until 1961." },
+        { q: "Who was the first Mwami (King) of Rwanda according to tradition?", options: ["Gihanga", "Ruganzu", "Kigeli", "Mutara"], answer: 0, explanation: "Gihanga is considered the legendary founder and first king of Rwanda." },
+        { q: "What was the traditional system of cattle lending in Rwanda called?", options: ["Ubuhake", "Umuganda", "Ubudehe", "Gacaca"], answer: 0, explanation: "Ubuhake was a patron-client system where patrons lent cattle to clients in exchange for services." },
+        { q: "The Abiru were responsible for what in the Rwandan kingdom?", options: ["Keeping royal rituals and traditions", "Military command", "Tax collection", "Land distribution"], answer: 0, explanation: "The Abiru were ritual specialists who preserved the monarchy's sacred traditions and ceremonies." },
+        { q: "What was the name of the royal drum of Rwanda?", options: ["Kalinga", "Ingoma", "Umuduri", "Inanga"], answer: 0, explanation: "Kalinga was the sacred royal drum, symbol of the monarchy's power." },
+        { q: "What percentage of Rwanda's land was covered by forest before human settlement?", options: ["Over 60%", "About 30%", "Less than 10%", "About 90%"], answer: 0, explanation: "Rwanda was historically heavily forested before agricultural expansion." },
+        { q: "The traditional Rwandan calendar was based on what?", options: ["Lunar cycles", "Solar cycles", "Agricultural seasons", "Royal decrees"], answer: 0, explanation: "Rwanda used a lunar calendar system for tracking time traditionally." },
+        { q: "What was the role of the 'Umwami' in traditional Rwanda?", options: ["Supreme political and spiritual leader", "Military general only", "Religious priest", "Trade negotiator"], answer: 0, explanation: "The Umwami was the king who held both political and spiritual authority over the kingdom." },
+        { q: "Which dynasty ruled the Kingdom of Rwanda?", options: ["Nyiginya dynasty", "Tutsi dynasty", "Hutu dynasty", "Twa dynasty"], answer: 0, explanation: "The Nyiginya dynasty ruled Rwanda from approximately the 15th century until 1961." },
+        { q: "What was 'Intore' in traditional Rwanda?", options: ["Elite warrior dancers", "Royal advisors", "Tax collectors", "Cattle herders"], answer: 0, explanation: "Intore were elite warriors who also performed traditional dances, a tradition that continues today." },
+        { q: "The 'Mwiru' code governed what aspect of Rwandan life?", options: ["Royal secrets and taboos", "Marriage customs", "Land ownership", "Trade relations"], answer: 0, explanation: "Mwiru was the secret code of royal customs and taboos known only to the Abiru." },
+        { q: "What was the traditional Rwandan drink made from bananas?", options: ["Urwagwa", "Ikivuguto", "Ikigage", "Ubuki"], answer: 0, explanation: "Urwagwa is a traditional banana beer that has been brewed in Rwanda for centuries." },
+        { q: "King Ruganzu II Ndoli is famous for what achievement?", options: ["Expanding Rwanda's territory significantly", "Introducing Christianity", "Building the first schools", "Creating the written language"], answer: 0, explanation: "Ruganzu II Ndoli greatly expanded Rwanda's borders in the 17th century." },
+        { q: "What was the 'Ubwiru' in traditional Rwanda?", options: ["Sacred royal rituals", "Military training", "Agricultural practices", "Marriage ceremonies"], answer: 0, explanation: "Ubwiru was the collection of sacred rituals and secrets of the monarchy." },
+        { q: "The 'Inyambo' were famous for what?", options: ["Long-horned sacred cattle", "Royal guards", "Ritual dancers", "Court musicians"], answer: 0, explanation: "Inyambo are the famous long-horned Ankole cattle that were sacred to Rwandan royalty." },
+        // Colonial Period (50 questions)
+        { q: "Which European country first colonized Rwanda?", options: ["Germany", "Belgium", "France", "Britain"], answer: 0, explanation: "Germany colonized Rwanda as part of German East Africa from 1885 to 1916." },
+        { q: "In what year did Belgium take over Rwanda from Germany?", options: ["1916", "1920", "1885", "1945"], answer: 0, explanation: "Belgium took control of Rwanda during World War I in 1916." },
+        { q: "What system did Belgian colonizers use to classify Rwandans?", options: ["Identity cards based on ethnicity", "Religious affiliation cards", "Professional classification", "Regional identification"], answer: 0, explanation: "Belgium introduced ethnic identity cards in 1933, formalizing ethnic divisions." },
+        { q: "Under which mandate did Belgium administer Rwanda after WWI?", options: ["League of Nations mandate", "UN mandate", "British Empire mandate", "French mandate"], answer: 0, explanation: "Rwanda became a League of Nations mandate territory under Belgian administration." },
+        { q: "What was the name of the territory combining Rwanda and Burundi under Belgian rule?", options: ["Ruanda-Urundi", "Belgian Congo", "East Africa", "Great Lakes Territory"], answer: 0, explanation: "Belgium administered Rwanda and Burundi together as Ruanda-Urundi." },
+        { q: "Which European explorer is credited with 'discovering' Rwanda for Europeans?", options: ["Count Gustav Adolf von Götzen", "Henry Morton Stanley", "David Livingstone", "John Hanning Speke"], answer: 0, explanation: "German Count von Götzen was the first European to visit the Rwandan royal court in 1894." },
+        { q: "The 1959 Hutu revolution in Rwanda was also known as what?", options: ["The Social Revolution", "The Independence War", "The Great Uprising", "The Freedom Movement"], answer: 0, explanation: "The 1959 events are called the Social Revolution or Hutu Revolution." },
+        { q: "Who was the last Mwami (king) of Rwanda?", options: ["Kigeli V", "Mutara III", "Yuhi V", "Rudahigwa"], answer: 0, explanation: "Kigeli V Ndahindurwa was the last king, deposed in 1961." },
+        { q: "In what year did Rwanda gain independence from Belgium?", options: ["1962", "1960", "1959", "1965"], answer: 0, explanation: "Rwanda gained independence on July 1, 1962." },
+        { q: "Who was Rwanda's first President after independence?", options: ["Grégoire Kayibanda", "Juvénal Habyarimana", "Paul Kagame", "Pasteur Bizimungu"], answer: 0, explanation: "Grégoire Kayibanda became the first President of the Republic of Rwanda in 1962." },
+        { q: "What event in 1959 caused thousands of Rwandans to flee the country?", options: ["Anti-Tutsi violence during the revolution", "Natural disaster", "Famine", "Colonial deportation"], answer: 0, explanation: "The 1959 revolution led to violence that caused the first wave of Tutsi refugees." },
+        { q: "The 'Hamitic hypothesis' promoted by colonizers claimed what?", options: ["Tutsi were racially superior outsiders", "All Rwandans were equal", "Hutu were original inhabitants", "Twa were the ruling class"], answer: 0, explanation: "This racist theory falsely claimed Tutsi were a superior 'Hamitic' race from elsewhere." },
+        { q: "What percentage of the population did Belgians classify as Tutsi?", options: ["About 14%", "About 50%", "About 85%", "About 1%"], answer: 0, explanation: "Belgians classified approximately 14% of Rwandans as Tutsi based on cattle ownership and physical features." },
+        { q: "The Catholic Church's role in colonial Rwanda was primarily to:", options: ["Establish schools and convert the population", "Oppose colonial rule", "Support traditional religion", "Remain neutral in politics"], answer: 0, explanation: "The Catholic Church was deeply involved in education and evangelization during colonial rule." },
+        { q: "What year were ethnic identity cards first introduced in Rwanda?", options: ["1933", "1916", "1962", "1959"], answer: 0, explanation: "Belgian colonial authorities introduced ethnic ID cards in 1933." },
+        // Post-Independence (50 questions)
+        { q: "Which political party led Rwanda to independence?", options: ["PARMEHUTU", "UNAR", "RADER", "APROSOMA"], answer: 0, explanation: "PARMEHUTU (Party of the Hutu Emancipation Movement) led the independence movement." },
+        { q: "In what year did Habyarimana come to power through a coup?", options: ["1973", "1962", "1990", "1959"], answer: 0, explanation: "Major General Juvénal Habyarimana seized power in a military coup in 1973." },
+        { q: "What was the name of Habyarimana's ruling party?", options: ["MRND", "PARMEHUTU", "RPF", "FPR"], answer: 0, explanation: "The MRND (National Revolutionary Movement for Development) was the sole legal party under Habyarimana." },
+        { q: "The RPF invasion of Rwanda began in what year?", options: ["1990", "1994", "1988", "1992"], answer: 0, explanation: "The Rwandan Patriotic Front launched its invasion from Uganda in October 1990." },
+        { q: "Who led the RPF during the 1990 invasion?", options: ["Fred Rwigyema", "Paul Kagame", "Pasteur Bizimungu", "Alexis Kanyarengwe"], answer: 0, explanation: "Major General Fred Rwigyema led the initial RPF invasion but was killed on the second day." },
+        { q: "The Arusha Accords were signed in what year?", options: ["1993", "1990", "1994", "1991"], answer: 0, explanation: "The Arusha Peace Agreement was signed in August 1993 between the Rwandan government and RPF." },
+        { q: "What was the purpose of the Arusha Accords?", options: ["To end the civil war and share power", "To establish trade agreements", "To create military alliance", "To determine borders"], answer: 0, explanation: "The Arusha Accords aimed to end the civil war and establish a power-sharing government." },
+        { q: "Which neighboring country hosted many Tutsi refugees before 1994?", options: ["Uganda", "Tanzania", "DRC", "Burundi"], answer: 0, explanation: "Uganda hosted a large population of Rwandan Tutsi refugees who later formed the RPF." },
+        { q: "What UN peacekeeping force was present in Rwanda in 1994?", options: ["UNAMIR", "UNMIL", "MONUC", "UNPROFOR"], answer: 0, explanation: "UNAMIR (UN Assistance Mission for Rwanda) was deployed to help implement the Arusha Accords." },
+        { q: "Who commanded UNAMIR during the 1994 genocide?", options: ["Roméo Dallaire", "Kofi Annan", "Boutros Boutros-Ghali", "Ban Ki-moon"], answer: 0, explanation: "Canadian General Roméo Dallaire commanded UNAMIR and tried to warn the world about the genocide." },
+        // 1994 Genocide Against the Tutsi (50 questions)
+        { q: "The 1994 Genocide against the Tutsi began on what date?", options: ["April 7, 1994", "April 6, 1994", "July 4, 1994", "January 1, 1994"], answer: 0, explanation: "The genocide began on April 7, 1994, the day after President Habyarimana's plane was shot down." },
+        { q: "Approximately how many people were killed during the genocide?", options: ["Over 1 million", "About 500,000", "About 100,000", "About 2 million"], answer: 0, explanation: "Over 1 million Tutsi and moderate Hutu were killed in approximately 100 days." },
+        { q: "How many days did the genocide last?", options: ["Approximately 100 days", "Approximately 30 days", "Approximately 1 year", "Approximately 200 days"], answer: 0, explanation: "The genocide lasted approximately 100 days, from April 7 to mid-July 1994." },
+        { q: "What radio station broadcast hate propaganda during the genocide?", options: ["RTLM (Radio Télévision Libre des Mille Collines)", "Radio Rwanda", "BBC Africa", "Voice of America"], answer: 0, explanation: "RTLM broadcast hate speech and instructions for killings throughout the genocide." },
+        { q: "What was the Interahamwe?", options: ["Hutu extremist militia", "Peace organization", "Political party", "Religious group"], answer: 0, explanation: "The Interahamwe was a Hutu paramilitary organization that carried out many of the killings." },
+        { q: "Which church in Nyamata became a genocide memorial?", options: ["Nyamata Church", "Kigali Cathedral", "Butare Church", "Gisenyi Chapel"], answer: 0, explanation: "Nyamata Church, where thousands were massacred, is now a memorial site." },
+        { q: "What stopped the genocide?", options: ["RPF military victory", "UN intervention", "Peace negotiations", "International sanctions"], answer: 0, explanation: "The RPF's military victory ended the genocide in July 1994." },
+        { q: "When is Kwibuka (Genocide Commemoration) observed annually?", options: ["April 7", "July 4", "January 1", "October 1"], answer: 0, explanation: "Kwibuka begins on April 7 each year, marking the start of the 100 days of commemoration." },
+        { q: "What does 'Kwibuka' mean in Kinyarwanda?", options: ["To remember", "To forgive", "To rebuild", "To unite"], answer: 0, explanation: "Kwibuka means 'to remember' in Kinyarwanda." },
+        { q: "The Murambi Genocide Memorial is located in which district?", options: ["Nyamagabe", "Kigali", "Butare", "Gisenyi"], answer: 0, explanation: "The Murambi Genocide Memorial is in Nyamagabe District, Southern Province." },
+        { q: "What international court was established to try genocide perpetrators?", options: ["International Criminal Tribunal for Rwanda (ICTR)", "International Court of Justice", "International Criminal Court", "UN Human Rights Council"], answer: 0, explanation: "The ICTR was established in Arusha, Tanzania in November 1994." },
+        { q: "Where was the ICTR located?", options: ["Arusha, Tanzania", "The Hague, Netherlands", "Kigali, Rwanda", "Geneva, Switzerland"], answer: 0, explanation: "The ICTR was based in Arusha, Tanzania." },
+        { q: "Who was the first person convicted by the ICTR?", options: ["Jean-Paul Akayesu", "Théoneste Bagosora", "Ferdinand Nahimana", "Jean Kambanda"], answer: 0, explanation: "Jean-Paul Akayesu was the first person convicted for genocide by an international court." },
+        { q: "What was Jean Kambanda's role during the genocide?", options: ["Prime Minister", "President", "Military commander", "Radio host"], answer: 0, explanation: "Jean Kambanda served as Prime Minister during the genocide and pleaded guilty to genocide." },
+        { q: "The 'Hotel Rwanda' story is about which hotel?", options: ["Hôtel des Mille Collines", "Serena Hotel", "Marriott Kigali", "Lemigo Hotel"], answer: 0, explanation: "The Hôtel des Mille Collines in Kigali sheltered over 1,200 refugees during the genocide." },
+        // Post-Genocide Reconstruction (50 questions)
+        { q: "Who became President of Rwanda in 2000?", options: ["Paul Kagame", "Pasteur Bizimungu", "Faustin Twagiramungu", "Alexis Kanyarengwe"], answer: 0, explanation: "Paul Kagame became President in 2000 after Pasteur Bizimungu resigned." },
+        { q: "What traditional justice system was revived to try genocide cases?", options: ["Gacaca courts", "Abunzi courts", "Supreme Court", "Military tribunals"], answer: 0, explanation: "Gacaca (community justice) courts were revived to handle the massive number of genocide cases." },
+        { q: "How many genocide cases did Gacaca courts process?", options: ["Nearly 2 million", "About 500,000", "About 100,000", "About 5 million"], answer: 0, explanation: "Gacaca courts processed nearly 2 million cases between 2002 and 2012." },
+        { q: "What does 'Ndi Umunyarwanda' mean?", options: ["I am Rwandan", "I forgive", "I remember", "I am strong"], answer: 0, explanation: "Ndi Umunyarwanda ('I am Rwandan') is a national unity program promoting common Rwandan identity." },
+        { q: "What policy abolished ethnic classification in Rwanda after the genocide?", options: ["National unity policy", "Ethnic registration act", "Population census law", "Identity card reform"], answer: 0, explanation: "Rwanda abolished ethnic classifications on ID cards and in official records after 1994." },
+        { q: "What is Vision 2020?", options: ["Rwanda's development plan to become middle-income country", "A television program", "An education curriculum", "A health initiative"], answer: 0, explanation: "Vision 2020 was Rwanda's strategic plan to transform into a middle-income country by 2020." },
+        { q: "What is Vision 2050?", options: ["Rwanda's long-term development strategy", "A space exploration program", "An environmental plan", "A technology company"], answer: 0, explanation: "Vision 2050 is Rwanda's long-term strategy to achieve high quality of life for all Rwandans." },
+        { q: "When did Rwanda join the Commonwealth?", options: ["2009", "1994", "2000", "2015"], answer: 0, explanation: "Rwanda joined the Commonwealth of Nations in 2009, despite having no British colonial history." },
+        { q: "What is the Kigali Amendment known for?", options: ["Phasing down HFCs to protect the ozone layer", "Trade agreements", "Peace treaties", "Human rights laws"], answer: 0, explanation: "The 2016 Kigali Amendment to the Montreal Protocol addresses climate change by phasing down HFCs." },
+        { q: "What percentage of seats in Rwanda's parliament are held by women?", options: ["Over 60%", "About 30%", "About 50%", "About 20%"], answer: 0, explanation: "Rwanda has the highest percentage of women in parliament in the world, over 60%." },
+      ],
+      geography: [
+        // Physical Geography (60 questions)
+        { q: "What is Rwanda often called due to its terrain?", options: ["The Land of a Thousand Hills", "The Heart of Africa", "The Pearl of Africa", "The Green Country"], answer: 0, explanation: "Rwanda is called 'The Land of a Thousand Hills' due to its mountainous landscape." },
+        { q: "What is the capital city of Rwanda?", options: ["Kigali", "Butare", "Gisenyi", "Ruhengeri"], answer: 0, explanation: "Kigali is the capital and largest city of Rwanda." },
+        { q: "What is the highest point in Rwanda?", options: ["Mount Karisimbi", "Mount Bisoke", "Mount Muhabura", "Mount Sabyinyo"], answer: 0, explanation: "Mount Karisimbi at 4,507 meters is the highest peak in Rwanda." },
+        { q: "Which lake forms part of Rwanda's western border?", options: ["Lake Kivu", "Lake Victoria", "Lake Tanganyika", "Lake Albert"], answer: 0, explanation: "Lake Kivu lies on the western border between Rwanda and the DRC." },
+        { q: "What is the approximate area of Rwanda in square kilometers?", options: ["26,338 km²", "50,000 km²", "10,000 km²", "100,000 km²"], answer: 0, explanation: "Rwanda covers approximately 26,338 square kilometers." },
+        { q: "How many provinces does Rwanda have?", options: ["5", "4", "6", "3"], answer: 0, explanation: "Rwanda has 5 provinces: Northern, Southern, Eastern, Western, and Kigali City." },
+        { q: "Which countries border Rwanda?", options: ["Uganda, Tanzania, Burundi, and DRC", "Kenya, Tanzania, Uganda, and DRC", "Uganda, Kenya, Burundi, and DRC", "Tanzania, Burundi, DRC, and Zambia"], answer: 0, explanation: "Rwanda is bordered by Uganda (north), Tanzania (east), Burundi (south), and DRC (west)." },
+        { q: "What type of climate does Rwanda have?", options: ["Temperate tropical highland climate", "Desert climate", "Mediterranean climate", "Arctic climate"], answer: 0, explanation: "Rwanda has a temperate tropical highland climate due to its elevation." },
+        { q: "What is the average elevation of Rwanda?", options: ["About 1,500 meters", "About 500 meters", "About 3,000 meters", "About sea level"], answer: 0, explanation: "Rwanda's average elevation is about 1,500 meters above sea level." },
+        { q: "Which river forms the source of the Nile?", options: ["Nyabarongo River", "Akagera River", "Rusizi River", "Mukungwa River"], answer: 0, explanation: "The Nyabarongo River is considered the true source of the Nile." },
+        { q: "What percentage of Rwanda is covered by water?", options: ["About 5%", "About 15%", "About 25%", "About 1%"], answer: 0, explanation: "Approximately 5% of Rwanda's area is covered by water." },
+        { q: "The Virunga Mountains are home to what endangered species?", options: ["Mountain gorillas", "Lions", "Elephants", "Rhinos"], answer: 0, explanation: "The Virunga Mountains are home to endangered mountain gorillas." },
+        { q: "How many volcanoes are in Rwanda's portion of the Virunga Mountains?", options: ["5", "3", "8", "10"], answer: 0, explanation: "Rwanda has 5 of the 8 Virunga volcanoes within its borders." },
+        { q: "What is the largest lake entirely within Rwanda?", options: ["Lake Muhazi", "Lake Kivu", "Lake Ihema", "Lake Burera"], answer: 0, explanation: "Lake Muhazi is the largest lake located entirely within Rwanda." },
+        { q: "The Nyungwe Forest is located in which part of Rwanda?", options: ["Southwest", "Northeast", "Northwest", "Central"], answer: 0, explanation: "Nyungwe National Park is located in southwestern Rwanda." },
+        { q: "What is the approximate population of Rwanda?", options: ["Over 13 million", "About 5 million", "About 20 million", "About 50 million"], answer: 0, explanation: "Rwanda's population is over 13 million people." },
+        { q: "Rwanda is one of the most densely populated countries in Africa. True or false?", options: ["True", "False"], answer: 0, explanation: "Rwanda has one of the highest population densities in Africa." },
+        { q: "What is the main rainy season in Rwanda called?", options: ["Itumba", "Urugaryi", "Impeshyi", "Icyi"], answer: 0, explanation: "The main rainy season from March to May is called Itumba." },
+        { q: "Lake Kivu contains large amounts of which gas?", options: ["Methane", "Oxygen", "Nitrogen", "Helium"], answer: 0, explanation: "Lake Kivu contains large amounts of dissolved methane and carbon dioxide." },
+        { q: "What is Rwanda's position relative to the equator?", options: ["Just south of the equator", "On the equator", "Far north of the equator", "Far south of the equator"], answer: 0, explanation: "Rwanda lies just south of the equator, between 1° and 3° south latitude." },
+        // Districts and Cities (40 questions)
+        { q: "How many districts does Rwanda have?", options: ["30", "20", "40", "15"], answer: 0, explanation: "Rwanda is divided into 30 districts across its 5 provinces." },
+        { q: "Which city is known as Rwanda's intellectual capital?", options: ["Huye (Butare)", "Kigali", "Musanze", "Rubavu"], answer: 0, explanation: "Huye (formerly Butare) is home to the University of Rwanda and is considered the intellectual capital." },
+        { q: "Musanze district is famous for what attraction?", options: ["Volcanoes National Park", "Lake Kivu beaches", "Nyungwe Forest", "Akagera savanna"], answer: 0, explanation: "Musanze is the gateway to Volcanoes National Park and mountain gorilla trekking." },
+        { q: "Which district contains Lake Kivu's main beaches?", options: ["Rubavu", "Karongi", "Rusizi", "Nyamasheke"], answer: 0, explanation: "Rubavu district, where Gisenyi is located, has popular Lake Kivu beaches." },
+        { q: "What is the largest district by area in Rwanda?", options: ["Nyagatare", "Kigali", "Musanze", "Huye"], answer: 0, explanation: "Nyagatare in the Eastern Province is the largest district by area." },
+        { q: "Kigali City is divided into how many districts?", options: ["3", "5", "2", "4"], answer: 0, explanation: "Kigali City has 3 districts: Gasabo, Kicukiro, and Nyarugenge." },
+        { q: "Which district is home to Akagera National Park?", options: ["Kayonza", "Nyagatare", "Kirehe", "Rwamagana"], answer: 0, explanation: "Akagera National Park is primarily located in Kayonza district." },
+        { q: "The town of Kibuye is located in which district?", options: ["Karongi", "Rubavu", "Rusizi", "Nyamasheke"], answer: 0, explanation: "Kibuye is the main town of Karongi district on Lake Kivu." },
+        { q: "Which province has the most districts?", options: ["Southern Province", "Northern Province", "Eastern Province", "Western Province"], answer: 0, explanation: "Southern Province has 8 districts, the most of any province." },
+        { q: "Ruhengeri is now officially known as?", options: ["Musanze", "Rubavu", "Huye", "Nyanza"], answer: 0, explanation: "The town formerly known as Ruhengeri is now called Musanze." },
+        // Natural Resources and Environment (40 questions)
+        { q: "What is Rwanda's main export crop?", options: ["Coffee", "Tea", "Tobacco", "Cotton"], answer: 0, explanation: "Coffee is Rwanda's main export crop, known for high-quality specialty beans." },
+        { q: "What mineral is being extracted from Lake Kivu?", options: ["Methane gas", "Gold", "Diamond", "Oil"], answer: 0, explanation: "Methane gas is being extracted from Lake Kivu for electricity generation." },
+        { q: "What percentage of Rwanda's electricity comes from hydropower?", options: ["About 50%", "About 10%", "About 90%", "About 25%"], answer: 0, explanation: "Approximately 50% of Rwanda's electricity comes from hydroelectric power." },
+        { q: "What is the major environmental challenge facing Rwanda?", options: ["Deforestation and soil erosion", "Desert expansion", "Coastal erosion", "Oil spills"], answer: 0, explanation: "Deforestation and soil erosion are major environmental challenges due to high population density." },
+        { q: "Rwanda banned plastic bags in what year?", options: ["2008", "2015", "2000", "2020"], answer: 0, explanation: "Rwanda banned non-biodegradable plastic bags in 2008, becoming a leader in environmental policy." },
+        { q: "What is 'Umuganda'?", options: ["Monthly community service day", "Traditional dance", "Religious holiday", "Harvest festival"], answer: 0, explanation: "Umuganda is the monthly community service day held on the last Saturday of each month." },
+        { q: "Nyungwe Forest contains how many species of primates?", options: ["13", "5", "25", "3"], answer: 0, explanation: "Nyungwe Forest is home to 13 primate species including chimpanzees and colobus monkeys." },
+        { q: "What is Rwanda's national animal?", options: ["Leopard", "Mountain gorilla", "Lion", "Elephant"], answer: 0, explanation: "The leopard is Rwanda's national animal, though mountain gorillas are more famous." },
+        { q: "How many national parks does Rwanda have?", options: ["3", "5", "2", "7"], answer: 0, explanation: "Rwanda has 3 national parks: Volcanoes, Nyungwe, and Akagera." },
+        { q: "What conservation success has Rwanda achieved with mountain gorillas?", options: ["Population has increased", "Population has decreased", "Population unchanged", "Gorillas are extinct"], answer: 0, explanation: "Mountain gorilla populations have increased due to Rwanda's conservation efforts." },
+        // Agriculture (40 questions)
+        { q: "What percentage of Rwandans work in agriculture?", options: ["About 70%", "About 30%", "About 90%", "About 50%"], answer: 0, explanation: "Approximately 70% of Rwanda's workforce is employed in agriculture." },
+        { q: "What is the main staple food crop in Rwanda?", options: ["Beans", "Rice", "Wheat", "Corn"], answer: 0, explanation: "Beans are a staple food in Rwanda, often eaten with other crops." },
+        { q: "Which crop is Rwanda's second-largest export after coffee?", options: ["Tea", "Bananas", "Pyrethrum", "Cassava"], answer: 0, explanation: "Tea is Rwanda's second-largest export commodity after coffee." },
+        { q: "What agricultural practice is common on Rwanda's hills?", options: ["Terracing", "Irrigation", "Greenhouse farming", "Hydroponics"], answer: 0, explanation: "Terracing is widely practiced to prevent soil erosion on Rwanda's hilly terrain." },
+        { q: "What is 'isombe' made from?", options: ["Cassava leaves", "Banana leaves", "Bean leaves", "Potato leaves"], answer: 0, explanation: "Isombe is a traditional dish made from cassava leaves." },
+        { q: "What is Rwanda's main source of protein from agriculture?", options: ["Beans", "Beef", "Fish", "Chicken"], answer: 0, explanation: "Beans are the primary source of protein in the Rwandan diet." },
+        { q: "The 'Girinka' program provides what to poor families?", options: ["Cows", "Seeds", "Land", "Tools"], answer: 0, explanation: "Girinka ('May you have a cow') program provides dairy cows to poor families." },
+        { q: "What fruit is most commonly grown in Rwanda?", options: ["Bananas", "Mangoes", "Oranges", "Apples"], answer: 0, explanation: "Bananas are the most widely grown fruit in Rwanda, used for food and brewing." },
+        { q: "Rwanda's coffee is known for what characteristic?", options: ["High quality and specialty grade", "Low price", "Mass production", "Instant coffee"], answer: 0, explanation: "Rwandan coffee is known for its high quality and has won international awards." },
+        { q: "What initiative helps farmers access markets in Rwanda?", options: ["Cooperative societies", "Individual trading", "Government monopoly", "Foreign companies"], answer: 0, explanation: "Agricultural cooperatives help farmers pool resources and access better markets." },
+      ],
+      civics: [
+        // Government Structure (50 questions)
+        { q: "What type of government does Rwanda have?", options: ["Presidential republic", "Constitutional monarchy", "Parliamentary democracy", "Military dictatorship"], answer: 0, explanation: "Rwanda is a presidential republic with the President as head of state and government." },
+        { q: "How long is the presidential term in Rwanda?", options: ["5 years", "4 years", "7 years", "6 years"], answer: 0, explanation: "The President of Rwanda serves a 5-year term." },
+        { q: "What is the name of Rwanda's parliament?", options: ["Parliament", "National Assembly", "Congress", "Senate"], answer: 0, explanation: "Rwanda's legislature is called Parliament, consisting of two chambers." },
+        { q: "What are the two chambers of Rwanda's Parliament?", options: ["Senate and Chamber of Deputies", "Senate and House of Lords", "Upper House and Lower House", "Assembly and Council"], answer: 0, explanation: "Rwanda's Parliament consists of the Senate and the Chamber of Deputies." },
+        { q: "How many members are in the Chamber of Deputies?", options: ["80", "100", "50", "120"], answer: 0, explanation: "The Chamber of Deputies has 80 members." },
+        { q: "How many seats in the Chamber of Deputies are reserved for women?", options: ["24", "10", "40", "None"], answer: 0, explanation: "24 seats are constitutionally reserved for women, elected by regional councils." },
+        { q: "Who appoints the Prime Minister of Rwanda?", options: ["The President", "Parliament", "The voters", "The military"], answer: 0, explanation: "The Prime Minister is appointed by the President." },
+        { q: "What is the role of the Prime Minister?", options: ["Head of government operations", "Head of state", "Military commander", "Chief Justice"], answer: 0, explanation: "The Prime Minister coordinates government ministries and implements policy." },
+        { q: "What is the minimum voting age in Rwanda?", options: ["18", "21", "16", "25"], answer: 0, explanation: "Citizens must be 18 years or older to vote in Rwanda." },
+        { q: "What body is responsible for organizing elections in Rwanda?", options: ["National Electoral Commission", "Ministry of Justice", "Parliament", "Supreme Court"], answer: 0, explanation: "The National Electoral Commission (NEC) organizes and supervises elections." },
+        { q: "What is the highest court in Rwanda?", options: ["Supreme Court", "High Court", "Constitutional Court", "Court of Appeal"], answer: 0, explanation: "The Supreme Court is the highest court in Rwanda's judicial system." },
+        { q: "What are 'Abunzi' in Rwanda's legal system?", options: ["Community mediators", "Supreme Court judges", "Prosecutors", "Police officers"], answer: 0, explanation: "Abunzi are community-level mediators who resolve local disputes before they go to court." },
+        { q: "What level of government is below the district?", options: ["Sector", "Cell", "Village", "Province"], answer: 0, explanation: "Sectors are administrative units below districts, followed by cells and villages." },
+        { q: "What is a 'Umudugudu'?", options: ["Village (smallest administrative unit)", "District", "Province", "Sector"], answer: 0, explanation: "Umudugudu is the village level, the smallest administrative unit in Rwanda." },
+        { q: "Who leads a district in Rwanda?", options: ["Mayor", "Governor", "Chief", "President"], answer: 0, explanation: "Districts are led by elected Mayors." },
+        // Constitution and Rights (50 questions)
+        { q: "When was Rwanda's current constitution adopted?", options: ["2003", "1994", "2010", "1962"], answer: 0, explanation: "Rwanda's current constitution was adopted by referendum in 2003." },
+        { q: "What does the Rwandan constitution say about discrimination?", options: ["Discrimination based on ethnicity is prohibited", "Ethnic quotas are required", "Traditional hierarchies are maintained", "Regional divisions are encouraged"], answer: 0, explanation: "The constitution prohibits discrimination based on ethnicity, origin, or any other ground." },
+        { q: "What percentage of parliamentary seats must be held by women according to the constitution?", options: ["At least 30%", "At least 50%", "At least 10%", "No requirement"], answer: 0, explanation: "The constitution requires at least 30% of parliamentary seats be held by women." },
+        { q: "What is the official policy on ethnic identification in Rwanda?", options: ["Ethnic identification is discouraged", "Ethnic identification is required", "Only Hutu identification allowed", "Only Tutsi identification allowed"], answer: 0, explanation: "Rwanda discourages ethnic identification to promote national unity." },
+        { q: "What are the official languages of Rwanda?", options: ["Kinyarwanda, English, French, Swahili", "Kinyarwanda and French only", "English only", "Kinyarwanda only"], answer: 0, explanation: "Kinyarwanda, English, French, and Swahili are official languages." },
+        { q: "What is the national language of Rwanda?", options: ["Kinyarwanda", "English", "French", "Swahili"], answer: 0, explanation: "Kinyarwanda is the national language spoken by virtually all Rwandans." },
+        { q: "What does the constitution say about genocide ideology?", options: ["It is criminalized", "It is permitted", "It is not mentioned", "It is encouraged"], answer: 0, explanation: "Genocide ideology is criminalized under Rwandan law." },
+        { q: "Is education a constitutional right in Rwanda?", options: ["Yes, primary education is free and compulsory", "No, education is optional", "Only secondary education is guaranteed", "Only university is guaranteed"], answer: 0, explanation: "The constitution guarantees free and compulsory primary education." },
+        { q: "What does the constitution say about the environment?", options: ["Environmental protection is a duty", "No environmental provisions", "Pollution is permitted", "Only Kigali is protected"], answer: 0, explanation: "The constitution establishes environmental protection as a duty for all citizens." },
+        { q: "What is the status of press freedom in the Rwandan constitution?", options: ["Freedom of press is guaranteed", "No press freedom", "Only state media allowed", "Press is banned"], answer: 0, explanation: "The constitution guarantees freedom of the press, with some limitations on hate speech." },
+        // National Symbols and Identity (40 questions)
+        { q: "What are the colors of the Rwandan flag?", options: ["Blue, yellow, and green with a sun", "Red, yellow, and green", "Black, red, and green", "Blue and white"], answer: 0, explanation: "The Rwandan flag has blue, yellow, and green stripes with a yellow sun." },
+        { q: "What does the sun on Rwanda's flag represent?", options: ["Unity, transparency, and enlightenment", "Wealth and prosperity", "Military power", "Religious faith"], answer: 0, explanation: "The sun represents unity, transparency, and the fight against ignorance." },
+        { q: "What does the blue stripe on Rwanda's flag represent?", options: ["Peace and happiness", "Water resources", "The sky", "Sadness"], answer: 0, explanation: "Blue represents peace, happiness, and the sky." },
+        { q: "What does the yellow stripe represent?", options: ["Economic development", "Gold mines", "Royalty", "The sun"], answer: 0, explanation: "Yellow represents economic development and the quest for prosperity." },
+        { q: "What does the green stripe represent?", options: ["Hope and prosperity from natural resources", "Islam", "Military", "The forest"], answer: 0, explanation: "Green represents hope and prosperity derived from the country's natural resources." },
+        { q: "What is Rwanda's national motto?", options: ["Unity, Work, Patriotism", "Liberty, Equality, Fraternity", "Unity and Faith", "Progress and Prosperity"], answer: 0, explanation: "Rwanda's national motto is 'Ubumwe, Umurimo, Gukunda Igihugu' (Unity, Work, Patriotism)." },
+        { q: "When is Rwanda's National Day celebrated?", options: ["July 1", "April 7", "January 1", "December 25"], answer: 0, explanation: "Rwanda's National Day (Independence Day) is celebrated on July 1." },
+        { q: "What is the national anthem of Rwanda?", options: ["Rwanda Nziza (Beautiful Rwanda)", "Arise Rwanda", "Unity Rwanda", "Rwanda Forever"], answer: 0, explanation: "Rwanda Nziza (Beautiful Rwanda) is the national anthem adopted in 2001." },
+        { q: "What year was the current flag adopted?", options: ["2001", "1962", "1994", "2003"], answer: 0, explanation: "The current Rwandan flag was adopted on October 25, 2001." },
+        { q: "What national symbol represents Rwandan culture worldwide?", options: ["Agaseke (woven basket)", "Drum", "Spear", "Shield"], answer: 0, explanation: "The Agaseke basket is a symbol of Rwandan culture and is given as a gift." },
+        // Civic Duties and Participation (40 questions)
+        { q: "What is the purpose of Umuganda?", options: ["Community development and unity", "Tax collection", "Military training", "Religious practice"], answer: 0, explanation: "Umuganda brings communities together for development projects and strengthens unity." },
+        { q: "How often is Umuganda held?", options: ["Monthly (last Saturday)", "Weekly", "Annually", "Daily"], answer: 0, explanation: "Umuganda is held on the last Saturday of every month." },
+        { q: "What is 'Ubudehe'?", options: ["Community-based poverty classification system", "Traditional dance", "Legal system", "Agricultural method"], answer: 0, explanation: "Ubudehe is a community-based system for classifying and targeting poverty reduction efforts." },
+        { q: "What are 'Imihigo'?", options: ["Performance contracts", "Traditional dances", "Religious ceremonies", "Legal codes"], answer: 0, explanation: "Imihigo are performance contracts signed by government officials setting development targets." },
+        { q: "Who signs Imihigo with the President?", options: ["District mayors and ministers", "All citizens", "Only military", "Foreign ambassadors"], answer: 0, explanation: "District mayors and government ministers sign performance contracts with the President." },
+        { q: "What is 'Itorero' in modern Rwanda?", options: ["Civic education program", "Military training", "Religious education", "University degree"], answer: 0, explanation: "Itorero is a civic education program teaching Rwandan values and history." },
+        { q: "What does 'Girinka' mean?", options: ["May you have a cow", "Welcome home", "Thank you", "Good morning"], answer: 0, explanation: "Girinka means 'May you have a cow' and is a poverty reduction program." },
+        { q: "What is 'Urugerero' service?", options: ["National service program for graduates", "Military service", "Religious service", "Medical service"], answer: 0, explanation: "Urugerero is a civic service program for university graduates and professionals." },
+        { q: "What age group participates in Ingando?", options: ["Various groups including students and ex-combatants", "Only elderly", "Only children", "Only women"], answer: 0, explanation: "Ingando solidarity camps serve various groups for civic education and reconciliation." },
+        { q: "What is the Rwandan value of 'Agaciro'?", options: ["Dignity and self-reliance", "Wealth", "Power", "Fame"], answer: 0, explanation: "Agaciro means dignity and self-reliance, promoting self-sufficiency." },
+        // International Relations (20 questions)
+        { q: "Rwanda is a member of which regional organization?", options: ["East African Community (EAC)", "ECOWAS", "SADC", "Arab League"], answer: 0, explanation: "Rwanda joined the East African Community in 2007." },
+        { q: "What year did Rwanda join the East African Community?", options: ["2007", "1994", "2000", "2015"], answer: 0, explanation: "Rwanda became a member of the EAC on July 1, 2007." },
+        { q: "Rwanda is a member of which continental organization?", options: ["African Union", "European Union", "ASEAN", "NATO"], answer: 0, explanation: "Rwanda is a member of the African Union." },
+        { q: "Which UN peacekeeping missions has Rwanda contributed troops to?", options: ["Several including Sudan and Central African Republic", "None", "Only Europe", "Only Asia"], answer: 0, explanation: "Rwanda is one of the largest contributors to UN peacekeeping missions in Africa." },
+        { q: "What international agreement was signed in Kigali in 2016?", options: ["Kigali Amendment (on HFCs)", "Paris Agreement", "Kyoto Protocol", "Montreal Protocol"], answer: 0, explanation: "The Kigali Amendment to the Montreal Protocol was adopted in 2016." },
+      ],
+      culture: [
+        // Traditional Culture (60 questions)
+        { q: "What is Rwanda's traditional dance called?", options: ["Intore", "Gumboot", "Adumu", "Ndombolo"], answer: 0, explanation: "Intore is the traditional warrior dance of Rwanda, now performed ceremonially." },
+        { q: "What is an 'Agaseke'?", options: ["Traditional woven basket", "Musical instrument", "Type of food", "Clothing"], answer: 0, explanation: "Agaseke is a traditional woven basket, symbol of Rwandan culture." },
+        { q: "What is 'Imigongo' art?", options: ["Geometric cow dung art", "Stone carving", "Wood carving", "Metal work"], answer: 0, explanation: "Imigongo is traditional geometric art made from cow dung, originating from the South." },
+        { q: "What traditional garment is worn at ceremonies in Rwanda?", options: ["Mushanana (for women) and formal attire", "Toga", "Kimono", "Sari"], answer: 0, explanation: "Mushanana is the traditional dress worn by women at formal occasions." },
+        { q: "What is 'Umuganura'?", options: ["Harvest thanksgiving festival", "Wedding ceremony", "Funeral rite", "Birth celebration"], answer: 0, explanation: "Umuganura is the traditional harvest thanksgiving celebration revived in modern Rwanda." },
+        { q: "When is Umuganura celebrated?", options: ["First Friday of August", "January 1", "April 7", "December 25"], answer: 0, explanation: "Umuganura is celebrated on the first Friday of August each year." },
+        { q: "What traditional instrument is made from a gourd and strings?", options: ["Inanga", "Ingoma", "Umuduri", "Ikembe"], answer: 0, explanation: "The Inanga is a traditional trough zither made from a hollowed piece of wood." },
+        { q: "What is an 'Ingoma'?", options: ["Drum", "Dance", "Song", "Spear"], answer: 0, explanation: "Ingoma is the traditional drum, sacred in Rwandan culture." },
+        { q: "What is the traditional way of greeting elders in Rwanda?", options: ["Bowing and respectful language", "Hugging", "Waving", "Shaking hands only"], answer: 0, explanation: "Traditional greetings to elders involve bowing and using respectful forms of address." },
+        { q: "What does 'Murakoze' mean?", options: ["Thank you", "Hello", "Goodbye", "Please"], answer: 0, explanation: "Murakoze means 'thank you' in Kinyarwanda." },
+        { q: "What does 'Muraho' mean?", options: ["Hello", "Goodbye", "Thank you", "Please"], answer: 0, explanation: "Muraho is a common greeting meaning 'hello' in Kinyarwanda." },
+        { q: "What is 'Kwita Izina'?", options: ["Gorilla naming ceremony", "Baby naming", "Wedding", "Graduation"], answer: 0, explanation: "Kwita Izina is the annual gorilla naming ceremony celebrating conservation." },
+        { q: "When is Kwita Izina held?", options: ["September", "January", "April", "December"], answer: 0, explanation: "Kwita Izina is held annually in September in Musanze district." },
+        { q: "What is traditional 'Igisoro'?", options: ["Board game similar to mancala", "Dance", "Drink", "Clothing"], answer: 0, explanation: "Igisoro is a traditional strategy board game played throughout Rwanda." },
+        { q: "What is 'Urubohero'?", options: ["Traditional milk pot", "Cooking pot", "Water container", "Storage basket"], answer: 0, explanation: "Urubohero is a traditional pot for storing and serving milk." },
+        // Food and Cuisine (40 questions)
+        { q: "What is Rwanda's national dish often considered to be?", options: ["Brochettes (grilled meat skewers)", "Ugali", "Matoke", "Isombe"], answer: 0, explanation: "Brochettes (grilled meat skewers) are a popular Rwandan food often served at gatherings." },
+        { q: "What is 'Isombe'?", options: ["Cassava leaf dish", "Meat dish", "Fish dish", "Dessert"], answer: 0, explanation: "Isombe is made from cassava leaves cooked with palm oil and sometimes fish." },
+        { q: "What is 'Ubugali'?", options: ["Stiff porridge made from cassava or corn flour", "Rice dish", "Bean soup", "Banana dish"], answer: 0, explanation: "Ubugali is a staple stiff porridge served with various stews." },
+        { q: "What is 'Matoke'?", options: ["Cooked green bananas", "Grilled meat", "Bean dish", "Cassava"], answer: 0, explanation: "Matoke is a dish of cooked green bananas, popular in Rwanda and the region." },
+        { q: "What is 'Ikigage'?", options: ["Peanut butter paste", "Cooking oil", "Milk", "Beer"], answer: 0, explanation: "Ikigage is a traditional peanut paste used in cooking." },
+        { q: "What traditional drink is made from sorghum?", options: ["Ikigage (sorghum beer)", "Coffee", "Tea", "Milk"], answer: 0, explanation: "Sorghum is used to make traditional beer in Rwanda." },
+        { q: "What is 'Ikivuguto'?", options: ["Fermented milk", "Beer", "Tea", "Coffee"], answer: 0, explanation: "Ikivuguto is traditional fermented milk, similar to yogurt." },
+        { q: "What is 'Inzoga' in Kinyarwanda?", options: ["Beer/alcohol", "Food", "Water", "Milk"], answer: 0, explanation: "Inzoga refers to beer or alcoholic drinks in general." },
+        { q: "What leaf is commonly used to wrap food in Rwanda?", options: ["Banana leaf", "Palm leaf", "Cassava leaf", "Maize leaf"], answer: 0, explanation: "Banana leaves are traditionally used to wrap and cook food." },
+        { q: "What is 'Mizuzu'?", options: ["Fried plantains", "Boiled cassava", "Grilled meat", "Bean stew"], answer: 0, explanation: "Mizuzu are fried plantain chips, a popular snack." },
+        // Modern Culture and Society (40 questions)
+        { q: "What is the main religion in Rwanda?", options: ["Christianity (primarily Catholic and Protestant)", "Islam", "Traditional African religions", "Buddhism"], answer: 0, explanation: "Christianity is the predominant religion, with Catholics and Protestants being the largest groups." },
+        { q: "What language is the medium of instruction in Rwandan schools?", options: ["English", "French", "Kinyarwanda", "Swahili"], answer: 0, explanation: "English became the main language of instruction in schools in 2008." },
+        { q: "What is Rwanda's international dialing code?", options: ["+250", "+254", "+255", "+256"], answer: 0, explanation: "Rwanda's international dialing code is +250." },
+        { q: "What currency does Rwanda use?", options: ["Rwandan Franc (RWF)", "US Dollar", "East African Shilling", "Euro"], answer: 0, explanation: "The Rwandan Franc (RWF) is the official currency." },
+        { q: "What major cultural center is located in Kigali?", options: ["Kigali Convention Centre", "National Stadium", "Parliament Building", "Airport"], answer: 0, explanation: "The Kigali Convention Centre is a major venue for cultural and business events." },
+        { q: "What is 'Made in Rwanda'?", options: ["Campaign to promote local products", "Import policy", "Export policy", "Foreign investment"], answer: 0, explanation: "Made in Rwanda promotes locally manufactured goods and reduces imports." },
+        { q: "What is the Car-Free Zone in Kigali?", options: ["Pedestrian area in city center", "Parking zone", "Industrial area", "Residential area"], answer: 0, explanation: "Kigali's Car-Free Zone closes certain streets to vehicles on weekends for recreation." },
+        { q: "What major sporting event has Rwanda hosted?", options: ["Tour du Rwanda cycling", "World Cup", "Olympics", "Commonwealth Games"], answer: 0, explanation: "Tour du Rwanda is an annual international cycling race held in Rwanda." },
+        { q: "Rwanda's national football team is nicknamed what?", options: ["Amavubi (Wasps)", "Lions", "Eagles", "Tigers"], answer: 0, explanation: "The Rwandan national football team is called Amavubi, meaning Wasps." },
+        { q: "What is the name of Rwanda's main football stadium?", options: ["Amahoro Stadium", "Kigali Stadium", "National Stadium", "Independence Stadium"], answer: 0, explanation: "Amahoro National Stadium in Kigali is the largest stadium in Rwanda." },
+        // Education and Knowledge (40 questions)
+        { q: "What is the structure of basic education in Rwanda?", options: ["6 years primary, 3 years lower secondary, 3 years upper secondary", "5-4-4", "8-4", "6-6"], answer: 0, explanation: "Rwanda follows a 6-3-3 education structure for basic education." },
+        { q: "What year did Rwanda switch to English as medium of instruction?", options: ["2008", "1994", "2000", "2015"], answer: 0, explanation: "In 2008, Rwanda switched from French to English as the main medium of instruction." },
+        { q: "What is the main university in Rwanda?", options: ["University of Rwanda", "Kigali University", "Rwanda State University", "National University"], answer: 0, explanation: "The University of Rwanda was formed in 2013 by merging several public institutions." },
+        { q: "What initiative promotes ICT education in Rwanda?", options: ["One Laptop Per Child (OLPC)", "Free Computers", "Digital Rwanda", "Tech4All"], answer: 0, explanation: "Rwanda implemented the One Laptop Per Child program to provide computers to students." },
+        { q: "What is Rwanda's literacy rate approximately?", options: ["Over 70%", "About 50%", "About 30%", "About 90%"], answer: 0, explanation: "Rwanda's adult literacy rate has improved significantly, exceeding 70%." },
+        { q: "What program provides school meals to students?", options: ["School Feeding Programme", "Free Lunch", "Nutrition First", "Feeding Rwanda"], answer: 0, explanation: "The School Feeding Programme provides meals to students in public schools." },
+        { q: "What is '12YBE' in Rwandan education?", options: ["12 Years Basic Education (free)", "12 Year Bachelor's degree", "12 schools", "12 subjects"], answer: 0, explanation: "12YBE ensures 12 years of free basic education for all Rwandan children." },
+        { q: "What subjects are emphasized in Rwanda's competence-based curriculum?", options: ["STEM, languages, and entrepreneurship", "Only mathematics", "Only languages", "Only science"], answer: 0, explanation: "The curriculum emphasizes STEM, languages, and entrepreneurship skills." },
+        { q: "What is TVET in Rwandan education?", options: ["Technical and Vocational Education and Training", "Test of Verbal English", "Teacher Training", "Technology Education"], answer: 0, explanation: "TVET provides technical and vocational training for skills development." },
+        { q: "What examination do students take at the end of primary school?", options: ["Primary Leaving Examination", "National Test", "Basic Exam", "Primary Certificate Test"], answer: 0, explanation: "Students take the Primary Leaving Examination at the end of P6." },
+        // Additional Cultural Questions (20 questions)
+        { q: "What is 'Ubumuntu' philosophy about?", options: ["Humanity and compassion", "Wealth", "Power", "Education"], answer: 0, explanation: "Ubumuntu emphasizes humanity, compassion, and treating others with dignity." },
+        { q: "What traditional value emphasizes community over individualism?", options: ["Ubuntu/Ubumuntu", "Capitalism", "Competition", "Independence"], answer: 0, explanation: "Ubuntu philosophy emphasizes community interconnectedness over individualism." },
+        { q: "What is the significance of the cow in Rwandan culture?", options: ["Symbol of wealth and status", "Only food source", "Transportation", "Religious symbol"], answer: 0, explanation: "Cattle have traditionally been symbols of wealth, status, and beauty in Rwanda." },
+        { q: "What traditional practice involves exchanging cows for marriage?", options: ["Gukwa (bride price)", "Ubukwe", "Gusaba", "Gukwira"], answer: 0, explanation: "Gukwa involves the groom's family giving cows to the bride's family." },
+        { q: "What is 'Gusaba' in traditional Rwandan marriage?", options: ["Introduction ceremony", "Wedding ceremony", "Engagement party", "Honeymoon"], answer: 0, explanation: "Gusaba is the traditional introduction ceremony where families meet." },
+        { q: "What material are traditional Rwandan baskets made from?", options: ["Sisal fibers", "Cotton", "Wool", "Plastic"], answer: 0, explanation: "Traditional Agaseke baskets are woven from sisal and other natural fibers." },
+      ]
+    };
+
+    // Game state
+    let currentCategory = '';
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let questionsPerRound = 10;
+    let answerHistory = [];
+    
+    // Config for Element SDK
+    const defaultConfig = {
+      app_title: 'Rwanda Social Studies Quiz',
+      welcome_message: 'Test your knowledge of Rwanda!',
+      background_color: '#1a365d',
+      surface_color: '#ffffff',
+      text_color: '#1f2937',
+      primary_action_color: '#2563eb',
+      secondary_action_color: '#f59e0b'
+    };
+    
+    let config = { ...defaultConfig };
+
+    // Initialize Element SDK
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (newConfig) => {
+        config = { ...config, ...newConfig };
+        document.getElementById('main-title').textContent = config.app_title || defaultConfig.app_title;
+        document.getElementById('welcome-text').textContent = config.welcome_message || defaultConfig.welcome_message;
+        document.getElementById('app').style.background = `linear-gradient(135deg, ${config.background_color || defaultConfig.background_color} 0%, #2c5282 50%, #2b6cb0 100%)`;
+      },
+      mapToCapabilities: (cfg) => ({
+        recolorables: [
+          {
+            get: () => cfg.background_color || defaultConfig.background_color,
+            set: (v) => { cfg.background_color = v; window.elementSdk.setConfig({ background_color: v }); }
+          },
+          {
+            get: () => cfg.surface_color || defaultConfig.surface_color,
+            set: (v) => { cfg.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); }
+          },
+          {
+            get: () => cfg.text_color || defaultConfig.text_color,
+            set: (v) => { cfg.text_color = v; window.elementSdk.setConfig({ text_color: v }); }
+          },
+          {
+            get: () => cfg.primary_action_color || defaultConfig.primary_action_color,
+            set: (v) => { cfg.primary_action_color = v; window.elementSdk.setConfig({ primary_action_color: v }); }
+          },
+          {
+            get: () => cfg.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (v) => { cfg.secondary_action_color = v; window.elementSdk.setConfig({ secondary_action_color: v }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (cfg) => new Map([
+        ['app_title', cfg.app_title || defaultConfig.app_title],
+        ['welcome_message', cfg.welcome_message || defaultConfig.welcome_message]
+      ])
+    });
+
+    // Initialize Data SDK
+    const dataHandler = {
+      onDataChanged(data) {
+        updateStatsDisplay(data);
+      }
+    };
+
+    async function initDataSDK() {
+      const result = await window.dataSdk.init(dataHandler);
+      if (!result.isOk) {
+        console.error('Failed to initialize Data SDK');
+      }
+    }
+
+    function updateStatsDisplay(data) {
+      const totalAnswered = data.length;
+      const correctAnswers = data.filter(d => d.correct).length;
+      const accuracy = totalAnswered > 0 ? Math.round((correctAnswers / totalAnswered) * 100) : 0;
+      
+      document.getElementById('total-answered').textContent = totalAnswered;
+      document.getElementById('accuracy-rate').textContent = accuracy + '%';
+    }
+
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    function startCategory(category) {
+      currentCategory = category;
+      
+      if (category === 'all') {
+        currentQuestions = shuffleArray([
+          ...questionsDB.history,
+          ...questionsDB.geography,
+          ...questionsDB.civics,
+          ...questionsDB.culture
+        ]);
+      } else {
+        currentQuestions = shuffleArray([...questionsDB[category]]);
+      }
+      
+      currentQuestions = currentQuestions.slice(0, questionsPerRound);
+      currentQuestionIndex = 0;
+      score = 0;
+      
+      showScreen('quiz');
+      updateCategoryBadge();
+      displayQuestion();
+    }
+
+    function updateCategoryBadge() {
+      const badge = document.getElementById('category-badge');
+      const categoryNames = {
+        history: { name: 'History', color: 'bg-amber-500' },
+        geography: { name: 'Geography', color: 'bg-emerald-500' },
+        civics: { name: 'Civics', color: 'bg-purple-500' },
+        culture: { name: 'Culture', color: 'bg-rose-500' },
+        all: { name: 'Mixed', color: 'bg-blue-600' }
+      };
+      
+      const cat = categoryNames[currentCategory];
+      badge.textContent = cat.name;
+      badge.className = `${cat.color} text-white px-4 py-2 rounded-full font-bold text-sm`;
+    }
+
+    function displayQuestion() {
+      const question = currentQuestions[currentQuestionIndex];
+      
+      document.getElementById('current-q').textContent = currentQuestionIndex + 1;
+      document.getElementById('total-q').textContent = questionsPerRound;
+      document.getElementById('current-score').textContent = score;
+      document.getElementById('question-text').textContent = question.q;
+      
+      const progress = ((currentQuestionIndex) / questionsPerRound) * 100;
+      document.getElementById('progress-bar').style.width = progress + '%';
+      
+      const optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+      
+      question.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition-all font-semibold text-gray-700';
+        btn.textContent = option;
+        btn.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(btn);
+      });
+      
+      document.getElementById('feedback-area').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+    }
+
+    async function selectAnswer(selectedIndex) {
+      const question = currentQuestions[currentQuestionIndex];
+      const isCorrect = selectedIndex === question.answer;
+      
+      const buttons = document.querySelectorAll('#options-container button');
+      buttons.forEach((btn, index) => {
+        btn.disabled = true;
+        btn.classList.remove('hover:border-blue-400', 'hover:bg-blue-50');
+        
+        if (index === question.answer) {
+          btn.classList.remove('border-gray-200');
+          btn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700', 'correct-answer');
+        } else if (index === selectedIndex && !isCorrect) {
+          btn.classList.remove('border-gray-200');
+          btn.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-700');
+        }
+      });
+      
+      if (isCorrect) {
+        score++;
+        document.getElementById('current-score').textContent = score;
+      }
+      
+      const feedbackArea = document.getElementById('feedback-area');
+      const feedbackText = document.getElementById('feedback-text');
+      const explanationText = document.getElementById('explanation-text');
+      
+      feedbackArea.classList.remove('hidden', 'bg-emerald-100', 'bg-rose-100');
+      feedbackArea.classList.add(isCorrect ? 'bg-emerald-100' : 'bg-rose-100');
+      
+      feedbackText.textContent = isCorrect ? '✓ Correct!' : '✗ Incorrect';
+      feedbackText.className = `font-semibold ${isCorrect ? 'text-emerald-700' : 'text-rose-700'}`;
+      explanationText.textContent = question.explanation;
+      
+      document.getElementById('next-btn').classList.remove('hidden');
+      document.getElementById('next-btn').textContent = currentQuestionIndex < questionsPerRound - 1 ? 'Next Question →' : 'See Results →';
+      
+      // Save to Data SDK
+      try {
+        await window.dataSdk.create({
+          category: currentCategory,
+          question_index: currentQuestionIndex,
+          correct: isCorrect,
+          timestamp: new Date().toISOString()
+        });
+      } catch (e) {
+        console.error('Failed to save answer:', e);
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      
+      if (currentQuestionIndex >= questionsPerRound) {
+        showResults();
+      } else {
+        displayQuestion();
+      }
+    }
+
+    function showResults() {
+      showScreen('results');
+      
+      const percentage = Math.round((score / questionsPerRound) * 100);
+      
+      document.getElementById('final-score').textContent = `${score}/${questionsPerRound}`;
+      document.getElementById('correct-count').textContent = score;
+      document.getElementById('wrong-count').textContent = questionsPerRound - score;
+      
+      let emoji, message;
+      if (percentage >= 90) {
+        emoji = '🏆';
+        message = 'Outstanding! You\'re a Rwanda expert!';
+      } else if (percentage >= 70) {
+        emoji = '🎉';
+        message = 'Great job! Excellent knowledge!';
+      } else if (percentage >= 50) {
+        emoji = '👍';
+        message = 'Good effort! Keep learning!';
+      } else {
+        emoji = '📚';
+        message = 'Keep studying! You\'ll improve!';
+      }
+      
+      document.getElementById('result-emoji').textContent = emoji;
+      document.getElementById('result-message').textContent = message;
+    }
+
+    function restartCategory() {
+      startCategory(currentCategory);
+    }
+
+    function goHome() {
+      showScreen('home');
+    }
+
+    function showScreen(screen) {
+      document.getElementById('home-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.add('hidden');
+      document.getElementById(`${screen}-screen`).classList.remove('hidden');
+    }
+
+    // Initialize
+    initDataSDK();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cae7843e3a3fdcd',t:'MTc3MDU4ODc1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

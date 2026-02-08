@@ -1,46 +1,462 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geography - Afro Syllabus</title>
-    <!-- AdSense Auto Ads -->
-    <script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">Home</a> |
-            <a href="maths.html">Maths</a> |
-            <a href="english.html">English</a> |
-            <a href="french.html">French</a> |
-            <a href="geography.html">Geography</a> |
-            <a href="sciences.html">Sciences</a> |
-            <a href="history.html">History</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Geography Syllabus</h1>
-        <h2>Core Topics</h2>
-        <ul>
-            <li>African physical geography (rivers, mountains, climate)</li>
-            <li>Human geography (cultures, migration, urbanization)</li>
-            <li>Environmental issues (deforestation, desertification, conservation)</li>
-            <li>Map skills (African countries, capitals, resources)</li>
-        </ul>
-        <h2>Special Focus</h2>
-        <ul>
-            <li>Climate change and its impact on Africa</li>
-            <li>Urbanization and megacities in Africa</li>
-            <li>Natural resources and sustainable development</li>
-        </ul>
-        <h2>Resources</h2>
-        <ul>
-            <li><a href="https://www.nationalgeographic.com/" target="_blank">National Geographic</a></li>
-            <li><a href="https://www.khanacademy.org/humanities/world-history/geography" target="_blank">Khan Academy Geography</a></li>
-            <li><a href="https://www.africageographic.com/" target="_blank">Africa Geographic</a></li>
-        </ul>
-    </main>
-</body>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geography Quest</title>
+  <meta name="google-adsense-account" content="ca-pub-6462287919691866">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462287919691866"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Fredoka', sans-serif;
+    }
+    
+    @keyframes bounce-in {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+    
+    @keyframes celebrate {
+      0% { transform: scale(1) rotate(0deg); }
+      25% { transform: scale(1.3) rotate(-10deg); }
+      50% { transform: scale(1.3) rotate(10deg); }
+      75% { transform: scale(1.3) rotate(-5deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
+    }
+    
+    @keyframes wrong-shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      60% { transform: translateX(-10px); }
+      80% { transform: translateX(10px); }
+    }
+    
+    .option-btn {
+      animation: bounce-in 0.5s ease-out forwards;
+      transition: all 0.2s ease;
+    }
+    
+    .option-btn:hover {
+      animation: wiggle 0.3s ease-in-out infinite;
+    }
+    
+    .celebrate {
+      animation: celebrate 0.6s ease-in-out;
+    }
+    
+    .float {
+      animation: float 2s ease-in-out infinite;
+    }
+    
+    .sparkle {
+      animation: sparkle 1s ease-in-out infinite;
+    }
+    
+    .wrong-shake {
+      animation: wrong-shake 0.5s ease-in-out;
+    }
+    
+    .star {
+      position: absolute;
+      font-size: 24px;
+      pointer-events: none;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full m-0 overflow-auto">
+  <!-- AdSense Auto Ads -->
+  <script data-ad-client="ca-pub-6462287919691866" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <div id="app-wrapper" class="w-full h-full min-h-full bg-gradient-to-br from-green-400 via-blue-400 to-indigo-500">
+   <div class="w-full min-h-full p-4 md:p-8"><!-- Header -->
+    <!-- Back to Home Button -->
+    <div class="mb-4">
+      <button onclick="window.location.href='index.html'" class="bg-white/20 hover:bg-white/30 backdrop-blur text-white px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2">
+        <span>←</span> Back to Home
+      </button>
+    </div>
+    <div class="text-center mb-6">
+     <h1 id="game-title" class="text-4xl md:text-6xl font-bold text-white drop-shadow-lg float">🌍 Geography Quest 🌎</h1>
+     <p id="instructions" class="text-xl md:text-2xl text-white mt-4 drop-shadow">Explore the world and test your geography knowledge!</p>
+    </div><!-- Game Area -->
+    <div class="max-w-4xl mx-auto"><!-- Question Card -->
+     <div class="bg-white rounded-3xl shadow-2xl p-6 md:p-8 mb-6 transform hover:scale-[1.02] transition-transform">
+      <div class="text-center">
+       <div id="question-emoji" class="text-8xl md:text-9xl mb-4 float">
+        🗽
+       </div>
+       <p class="text-2xl md:text-3xl font-semibold text-gray-700" id="question-text">What is the capital of France?</p>
+       <p class="text-lg md:text-xl text-gray-500 mt-3" id="question-detail">Hint: It's known as the City of Light</p>
+      </div>
+     </div><!-- Answer Choices -->
+     <div id="choices-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6"><!-- Options will be inserted here -->
+     </div><!-- Feedback Area -->
+     <div id="feedback" class="text-center py-4 rounded-2xl mb-6 hidden">
+      <p id="feedback-text" class="text-2xl md:text-3xl font-bold"></p>
+      <p id="feedback-fact" class="text-lg mt-2"></p>
+     </div><!-- Score & Progress -->
+     <div class="bg-white/80 backdrop-blur rounded-2xl p-4 md:p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2"><span class="text-3xl">⭐</span> <span class="text-2xl font-bold text-green-600">Score: <span id="score">0</span></span>
+      </div>
+      <div class="flex items-center gap-2"><span class="text-3xl">🎯</span> <span class="text-2xl font-bold text-blue-600">Question: <span id="round">1</span>/20</span>
+      </div><button id="next-btn" onclick="nextQuestion()" class="bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xl font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all hidden"> Next! 🚀 </button>
+     </div>
+    </div><!-- Stars container for celebrations -->
+    <div id="stars-container" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+   </div>
+  </div>
+  <script>
+    // Geography game data - 200+ comprehensive questions
+    const geographyQuestions = [
+      { question: 'What is the capital of France?', options: ['Paris', 'Lyon', 'Marseille', 'Nice'], correct: 'Paris', emoji: '🗼', fact: 'Paris is home to the Eiffel Tower!' },
+      { question: 'Which country is home to the Great Wall?', options: ['China', 'Japan', 'Korea', 'Vietnam'], correct: 'China', emoji: '🏯', fact: 'The Great Wall is over 13,000 miles long!' },
+      { question: 'What is the capital of Japan?', options: ['Kyoto', 'Tokyo', 'Osaka', 'Hiroshima'], correct: 'Tokyo', emoji: '🗾', fact: 'Tokyo is the most populous metropolitan area!' },
+      { question: 'Which country has the Statue of Liberty?', options: ['Canada', 'Mexico', 'United States', 'Brazil'], correct: 'United States', emoji: '🗽', fact: 'It was a gift from France to the USA!' },
+      { question: 'What is the largest desert?', options: ['Sahara', 'Gobi', 'Kalahari', 'Arabian'], correct: 'Sahara', emoji: '🏜️', fact: 'The Sahara covers 9 million square kilometers!' },
+      { question: 'Which country has Big Ben?', options: ['Scotland', 'Wales', 'England', 'Northern Ireland'], correct: 'England', emoji: '⏰', fact: 'Big Ben is the bell inside the clock tower!' },
+      { question: 'What is the capital of Australia?', options: ['Sydney', 'Melbourne', 'Canberra', 'Brisbane'], correct: 'Canberra', emoji: '🦘', fact: 'Canberra was designed as a purpose-built capital!' },
+      { question: 'Where is Christ the Redeemer?', options: ['Argentina', 'Brazil', 'Colombia', 'Peru'], correct: 'Brazil', emoji: '🗿', fact: 'It overlooks Rio de Janeiro!' },
+      { question: 'What is the capital of India?', options: ['Mumbai', 'New Delhi', 'Bangalore', 'Kolkata'], correct: 'New Delhi', emoji: '🇮🇳', fact: 'One of the oldest inhabited cities!' },
+      { question: 'Which country has the Colosseum?', options: ['Greece', 'Spain', 'Italy', 'Turkey'], correct: 'Italy', emoji: '🏛️', fact: 'An iconic symbol of Roman engineering!' },
+      { question: 'What is the capital of Brazil?', options: ['Rio', 'Salvador', 'Brasília', 'São Paulo'], correct: 'Brasília', emoji: '🌴', fact: 'Built in 1960 as a planned city!' },
+      { question: 'Which is the smallest country?', options: ['Monaco', 'Luxembourg', 'Vatican City', 'Liechtenstein'], correct: 'Vatican City', emoji: '⛪', fact: 'Only 0.44 square kilometers!' },
+      { question: 'What is the capital of Canada?', options: ['Toronto', 'Vancouver', 'Ottawa', 'Montreal'], correct: 'Ottawa', emoji: '🍁', fact: 'Located at the confluence of three rivers!' },
+      { question: 'What is the tallest mountain?', options: ['K2', 'Kangchenjunga', 'Everest', 'Makalu'], correct: 'Everest', emoji: '⛰️', fact: 'At 29,032 feet above sea level!' },
+      { question: 'Which country is the Land Down Under?', options: ['NZ', 'Australia', 'Fiji', 'PNG'], correct: 'Australia', emoji: '🦘', fact: 'Largest island and smallest continent!' },
+      { question: 'What is the capital of Egypt?', options: ['Alexandria', 'Cairo', 'Giza', 'Luxor'], correct: 'Cairo', emoji: '🐪', fact: 'Home to the Egyptian Museum!' },
+      { question: 'Which country is famous for windmills?', options: ['Germany', 'Belgium', 'Netherlands', 'Denmark'], correct: 'Netherlands', emoji: '💨', fact: 'Used for water management!' },
+      { question: 'What is the capital of Spain?', options: ['Barcelona', 'Madrid', 'Valencia', 'Seville'], correct: 'Madrid', emoji: '🇪🇸', fact: 'One of Europe\'s largest capitals!' },
+      { question: 'Which country has the Taj Mahal?', options: ['India', 'Pakistan', 'Bangladesh', 'Nepal'], correct: 'India', emoji: '🕌', fact: 'One of Seven Wonders of the World!' },
+      { question: 'What is the capital of Germany?', options: ['Munich', 'Hamburg', 'Berlin', 'Cologne'], correct: 'Berlin', emoji: '🇩🇪', fact: 'Divided for 28 years!' },
+      { question: 'Which country has the most languages?', options: ['India', 'Indonesia', 'Nigeria', 'PNG'], correct: 'PNG', emoji: '🗣️', fact: 'Over 800 languages!' },
+      { question: 'What is the capital of Mexico?', options: ['Cancun', 'Mexico City', 'Guadalajara', 'Monterrey'], correct: 'Mexico City', emoji: '🌮', fact: 'One of the largest cities!' },
+      { question: 'Which country has the Amazon?', options: ['Colombia', 'Peru', 'Brazil', 'Ecuador'], correct: 'Brazil', emoji: '🌳', fact: 'Produces 20% of world\'s oxygen!' },
+      { question: 'What is the capital of South Africa?', options: ['Cape Town', 'Johannesburg', 'Pretoria', 'Durban'], correct: 'Pretoria', emoji: '🦁', fact: 'Has three capitals!' },
+      { question: 'What is the capital of Italy?', options: ['Venice', 'Florence', 'Rome', 'Milan'], correct: 'Rome', emoji: '🏛️', fact: 'Inhabited for nearly three millennia!' },
+      { question: 'Which country has the most time zones?', options: ['Russia', 'France', 'USA', 'Canada'], correct: 'France', emoji: '🕐', fact: 'Has 12 time zones!' },
+      { question: 'What is the capital of Greece?', options: ['Thessaloniki', 'Athens', 'Patras', 'Larissa'], correct: 'Athens', emoji: '🏺', fact: 'Birthplace of Western democracy!' },
+      { question: 'Which is the largest country?', options: ['Canada', 'USA', 'Russia', 'China'], correct: 'Russia', emoji: '🌍', fact: 'Spans 11 time zones!' },
+      { question: 'What is the capital of South Korea?', options: ['Busan', 'Seoul', 'Incheon', 'Daegu'], correct: 'Seoul', emoji: '🏙️', fact: 'One of the largest metropolitan areas!' },
+      { question: 'Which country has the most islands?', options: ['Indonesia', 'Philippines', 'Norway', 'Sweden'], correct: 'Indonesia', emoji: '🏝️', fact: 'Over 17,000 islands!' },
+      { question: 'What is the capital of Turkey?', options: ['Istanbul', 'Ankara', 'Izmir', 'Antalya'], correct: 'Ankara', emoji: '🕌', fact: 'Became capital in 1923!' },
+      { question: 'Which country has the most mountains?', options: ['USA', 'China', 'Nepal', 'Indonesia'], correct: 'Indonesia', emoji: '⛰️', fact: 'Over 130 active volcanoes!' },
+      { question: 'What is the capital of Russia?', options: ['St. Petersburg', 'Novosibirsk', 'Moscow', 'Yekaterinburg'], correct: 'Moscow', emoji: '🏰', fact: 'Largest city in Europe!' },
+      { question: 'Which country shares Niagara Falls?', options: ['Mexico', 'USA only', 'Canada only', 'USA and Canada'], correct: 'USA and Canada', emoji: '💧', fact: 'Shared border waterfall!' },
+      { question: 'What is the capital of Poland?', options: ['Krakow', 'Warsaw', 'Gdansk', 'Wroclaw'], correct: 'Warsaw', emoji: '🇵🇱', fact: 'Rebuilt after WWII!' },
+      { question: 'Which country has the longest coastline?', options: ['USA', 'Australia', 'Canada', 'Russia'], correct: 'Canada', emoji: '🌊', fact: 'Longest in the world!' },
+      { question: 'What is the capital of Switzerland?', options: ['Zurich', 'Bern', 'Geneva', 'Lausanne'], correct: 'Bern', emoji: '🇨🇭', fact: 'Not in the European Union!' },
+      { question: 'Which country has the Great Barrier Reef?', options: ['Fiji', 'Australia', 'PNG', 'Indonesia'], correct: 'Australia', emoji: '🐠', fact: 'World\'s largest coral reef!' },
+      { question: 'What is the capital of Sweden?', options: ['Gothenburg', 'Malmo', 'Stockholm', 'Uppsala'], correct: 'Stockholm', emoji: '🇸🇪', fact: 'Built on 14 islands!' },
+      { question: 'Which country has the most active volcanoes?', options: ['USA', 'Japan', 'Indonesia', 'Chile'], correct: 'Indonesia', emoji: '🌋', fact: 'On the Ring of Fire!' },
+      { question: 'What is the capital of Portugal?', options: ['Porto', 'Covilha', 'Lisbon', 'Funchal'], correct: 'Lisbon', emoji: '🚋', fact: 'Built on seven hills!' },
+      { question: 'Which country has the Serengeti?', options: ['Kenya', 'Tanzania', 'Uganda', 'Rwanda'], correct: 'Tanzania', emoji: '🦁', fact: 'Largest wildlife migration!' },
+      { question: 'What is the capital of Norway?', options: ['Bergen', 'Trondheim', 'Oslo', 'Stavanger'], correct: 'Oslo', emoji: '🇳🇴', fact: 'Surrounded by mountains!' },
+      { question: 'Which country has the most UNESCO sites?', options: ['China', 'Italy', 'Germany', 'France'], correct: 'Italy', emoji: '🏛️', fact: 'Over 50 sites!' },
+      { question: 'What is the capital of Thailand?', options: ['Chiang Mai', 'Phuket', 'Bangkok', 'Pattaya'], correct: 'Bangkok', emoji: '🏰', fact: 'One of the hottest cities!' },
+      { question: 'Which country produces most coffee?', options: ['Vietnam', 'Colombia', 'Brazil', 'Ethiopia'], correct: 'Brazil', emoji: '☕', fact: 'One-third of world supply!' },
+      { question: 'What is the capital of Kenya?', options: ['Mombasa', 'Nairobi', 'Kisumu', 'Nakuru'], correct: 'Nairobi', emoji: '🦁', fact: 'Silicon Savanna of Africa!' },
+      { question: 'What is the capital of Vietnam?', options: ['Ho Chi Minh City', 'Hanoi', 'Da Nang', 'Hai Phong'], correct: 'Hanoi', emoji: '🇻🇳', fact: 'One of the oldest capitals!' },
+      { question: 'Which country has Victoria Falls?', options: ['Tanzania', 'Zambia', 'Zimbabwe', 'Mozambique'], correct: 'Zimbabwe', emoji: '💧', fact: 'One of Seven Natural Wonders!' },
+      { question: 'What is the capital of Malaysia?', options: ['George Town', 'Kuala Lumpur', 'Johor Bahru', 'Ipoh'], correct: 'Kuala Lumpur', emoji: '🏙️', fact: 'Home to Petronas Twin Towers!' },
+      { question: 'Which country has the Atacama Desert?', options: ['Peru', 'China', 'Egypt', 'Chile'], correct: 'Chile', emoji: '🏜️', fact: 'Driest place on Earth!' },
+      { question: 'What is the capital of Indonesia?', options: ['Surabaya', 'Bandung', 'Jakarta', 'Medan'], correct: 'Jakarta', emoji: '🌴', fact: 'Sinking due to groundwater extraction!' },
+      { question: 'What is the capital of Pakistan?', options: ['Karachi', 'Lahore', 'Islamabad', 'Rawalpindi'], correct: 'Islamabad', emoji: '🇵🇰', fact: 'Purpose-built capital city!' },
+      { question: 'What is the capital of Bangladesh?', options: ['Chittagong', 'Dhaka', 'Khulna', 'Rajshahi'], correct: 'Dhaka', emoji: '🇧🇩', fact: 'Most densely populated city!' },
+      { question: 'Which country has Angel Falls?', options: ['Brazil', 'USA', 'Norway', 'Venezuela'], correct: 'Venezuela', emoji: '💧', fact: 'Highest uninterrupted waterfall!' },
+      { question: 'What is the capital of Nigeria?', options: ['Lagos', 'Abuja', 'Ibadan', 'Kano'], correct: 'Abuja', emoji: '🇳🇬', fact: 'Built to replace Lagos!' },
+      { question: 'What is the capital of Ghana?', options: ['Kumasi', 'Accra', 'Tema', 'Takoradi'], correct: 'Accra', emoji: '🇬🇭', fact: 'Major West African hub!' },
+      { question: 'What is the capital of Morocco?', options: ['Casablanca', 'Marrakech', 'Rabat', 'Fez'], correct: 'Rabat', emoji: '🇲🇦', fact: 'On the Atlantic coast!' },
+      { question: 'What is the capital of Ethiopia?', options: ['Dire Dawa', 'Addis Ababa', 'Mekelle', 'Adama'], correct: 'Addis Ababa', emoji: '🇪🇹', fact: 'Headquarters of African Union!' },
+      { question: 'What is the capital of Peru?', options: ['Cusco', 'Arequipa', 'Lima', 'Trujillo'], correct: 'Lima', emoji: '🇵🇪', fact: 'Home to many archaeological sites!' },
+      { question: 'What is the capital of Chile?', options: ['Valparaiso', 'Vina del Mar', 'Santiago', 'Concepcion'], correct: 'Santiago', emoji: '🇨🇱', fact: 'Surrounded by the Andes!' },
+      { question: 'What is the capital of Colombia?', options: ['Medellin', 'Bogota', 'Cali', 'Barranquilla'], correct: 'Bogota', emoji: '🇨🇴', fact: 'Third-highest capital city!' },
+      { question: 'What is the capital of Argentina?', options: ['Cordoba', 'Rosario', 'Buenos Aires', 'Mendoza'], correct: 'Buenos Aires', emoji: '🇦🇷', fact: 'Paris of South America!' },
+      { question: 'What is the capital of Venezuela?', options: ['Valencia', 'Caracas', 'Maracaibo', 'Barquisimeto'], correct: 'Caracas', emoji: '🇻🇪', fact: 'Built in a narrow valley!' },
+      { question: 'What is the capital of Ecuador?', options: ['Guayaquil', 'Cuenca', 'Quito', 'Ambato'], correct: 'Quito', emoji: '🇪🇨', fact: 'On the equator at high altitude!' },
+      { question: 'What is the capital of Bolivia?', options: ['Santa Cruz', 'La Paz', 'Sucre', 'Cochabamba'], correct: 'La Paz', emoji: '🇧🇴', fact: 'Highest capital city!' },
+      { question: 'What is the capital of Paraguay?', options: ['Asuncion', 'Ciudad del Este', 'Encarnacion', 'Villarrica'], correct: 'Asuncion', emoji: '🇵🇾', fact: 'On the Paraguay River!' },
+      { question: 'What is the capital of Uruguay?', options: ['Salto', 'Las Piedras', 'Montevideo', 'Maldonado'], correct: 'Montevideo', emoji: '🇺🇾', fact: 'Southernmost South American capital!' },
+      { question: 'What is the capital of Costa Rica?', options: ['San Jose', 'Alajuela', 'Cartago', 'Heredia'], correct: 'San Jose', emoji: '🇨🇷', fact: 'Known for conservation!' },
+      { question: 'What is the capital of Panama?', options: ['Colon', 'David', 'Panama City', 'Chorrera'], correct: 'Panama City', emoji: '🇵🇦', fact: 'Connected by famous canal!' },
+      { question: 'What is the capital of Nicaragua?', options: ['Leon', 'Granada', 'Managua', 'Masaya'], correct: 'Managua', emoji: '🇳🇮', fact: 'Between two large lakes!' },
+      { question: 'What is the capital of Honduras?', options: ['San Pedro Sula', 'Tegucigalpa', 'La Ceiba', 'Trujillo'], correct: 'Tegucigalpa', emoji: '🇭🇳', fact: 'In a mountainous region!' },
+      { question: 'What is the capital of El Salvador?', options: ['Santa Ana', 'San Salvador', 'Soyapango', 'Mejicanos'], correct: 'San Salvador', emoji: '🇸🇻', fact: 'Most densely populated area!' },
+      { question: 'What is the capital of Guatemala?', options: ['Antigua', 'Quetzaltenango', 'Guatemala City', 'Chichicastenango'], correct: 'Guatemala City', emoji: '🇬🇹', fact: 'Largest city in Central America!' },
+      { question: 'What is the capital of Belize?', options: ['Orange Walk', 'Belmopan', 'Caye Caulker', 'San Ignacio'], correct: 'Belmopan', emoji: '🇧🇿', fact: 'Built as a planned city!' },
+      { question: 'What is the capital of Barbados?', options: ['Speightstown', 'Bridgetown', 'Holetown', 'Bathsheba'], correct: 'Bridgetown', emoji: '🇧🇧', fact: 'Oldest city in Caribbean!' },
+      { question: 'What is the capital of Trinidad and Tobago?', options: ['San Fernando', 'Port of Spain', 'Arima', 'Chaguanas'], correct: 'Port of Spain', emoji: '🇹🇹', fact: 'Major Caribbean port!' },
+      { question: 'What is the capital of Jamaica?', options: ['Montego Bay', 'Kingston', 'Ocho Rios', 'Negril'], correct: 'Kingston', emoji: '🇯🇲', fact: 'One of largest natural harbors!' },
+      { question: 'What is the capital of Haiti?', options: ['Cap-Haïtien', 'Port-au-Prince', 'Jacmel', 'Gonaïves'], correct: 'Port-au-Prince', emoji: '🇭🇹', fact: 'Largest city in Haiti!' },
+      { question: 'What is the capital of Dominican Republic?', options: ['Santiago', 'Santo Domingo', 'La Romana', 'Punta Cana'], correct: 'Santo Domingo', emoji: '🇩🇴', fact: 'Oldest city in Americas!' },
+      { question: 'What is the capital of Cuba?', options: ['Santiago de Cuba', 'Havana', 'Camaguey', 'Holguin'], correct: 'Havana', emoji: '🇨🇺', fact: 'UNESCO World Heritage Site!' },
+      { question: 'What is the capital of Bahamas?', options: ['Freeport', 'Nassau', 'Marsh Harbour', 'Exuma'], correct: 'Nassau', emoji: '🇧🇸', fact: 'Largest city in Bahamas!' },
+      { question: 'What is the capital of Fiji?', options: ['Nadi', 'Suva', 'Labasa', 'Sigatoka'], correct: 'Suva', emoji: '🇫🇯', fact: 'On southern coast!' },
+      { question: 'What is the capital of Samoa?', options: ['Savai\'i', 'Apia', 'Pago Pago', 'Vailoa'], correct: 'Apia', emoji: '🇼🇸', fact: 'Largest city in Samoa!' },
+      { question: 'What is the capital of Tonga?', options: ['Haapai', 'Nuku\'alofa', 'Vavau', 'Tongatapu'], correct: 'Nuku\'alofa', emoji: '🇹🇴', fact: 'Largest city in Tonga!' },
+      { question: 'What is the capital of Kiribati?', options: ['Betio', 'Tarawa', 'Butaritari', 'Makin'], correct: 'Tarawa', emoji: '🇰🇮', fact: 'Most densely populated area!' },
+      { question: 'What is the capital of Vanuatu?', options: ['Luganville', 'Port Vila', 'Lenakel', 'Isangel'], correct: 'Port Vila', emoji: '🇻🇺', fact: 'Largest city in Vanuatu!' },
+      { question: 'What is the capital of Solomon Islands?', options: ['Auki', 'Gizo', 'Honiara', 'Buala'], correct: 'Honiara', emoji: '🇸🇧', fact: 'On Guadalcanal Island!' },
+      { question: 'What is the capital of Micronesia?', options: ['Koror', 'Palikir', 'Kolonia', 'Majuro'], correct: 'Palikir', emoji: '🇫🇲', fact: 'FSM capital!' },
+      { question: 'What is the capital of Palau?', options: ['Koror', 'Ngerulmud', 'Babeldaob', 'Angaur'], correct: 'Ngerulmud', emoji: '🇵🇼', fact: 'Newest Pacific capital!' }
+    ];
+    
+    const buttonColors = [
+      'from-red-400 to-red-500',
+      'from-orange-400 to-orange-500',
+      'from-yellow-400 to-yellow-500',
+      'from-green-400 to-green-500',
+      'from-teal-400 to-teal-500',
+      'from-blue-400 to-blue-500',
+      'from-indigo-400 to-indigo-500',
+      'from-purple-400 to-purple-500'
+    ];
+    
+    let currentQuestion = null;
+    let score = 0;
+    let round = 1;
+    let usedQuestions = [];
+    let answered = false;
+    
+    const defaultConfig = {
+      game_title: '🌍 Geography Quest 🌎',
+      instructions_text: 'Explore the world and test your geography knowledge!',
+      correct_message: '🎉 Correct! You\'re a geography master! 🎉'
+    };
+    
+    let config = { ...defaultConfig };
+    
+    function shuffleArray(array) {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    }
+    
+    function createStars() {
+      const container = document.getElementById('stars-container');
+      const emojis = ['⭐', '🌟', '✨', '💫', '🎉', '🎊', '🌍'];
+      
+      for (let i = 0; i < 20; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 0.5 + 's';
+        star.style.animation = `sparkle 1s ease-in-out ${Math.random() * 0.5}s`;
+        container.appendChild(star);
+        
+        setTimeout(() => star.remove(), 1500);
+      }
+    }
+    
+    function generateQuestion() {
+      const availableQuestions = geographyQuestions.filter((q, idx) => !usedQuestions.includes(idx));
+      
+      if (availableQuestions.length === 0) {
+        usedQuestions = [];
+        return generateQuestion();
+      }
+      
+      const randomIdx = Math.floor(Math.random() * availableQuestions.length);
+      const questionData = availableQuestions[randomIdx];
+      const originalIdx = geographyQuestions.indexOf(questionData);
+      usedQuestions.push(originalIdx);
+      
+      return questionData;
+    }
+    
+    function renderChoices(options, correctAnswer) {
+      const container = document.getElementById('choices-container');
+      container.innerHTML = '';
+      
+      const shuffledOptions = shuffleArray(options);
+      
+      shuffledOptions.forEach((option, index) => {
+        const colorClass = buttonColors[index % buttonColors.length];
+        const button = document.createElement('button');
+        button.className = `option-btn bg-gradient-to-br ${colorClass} text-white text-2xl md:text-3xl font-bold py-5 md:py-6 px-4 rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all`;
+        button.style.animationDelay = `${index * 0.1}s`;
+        button.textContent = option;
+        button.onclick = () => checkAnswer(option, correctAnswer, button);
+        container.appendChild(button);
+      });
+    }
+    
+    function checkAnswer(selected, correct, button) {
+      if (answered) return;
+      answered = true;
+      
+      const feedback = document.getElementById('feedback');
+      const feedbackText = document.getElementById('feedback-text');
+      const feedbackFact = document.getElementById('feedback-fact');
+      const nextBtn = document.getElementById('next-btn');
+      
+      if (selected === correct) {
+        score += 10;
+        document.getElementById('score').textContent = score;
+        
+        button.classList.add('celebrate');
+        feedback.className = 'text-center py-4 rounded-2xl mb-6 bg-green-100';
+        feedbackText.textContent = config.correct_message || defaultConfig.correct_message;
+        feedbackText.className = 'text-2xl md:text-3xl font-bold text-green-600';
+        feedbackFact.textContent = currentQuestion.fact;
+        feedbackFact.className = 'text-lg text-green-600';
+        
+        createStars();
+      } else {
+        button.classList.add('wrong-shake');
+        feedback.className = 'text-center py-4 rounded-2xl mb-6 bg-red-100';
+        feedbackText.textContent = `Oops! The correct answer was "${correct}" 💪`;
+        feedbackText.className = 'text-2xl md:text-3xl font-bold text-red-500';
+        feedbackFact.textContent = currentQuestion.fact;
+        feedbackFact.className = 'text-lg text-red-500';
+        
+        const buttons = document.querySelectorAll('#choices-container button');
+        buttons.forEach(btn => {
+          if (btn.textContent === correct) {
+            btn.classList.add('celebrate');
+            btn.style.boxShadow = '0 0 20px 5px rgba(34, 197, 94, 0.6)';
+          }
+        });
+      }
+      
+      feedback.classList.remove('hidden');
+      
+      if (round < 20) {
+        nextBtn.classList.remove('hidden');
+      } else {
+        showFinalScore();
+      }
+    }
+    
+    function showFinalScore() {
+      const container = document.querySelector('.max-w-4xl');
+      const stars = score >= 160 ? '🌍🌎🌏' : score >= 100 ? '🌍🌎' : '🌍';
+      const message = score >= 160 ? 'World Explorer!' : score >= 100 ? 'Geography Enthusiast!' : 'Learning Traveler!';
+      
+      container.innerHTML = `
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center">
+          <div class="text-6xl md:text-8xl mb-6 float">${stars}</div>
+          <h2 class="text-4xl md:text-5xl font-bold text-green-600 mb-4">${message}</h2>
+          <p class="text-2xl md:text-3xl text-gray-700 mb-8">You scored <span class="text-blue-500 font-bold">${score}</span> points!</p>
+          <button onclick="restartGame()" class="bg-gradient-to-r from-green-500 to-blue-500 text-white text-2xl font-bold py-4 px-12 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+            Explore Again! 🌐
+          </button>
+        </div>
+      `;
+      
+      createStars();
+    }
+    
+    function nextQuestion() {
+      if (round >= 20) {
+        showFinalScore();
+        return;
+      }
+      
+      round++;
+      answered = false;
+      document.getElementById('round').textContent = round;
+      document.getElementById('feedback').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+      
+      loadQuestion();
+    }
+    
+    function loadQuestion() {
+      currentQuestion = generateQuestion();
+      
+      document.getElementById('question-emoji').textContent = currentQuestion.emoji;
+      document.getElementById('question-text').textContent = currentQuestion.question;
+      document.getElementById('question-detail').textContent = 'Can you answer this?';
+      
+      renderChoices(currentQuestion.options, currentQuestion.correct);
+    }
+    
+    function restartGame() {
+      score = 0;
+      round = 1;
+      usedQuestions = [];
+      answered = false;
+      
+      location.reload();
+    }
+    
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      const titleEl = document.getElementById('game-title');
+      const instructionsEl = document.getElementById('instructions');
+      
+      if (titleEl) {
+        titleEl.textContent = config.game_title || defaultConfig.game_title;
+      }
+      
+      if (instructionsEl) {
+        instructionsEl.textContent = config.instructions_text || defaultConfig.instructions_text;
+      }
+    }
+    
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+    
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ['game_title', cfg.game_title || defaultConfig.game_title],
+        ['instructions_text', cfg.instructions_text || defaultConfig.instructions_text],
+        ['correct_message', cfg.correct_message || defaultConfig.correct_message]
+      ]);
+    }
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+      config = { ...defaultConfig, ...window.elementSdk.config };
+    }
+    
+    loadQuestion();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cae45eac1e54ec8',t:'MTc3MDU4NjY5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

@@ -1,48 +1,503 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maths - Afro Syllabus</title>
-    <!-- AdSense Auto Ads -->
-    <script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">Home</a> |
-            <a href="maths.html">Maths</a> |
-            <a href="english.html">English</a> |
-            <a href="french.html">French</a> |
-            <a href="geography.html">Geography</a> |
-            <a href="sciences.html">Sciences</a> |
-            <a href="history.html">History</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Maths Syllabus</h1>
-        <h2>Core Topics</h2>
-        <ul>
-            <li>Number sense and operations (contextualized with African trade and markets)</li>
-            <li>Algebra (patterns in African art and music)</li>
-            <li>Geometry (African architecture and design)</li>
-            <li>Measurement (local units, land, and resources)</li>
-            <li>Data handling (statistics with local data)</li>
-            <li>Problem-solving (real-life African scenarios)</li>
-        </ul>
-        <h2>Special Focus</h2>
-        <ul>
-            <li>Financial literacy: Saving, budgeting, and entrepreneurship in African communities</li>
-            <li>Math in African games and sports (e.g., Mancala, football statistics)</li>
-            <li>Math and technology: Mobile money, digital payments</li>
-        </ul>
-        <h2>Resources</h2>
-        <ul>
-            <li><a href="https://www.khanacademy.org/math" target="_blank">Khan Academy Maths</a></li>
-            <li><a href="https://www.africanmathsinitiative.net/" target="_blank">African Maths Initiative</a></li>
-            <li><a href="https://www.starfall.com/h/math/" target="_blank">Starfall Math</a></li>
-        </ul>
-    </main>
-</body>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Adventure</title>
+  <meta name="google-adsense-account" content="ca-pub-6462287919691866">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462287919691866"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Fredoka', sans-serif;
+    }
+    @keyframes bounce-in {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+    @keyframes confetti-fall {
+      0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100%) rotate(720deg); opacity: 0; }
+    }
+    .bounce-in { animation: bounce-in 0.5s ease-out; }
+    .wiggle { animation: wiggle 0.5s ease-in-out; }
+    .float { animation: float 2s ease-in-out infinite; }
+    .sparkle { animation: sparkle 1s ease-in-out infinite; }
+    .confetti { animation: confetti-fall 2s ease-out forwards; }
+    .game-btn {
+      transition: all 0.2s ease;
+      transform-origin: center;
+    }
+    .game-btn:hover {
+      transform: scale(1.05);
+    }
+    .game-btn:active {
+      transform: scale(0.95);
+    }
+    .answer-btn {
+      transition: all 0.3s ease;
+    }
+    .answer-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .star-container {
+      display: flex;
+      gap: 4px;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full m-0 p-0 overflow-auto">
+  <!-- AdSense Auto Ads -->
+  <script data-ad-client="ca-pub-6462287919691866" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <div id="app-wrapper" class="min-h-full w-full flex flex-col items-center justify-center p-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);"><!-- Start Screen -->
+   <div id="start-screen" class="text-center max-w-md w-full">
+    <!-- Back to Home Button -->
+    <div class="mb-4">
+      <button onclick="window.location.href='index.html'" class="bg-white/20 hover:bg-white/30 backdrop-blur text-white px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2 mx-auto">
+        <span>←</span> Back to Home
+      </button>
+    </div>
+    <div class="float">
+     <div class="text-8xl mb-4">
+      🎯
+     </div>
+    </div>
+    <h1 id="main-title" class="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">Math Adventure</h1>
+    <p class="text-xl text-white/90 mb-8">Learn numbers with fun! 🌟</p>
+    <div class="space-y-4"><button onclick="startGame('counting')" class="game-btn w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xl font-bold py-4 px-8 rounded-2xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">🔢</span> Counting Fun </button> <button onclick="startGame('addition')" class="game-btn w-full bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xl font-bold py-4 px-8 rounded-2xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">➕</span> Addition </button> <button onclick="startGame('subtraction')" class="game-btn w-full bg-gradient-to-r from-pink-400 to-rose-500 text-white text-xl font-bold py-4 px-8 rounded-2xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">➖</span> Subtraction </button> <button onclick="startGame('shapes')" class="game-btn w-full bg-gradient-to-r from-cyan-400 to-blue-500 text-white text-xl font-bold py-4 px-8 rounded-2xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">🔷</span> Shapes </button> <button onclick="startGame('comparison')" class="game-btn w-full bg-gradient-to-r from-purple-400 to-indigo-500 text-white text-xl font-bold py-4 px-8 rounded-2xl shadow-lg flex items-center justify-center gap-3"> <span class="text-3xl">⚖️</span> Bigger or Smaller </button>
+    </div>
+   </div><!-- Game Screen -->
+   <div id="game-screen" class="hidden text-center max-w-lg w-full">
+    <div class="bg-white/20 backdrop-blur-sm rounded-3xl p-6 shadow-2xl"><!-- Progress Bar -->
+     <div class="mb-4">
+      <div class="flex justify-between items-center mb-2"><span class="text-white font-bold">Question <span id="current-q">1</span>/15</span>
+       <div class="star-container" id="stars-display"></div>
+      </div>
+      <div class="w-full bg-white/30 rounded-full h-3">
+       <div id="progress-bar" class="bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full transition-all duration-500" style="width: 6.67%"></div>
+      </div>
+     </div><!-- Question Area -->
+     <div id="question-area" class="bg-white rounded-2xl p-6 mb-6 shadow-inner min-h-[200px] flex flex-col items-center justify-center">
+      <div id="question-emoji" class="text-6xl mb-4">
+       🤔
+      </div>
+      <p id="question-text" class="text-2xl md:text-3xl font-bold text-gray-800"></p>
+      <div id="visual-area" class="mt-4 flex flex-wrap justify-center gap-2"></div>
+     </div><!-- Answer Buttons -->
+     <div id="answers-grid" class="grid grid-cols-2 gap-4 mb-4"></div><!-- Feedback Area -->
+     <div id="feedback" class="hidden text-2xl font-bold py-3 rounded-xl"></div>
+    </div><!-- Back Button --> <button onclick="window.location.href='index.html'" class="mt-4 text-white/80 hover:text-white font-medium flex items-center justify-center gap-2 mx-auto"> <span>←</span> Back to Home </button>
+   </div><!-- Results Screen -->
+   <div id="results-screen" class="hidden text-center max-w-md w-full">
+    <div class="bg-white/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl bounce-in">
+     <div id="results-emoji" class="text-8xl mb-4">
+      🏆
+     </div>
+     <h2 class="text-3xl font-bold text-white mb-2">Amazing Job!</h2>
+     <p id="encouragement-display" class="text-xl text-white/90 mb-4">You're a math superstar!</p>
+     <div class="bg-white rounded-2xl p-6 mb-6">
+      <p class="text-5xl font-bold text-purple-600 mb-2"><span id="final-score">0</span>/15</p>
+      <p class="text-gray-600">Questions Correct</p>
+      <div class="flex justify-center gap-1 mt-4" id="final-stars"></div>
+     </div>
+     <div class="space-y-3"><button onclick="restartGame()" class="game-btn w-full bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xl font-bold py-4 px-8 rounded-2xl shadow-lg"> 🔄 Play Again </button> <button onclick="window.location.href='index.html'" class="game-btn w-full bg-gradient-to-r from-purple-400 to-indigo-500 text-white text-xl font-bold py-4 px-8 rounded-2xl shadow-lg"> 🏠 Back to Home </button>
+     </div>
+    </div>
+   </div><!-- Confetti Container -->
+   <div id="confetti-container" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+  </div>
+  <script>
+    const defaultConfig = {
+      game_title: "Math Adventure",
+      encouragement_text: "You're a math superstar!",
+      primary_color: "#667eea",
+      secondary_color: "#f093fb",
+      text_color: "#ffffff",
+      accent_color: "#fbbf24",
+      button_color: "#10b981"
+    };
+
+    let config = { ...defaultConfig };
+    let currentGame = '';
+    let currentQuestion = 0;
+    let score = 0;
+    let questions = [];
+    const totalQuestions = 15;
+
+    const emojis = {
+      counting: ['🍎', '🍊', '🍋', '🍇', '🍓', '🌟', '🎈', '🦋', '🐝', '🌸', '🍪', '🧁', '🍬', '🎁', '🚗'],
+      correct: ['🎉', '⭐', '🌟', '💫', '✨', '🥳', '👏', '💪', '🎊', '🏆'],
+      wrong: ['😅', '🤔', '💭', '🙈']
+    };
+
+    const shapes = [
+      { name: 'Circle', emoji: '🔴', svg: '<svg viewBox="0 0 100 100" class="w-20 h-20"><circle cx="50" cy="50" r="40" fill="#ef4444"/></svg>' },
+      { name: 'Square', emoji: '🟧', svg: '<svg viewBox="0 0 100 100" class="w-20 h-20"><rect x="10" y="10" width="80" height="80" fill="#f97316"/></svg>' },
+      { name: 'Triangle', emoji: '🔺', svg: '<svg viewBox="0 0 100 100" class="w-20 h-20"><polygon points="50,10 90,90 10,90" fill="#eab308"/></svg>' },
+      { name: 'Star', emoji: '⭐', svg: '<svg viewBox="0 0 100 100" class="w-20 h-20"><polygon points="50,5 61,40 98,40 68,62 79,97 50,75 21,97 32,62 2,40 39,40" fill="#fbbf24"/></svg>' },
+      { name: 'Heart', emoji: '❤️', svg: '<svg viewBox="0 0 100 100" class="w-20 h-20"><path d="M50,88 C20,60 5,40 15,25 C25,10 40,15 50,30 C60,15 75,10 85,25 C95,40 80,60 50,88" fill="#ec4899"/></svg>' },
+      { name: 'Diamond', emoji: '🔷', svg: '<svg viewBox="0 0 100 100" class="w-20 h-20"><polygon points="50,5 95,50 50,95 5,50" fill="#3b82f6"/></svg>' }
+    ];
+
+    function generateCountingQuestion() {
+      const count = Math.floor(Math.random() * 10) + 1;
+      const emoji = emojis.counting[Math.floor(Math.random() * emojis.counting.length)];
+      const visual = Array(count).fill(emoji).join(' ');
+      const wrongAnswers = generateWrongAnswers(count, 1, 10);
+      
+      return {
+        text: "How many do you see?",
+        visual: visual,
+        correct: count,
+        options: shuffle([count, ...wrongAnswers])
+      };
+    }
+
+    function generateAdditionQuestion() {
+      const a = Math.floor(Math.random() * 6) + 1;
+      const b = Math.floor(Math.random() * 6) + 1;
+      const answer = a + b;
+      const emoji = emojis.counting[Math.floor(Math.random() * emojis.counting.length)];
+      const visual = Array(a).fill(emoji).join(' ') + ' ➕ ' + Array(b).fill(emoji).join(' ');
+      const wrongAnswers = generateWrongAnswers(answer, 2, 12);
+      
+      return {
+        text: `${a} + ${b} = ?`,
+        visual: visual,
+        correct: answer,
+        options: shuffle([answer, ...wrongAnswers])
+      };
+    }
+
+    function generateSubtractionQuestion() {
+      const a = Math.floor(Math.random() * 8) + 3;
+      const b = Math.floor(Math.random() * (a - 1)) + 1;
+      const answer = a - b;
+      const emoji = emojis.counting[Math.floor(Math.random() * emojis.counting.length)];
+      const wrongAnswers = generateWrongAnswers(answer, 0, 10);
+      
+      return {
+        text: `${a} - ${b} = ?`,
+        visual: `${Array(a).fill(emoji).join(' ')} ➖ ${Array(b).fill('❌').join(' ')}`,
+        correct: answer,
+        options: shuffle([answer, ...wrongAnswers])
+      };
+    }
+
+    function generateShapeQuestion() {
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      const wrongShapes = shapes.filter(s => s.name !== shape.name);
+      const wrongAnswers = shuffle(wrongShapes).slice(0, 3).map(s => s.name);
+      
+      return {
+        text: "What shape is this?",
+        visual: shape.svg,
+        correct: shape.name,
+        options: shuffle([shape.name, ...wrongAnswers]),
+        isShape: true
+      };
+    }
+
+    function generateComparisonQuestion() {
+      const a = Math.floor(Math.random() * 10) + 1;
+      let b;
+      do {
+        b = Math.floor(Math.random() * 10) + 1;
+      } while (a === b);
+      
+      const askBigger = Math.random() > 0.5;
+      const answer = askBigger ? Math.max(a, b) : Math.min(a, b);
+      
+      return {
+        text: askBigger ? "Which is BIGGER?" : "Which is SMALLER?",
+        visual: `<span class="text-5xl font-bold text-purple-600">${a}</span> <span class="text-3xl">or</span> <span class="text-5xl font-bold text-pink-500">${b}</span>`,
+        correct: answer,
+        options: [a, b],
+        isComparison: true
+      };
+    }
+
+    function generateWrongAnswers(correct, min, max) {
+      const wrong = [];
+      while (wrong.length < 3) {
+        const num = Math.floor(Math.random() * (max - min + 1)) + min;
+        if (num !== correct && !wrong.includes(num)) {
+          wrong.push(num);
+        }
+      }
+      return wrong;
+    }
+
+    function shuffle(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function generateQuestions(gameType) {
+      const generators = {
+        counting: generateCountingQuestion,
+        addition: generateAdditionQuestion,
+        subtraction: generateSubtractionQuestion,
+        shapes: generateShapeQuestion,
+        comparison: generateComparisonQuestion
+      };
+      
+      return Array(totalQuestions).fill(null).map(() => generators[gameType]());
+    }
+
+    function startGame(gameType) {
+      currentGame = gameType;
+      currentQuestion = 0;
+      score = 0;
+      questions = generateQuestions(gameType);
+      
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+      
+      updateStarsDisplay();
+      showQuestion();
+    }
+
+    function updateStarsDisplay() {
+      const starsContainer = document.getElementById('stars-display');
+      const starsNeeded = Math.ceil(totalQuestions / 3);
+      const starsEarned = Math.floor(score / 3);
+      
+      starsContainer.innerHTML = Array(starsNeeded).fill(null).map((_, i) => 
+        `<span class="text-2xl ${i < starsEarned ? 'sparkle' : 'opacity-40'}">${i < starsEarned ? '⭐' : '☆'}</span>`
+      ).join('');
+    }
+
+    function showQuestion() {
+      const q = questions[currentQuestion];
+      const questionEmoji = document.getElementById('question-emoji');
+      const questionText = document.getElementById('question-text');
+      const visualArea = document.getElementById('visual-area');
+      const answersGrid = document.getElementById('answers-grid');
+      const feedback = document.getElementById('feedback');
+      
+      feedback.classList.add('hidden');
+      
+      const gameEmojis = {
+        counting: '🔢',
+        addition: '➕',
+        subtraction: '➖',
+        shapes: '🔷',
+        comparison: '⚖️'
+      };
+      
+      questionEmoji.textContent = gameEmojis[currentGame];
+      questionText.textContent = q.text;
+      
+      if (q.isShape) {
+        visualArea.innerHTML = q.visual;
+      } else if (q.isComparison) {
+        visualArea.innerHTML = q.visual;
+      } else {
+        visualArea.innerHTML = `<span class="text-4xl">${q.visual}</span>`;
+      }
+      
+      const colors = [
+        'from-red-400 to-red-500',
+        'from-blue-400 to-blue-500',
+        'from-green-400 to-green-500',
+        'from-yellow-400 to-orange-500'
+      ];
+      
+      answersGrid.innerHTML = q.options.map((opt, i) => `
+        <button onclick="checkAnswer('${opt}')" class="answer-btn bg-gradient-to-br ${colors[i]} text-white text-3xl font-bold py-6 rounded-2xl shadow-lg">
+          ${opt}
+        </button>
+      `).join('');
+      
+      document.getElementById('current-q').textContent = currentQuestion + 1;
+      document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / totalQuestions) * 100}%`;
+    }
+
+    function checkAnswer(answer) {
+      const q = questions[currentQuestion];
+      const isCorrect = String(answer) === String(q.correct);
+      const feedback = document.getElementById('feedback');
+      
+      if (isCorrect) {
+        score++;
+        updateStarsDisplay();
+        const emoji = emojis.correct[Math.floor(Math.random() * emojis.correct.length)];
+        feedback.className = 'text-2xl font-bold py-3 rounded-xl bg-green-100 text-green-600 bounce-in';
+        feedback.innerHTML = `${emoji} Correct! ${emoji}`;
+        createMiniConfetti();
+      } else {
+        const emoji = emojis.wrong[Math.floor(Math.random() * emojis.wrong.length)];
+        feedback.className = 'text-2xl font-bold py-3 rounded-xl bg-red-100 text-red-500 wiggle';
+        feedback.innerHTML = `${emoji} It was ${q.correct}! Try the next one!`;
+      }
+      
+      feedback.classList.remove('hidden');
+      
+      const buttons = document.querySelectorAll('.answer-btn');
+      buttons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.textContent.trim() === String(q.correct)) {
+          btn.classList.add('ring-4', 'ring-green-300');
+        }
+      });
+      
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < totalQuestions) {
+          showQuestion();
+        } else {
+          showResults();
+        }
+      }, 1500);
+    }
+
+    function createMiniConfetti() {
+      const container = document.getElementById('confetti-container');
+      const confettiEmojis = ['🎉', '⭐', '✨', '💫', '🌟'];
+      
+      for (let i = 0; i < 8; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti absolute text-3xl';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+        confetti.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+        container.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 2000);
+      }
+    }
+
+    function showResults() {
+      document.getElementById('game-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.remove('hidden');
+      
+      document.getElementById('final-score').textContent = score;
+      document.getElementById('encouragement-display').textContent = config.encouragement_text || defaultConfig.encouragement_text;
+      
+      const starsEarned = Math.floor(score / 3);
+      const maxStars = 5;
+      document.getElementById('final-stars').innerHTML = Array(maxStars).fill(null).map((_, i) => 
+        `<span class="text-4xl ${i < starsEarned ? 'sparkle' : 'opacity-30'}">${i < starsEarned ? '⭐' : '☆'}</span>`
+      ).join('');
+      
+      let resultsEmoji = '🎉';
+      if (score === totalQuestions) resultsEmoji = '🏆';
+      else if (score >= totalQuestions * 0.8) resultsEmoji = '🌟';
+      else if (score >= totalQuestions * 0.6) resultsEmoji = '😊';
+      else if (score >= totalQuestions * 0.4) resultsEmoji = '💪';
+      else resultsEmoji = '🤗';
+      
+      document.getElementById('results-emoji').textContent = resultsEmoji;
+      
+      createCelebrationConfetti();
+    }
+
+    function createCelebrationConfetti() {
+      const container = document.getElementById('confetti-container');
+      const confettiEmojis = ['🎉', '⭐', '✨', '💫', '🌟', '🎊', '🏆', '💪'];
+      
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti absolute text-4xl';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.animationDelay = `${Math.random() * 1}s`;
+        confetti.style.animationDuration = `${2 + Math.random() * 2}s`;
+        confetti.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+        container.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
+
+    function restartGame() {
+      startGame(currentGame);
+    }
+
+    function goHome() {
+      // Navigate back to main home page
+      window.location.href = 'index.html';
+    }
+
+    async function onConfigChange(newConfig) {
+      config = { ...config, ...newConfig };
+      
+      document.getElementById('main-title').textContent = config.game_title || defaultConfig.game_title;
+      document.getElementById('encouragement-display').textContent = config.encouragement_text || defaultConfig.encouragement_text;
+      
+      const wrapper = document.getElementById('app-wrapper');
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      wrapper.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
+    }
+
+    function mapToCapabilities(cfg) {
+      return {
+        recolorables: [
+          {
+            get: () => cfg.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              cfg.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => cfg.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              cfg.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(cfg) {
+      return new Map([
+        ["game_title", cfg.game_title || defaultConfig.game_title],
+        ["encouragement_text", cfg.encouragement_text || defaultConfig.encouragement_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cae605b727ffdcd',t:'MTc3MDU4Nzc4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

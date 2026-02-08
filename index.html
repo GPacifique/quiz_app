@@ -3,8 +3,8 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SharpTechLearners Quiz App | African School Subjects</title>
-  <meta name="description" content="SharpTechLearners Quiz App - Test your knowledge across African school subjects. Choose your level and start learning with 600+ questions!" />
+  <title>SharpTechLearners Quiz Games Hub | African School Subjects</title>
+  <meta name="description" content="SharpTechLearners Quiz Games Hub - Test your knowledge across African school subjects with interactive quiz games. Choose your level and start learning with 600+ questions!" />
   <meta name="keywords" content="quiz, education, African school, knowledge, learners, sharptechlearners, online quiz, school subjects, beginner, intermediate, advanced" />
   <meta name="author" content="SharpTechLearners" />
   <link rel="canonical" href="https://sharptechlearners.com/" />
@@ -86,6 +86,81 @@
     .level-card:hover {
       transform: translateY(-5px);
     }
+    
+    /* Screenshot Gallery Styles */
+    .screenshot-gallery {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    
+    .screenshot-container {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+    }
+    
+    .screenshot-slide {
+      min-width: 100%;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .screenshot-slide:hover {
+      transform: scale(1.02);
+    }
+    
+    .screenshot-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    
+    .screenshot-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white;
+      padding: 20px;
+      border-radius: 0 0 12px 12px;
+    }
+    
+    .screenshot-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .screenshot-desc {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    
+    .gallery-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+      background: white;
+      transform: scale(1.2);
+    }
     /* Responsive logo for small screens */
     @media (max-width: 480px) {
       #sharptech-logo {
@@ -118,14 +193,17 @@
       </div>
     </div>
   </nav>
-      <div class="flex gap-4">
-        <a href="index.html" class="text-base font-semibold text-purple-900 px-3 py-2 rounded hover:bg-white/30 transition-all">Home</a>
-        <a href="maths.html" class="text-base font-semibold text-purple-900 px-3 py-2 rounded hover:bg-white/30 transition-all">Maths</a>
-        <a href="english.html" class="text-base font-semibold text-purple-900 px-3 py-2 rounded hover:bg-white/30 transition-all">English</a>
-        <a href="french.html" class="text-base font-semibold text-purple-900 px-3 py-2 rounded hover:bg-white/30 transition-all">French</a>
-        <a href="geography.html" class="text-base font-semibold text-purple-900 px-3 py-2 rounded hover:bg-white/30 transition-all">Geography</a>
-        <a href="sciences.html" class="text-base font-semibold text-purple-900 px-3 py-2 rounded hover:bg-white/30 transition-all">Sciences</a>
-        <a href="history.html" class="text-base font-semibold text-purple-900 px-3 py-2 rounded hover:bg-white/30 transition-all">History</a>
+      <div class="flex gap-2 flex-wrap">
+        <a href="index.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">Home</a>
+        <a href="maths.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">Maths</a>
+        <a href="english.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">English</a>
+        <a href="englishmaster.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">English Master</a>
+        <a href="french.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">French</a>
+        <a href="geography.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">Geography</a>
+        <a href="sciences.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">Sciences</a>
+        <a href="history.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">History</a>
+        <a href="socialstudies.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">Social Studies</a>
+        <a href="cartoonracinggame.html" class="text-sm font-semibold text-purple-900 px-2 py-1 rounded hover:bg-white/30 transition-all">Racing Game</a>
       </div>
     <!-- AdSense Auto Ads -->
     <script data-ad-client="ca-pub-6462287919691866" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -136,8 +214,8 @@
       <div class="flex justify-center mb-4">
         <img id="sharptech-logo" src="images/sharptechlearners_logo.svg" alt="SharpTechLearners Logo" class="rounded-xl shadow-md bg-white/10" style="height:80px; width:auto; max-width:320px;" />
       </div>
-      <h1 id="quiz-title" class="text-4xl sm:text-5xl font-bold text-white mb-3">Knowledge Quiz</h1>
-      <p class="text-white/80 text-base sm:text-lg">Choose your difficulty level to begin</p>
+      <h1 id="quiz-title" class="text-4xl sm:text-5xl font-bold text-white mb-3">Quiz Games Hub</h1>
+      <p class="text-white/80 text-base sm:text-lg">Choose your difficulty level to start playing quiz games</p>
       <p class="text-white/90 text-base sm:text-xl font-semibold mt-2">Created by GPacifique</p>
      </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8"><!-- Beginner Level -->
@@ -172,7 +250,87 @@
        </div>
       </div>
      </div>
-     <p class="text-white/60 text-sm">600+ total questions • All African school subjects covered</p>
+     
+     <!-- Screenshot Gallery -->
+     <div class="screenshot-gallery mb-8">
+       <div class="screenshot-container" id="screenshot-container">
+         <!-- Maths Screenshot -->
+         <div class="screenshot-slide" onclick="navigateToPage('maths.html')">
+           <img src="images/maths-screenshot.jpg" alt="Math Adventure Screenshot" class="screenshot-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDgwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjNjY3ZWVhIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPvCfkK8gTWF0aCBBZHZlbnR1cmU8L3RleHQ+Cjx0ZXh0IHg9IjQwMCIgeT0iMTMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIxNiIgb3BhY2l0eT0iMC44Ij5DbGljayB0byBwbGF5IG1hdGggZ2FtZXM8L3RleHQ+Cjwvc3ZnPg=='">
+           <div class="screenshot-overlay">
+             <div class="screenshot-title">🔢 Math Adventure</div>
+             <div class="screenshot-desc">Learn numbers with fun games</div>
+           </div>
+         </div>
+         
+         <!-- English Screenshot -->
+         <div class="screenshot-slide" onclick="navigateToPage('english.html')">
+           <img src="images/english-screenshot.jpg" alt="English Adventure Screenshot" class="screenshot-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDgwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZjA5M2ZiIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPvCfjIggQWxwaGFiZXQgQWR2ZW50dXJlPC90ZXh0Pgo8dGV4dCB4PSI0MDAiIHk9IjEzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMTYiIG9wYWNpdHk9IjAuOCI+TGVhcm4gYWxwaGFiZXQgYW5kIHNwZWxsaW5nPC90ZXh0Pgo8L3N2Zz4='">
+           <div class="screenshot-overlay">
+             <div class="screenshot-title">🌈 Alphabet Adventure</div>
+             <div class="screenshot-desc">Learn alphabet and spelling</div>
+           </div>
+         </div>
+         
+         <!-- English Master Screenshot -->
+         <div class="screenshot-slide" onclick="navigateToPage('englishmaster.html')">
+           <img src="images/englishmaster-screenshot.jpg" alt="English Master Screenshot" class="screenshot-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDgwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZmZkNzAwIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJibGFjayIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPvCfkZEgRW5nbGlzaCBNYXN0ZXI8L3RleHQ+Cjx0ZXh0IHg9IjQwMCIgeT0iMTMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJibGFjayIgZm9udC1zaXplPSIxNiIgb3BhY2l0eT0iMC44Ij5BZHZhbmNlZCBFbmdsaXNoIGNoYWxsZW5nZXM8L3RleHQ+Cjwvc3ZnPg=='">
+           <div class="screenshot-overlay">
+             <div class="screenshot-title">👑 English Master</div>
+             <div class="screenshot-desc">Advanced English challenges</div>
+           </div>
+         </div>
+         
+         <!-- Geography Screenshot -->
+         <div class="screenshot-slide" onclick="navigateToPage('geography.html')">
+           <img src="images/geography-screenshot.jpg" alt="Geography Quest Screenshot" class="screenshot-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDgwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjNDJkMzkyIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPvCfjI0gR2VvZ3JhcGh5IFF1ZXN0PC90ZXh0Pgo8dGV4dCB4PSI0MDAiIHk9IjEzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMTYiIG9wYWNpdHk9IjAuOCI+RXhwbG9yZSB0aGUgd29ybGQ8L3RleHQ+Cjwvc3ZnPg=='">
+           <div class="screenshot-overlay">
+             <div class="screenshot-title">🌍 Geography Quest</div>
+             <div class="screenshot-desc">Explore the world</div>
+           </div>
+         </div>
+         
+         <!-- Sciences Screenshot -->
+         <div class="screenshot-slide" onclick="navigateToPage('sciences.html')">
+           <img src="images/sciences-screenshot.jpg" alt="Science Explorer Screenshot" class="screenshot-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDgwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjOGI1Y2Y2Ii8+Cjx0ZXh0IHg9IjQwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPvCfkqwgU2NpZW5jZSBFeHBsb3JlcjwvdGV4dD4KPHR4ZXQgeD0iNDAwIiB5PSIxMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjE2IiBvcGFjaXR5PSIwLjgiPkRpc2NvdmVyIHNjaWVuY2UgZmFjdHM8L3RleHQ+Cjwvc3ZnPg=='">
+           <div class="screenshot-overlay">
+             <div class="screenshot-title">🔬 Science Explorer</div>
+             <div class="screenshot-desc">Discover science facts</div>
+           </div>
+         </div>
+         
+         <!-- History Screenshot -->
+         <div class="screenshot-slide" onclick="navigateToPage('history.html')">
+           <img src="images/history-screenshot.jpg" alt="History Explorer Screenshot" class="screenshot-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDgwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZWY0NDQ0Ii8+Cjx0ZXh0IHg9IjQwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPvCfjY8gSGlzdG9yeSBFeHBsb3JlcjwvdGV4dD4KPHR4ZXQgeD0iNDAwIiB5PSIxMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjE2IiBvcGFjaXR5PSIwLjgiPkRpc2NvdmVyIEFmcmljYW4gaGlzdG9yeTwvdGV4dD4KPC9zdmc+'">
+           <div class="screenshot-overlay">
+             <div class="screenshot-title">🏛️ History Explorer</div>
+             <div class="screenshot-desc">Discover African history</div>
+           </div>
+         </div>
+         
+         <!-- Racing Game Screenshot -->
+         <div class="screenshot-slide" onclick="navigateToPage('cartoonracinggame.html')">
+           <img src="images/racing-screenshot.jpg" alt="Racing Game Screenshot" class="screenshot-img" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDgwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZmY2NjAwIi8+Cjx0ZXh0IHg9IjQwMCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiPvCfmKggQ2FydG9vbiBSYWNpbmcgR2FtZTwvdGV4dD4KPHR4ZXQgeD0iNDAwIiB5PSIxMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjE2IiBvcGFjaXR5PSIwLjgiPkZ1biByYWNpbmcgYWN0aW9uPC90ZXh0Pgo8L3N2Zz4='">
+           <div class="screenshot-overlay">
+             <div class="screenshot-title">🏎️ Cartoon Racing Game</div>
+             <div class="screenshot-desc">Fun racing action</div>
+           </div>
+         </div>
+       </div>
+       
+       <!-- Gallery Navigation Dots -->
+       <div class="gallery-dots" id="gallery-dots">
+         <span class="dot active" onclick="currentSlide(1)"></span>
+         <span class="dot" onclick="currentSlide(2)"></span>
+         <span class="dot" onclick="currentSlide(3)"></span>
+         <span class="dot" onclick="currentSlide(4)"></span>
+         <span class="dot" onclick="currentSlide(5)"></span>
+         <span class="dot" onclick="currentSlide(6)"></span>
+         <span class="dot" onclick="currentSlide(7)"></span>
+       </div>
+     </div>
+     
+     <p class="text-white/60 text-sm">600+ total questions • All African school subjects covered • Plus fun racing game</p>
     </div>
    </div><!-- Quiz Screen -->
    <div id="quiz-screen" class="h-full flex flex-col p-6 hidden"><!-- Progress Bar -->
@@ -1112,6 +1270,72 @@
           if (_originalStartQuiz) _originalStartQuiz();
           startTimer();
         }
+      }
+      
+      // Initialize screenshot gallery
+      initializeGallery();
+    });
+    
+    // Screenshot Gallery Functionality
+    let slideIndex = 1;
+    let slideInterval;
+    
+    function initializeGallery() {
+      showSlide(slideIndex);
+      autoSlide();
+    }
+    
+    function showSlide(n) {
+      const slides = document.querySelectorAll('.screenshot-slide');
+      const dots = document.querySelectorAll('.dot');
+      const container = document.getElementById('screenshot-container');
+      
+      if (n > slides.length) { slideIndex = 1; }
+      if (n < 1) { slideIndex = slides.length; }
+      
+      // Move container to show current slide
+      const translateX = -((slideIndex - 1) * 100);
+      container.style.transform = `translateX(${translateX}%)`;
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === slideIndex - 1);
+      });
+    }
+    
+    function currentSlide(n) {
+      clearInterval(slideInterval);
+      slideIndex = n;
+      showSlide(slideIndex);
+      autoSlide(); // Restart auto rotation
+    }
+    
+    function nextSlide() {
+      slideIndex++;
+      showSlide(slideIndex);
+    }
+    
+    function autoSlide() {
+      slideInterval = setInterval(() => {
+        nextSlide();
+      }, 4000); // Change slide every 4 seconds
+    }
+    
+    function navigateToPage(page) {
+      window.location.href = page;
+    }
+    
+    // Pause auto-slide on hover
+    document.addEventListener('DOMContentLoaded', () => {
+      const gallery = document.querySelector('.screenshot-gallery');
+      if (gallery) {
+        gallery.addEventListener('mouseenter', () => {
+          clearInterval(slideInterval);
+        });
+        
+        gallery.addEventListener('mouseleave', () => {
+          autoSlide();
+        });
       }
     });
   </script>

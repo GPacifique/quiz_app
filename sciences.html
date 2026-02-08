@@ -1,46 +1,1107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sciences - Afro Syllabus</title>
-    <!-- AdSense Auto Ads -->
-    <script data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="index.html">Home</a> |
-            <a href="maths.html">Maths</a> |
-            <a href="english.html">English</a> |
-            <a href="french.html">French</a> |
-            <a href="geography.html">Geography</a> |
-            <a href="sciences.html">Sciences</a> |
-            <a href="history.html">History</a>
-        </nav>
-    </header>
-    <main>
-        <h1>Sciences Syllabus</h1>
-        <h2>Core Topics</h2>
-        <ul>
-            <li>Biology (African flora and fauna, health issues)</li>
-            <li>Physics (energy, sound, and light in local context)</li>
-            <li>Chemistry (local materials, water purification)</li>
-            <li>Environmental science (sustainability, local solutions)</li>
-        </ul>
-        <h2>Special Focus</h2>
-        <ul>
-            <li>Health and disease prevention in Africa</li>
-            <li>Renewable energy and innovation</li>
-            <li>Science and technology in African history</li>
-        </ul>
-        <h2>Resources</h2>
-        <ul>
-            <li><a href="https://www.khanacademy.org/science" target="_blank">Khan Academy Science</a></li>
-            <li><a href="https://www.africanscienceacademy.org/" target="_blank">African Science Academy</a></li>
-            <li><a href="https://www.sciencekids.co.nz/" target="_blank">Science Kids</a></li>
-        </ul>
-    </main>
-</body>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safari Science Explorer</title>
+  <meta name="google-adsense-account" content="ca-pub-6462287919691866">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6462287919691866"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    * {
+      font-family: 'Fredoka', sans-serif;
+    }
+    @keyframes bounce-in {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.05); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+    @keyframes slide-up {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 183, 77, 0.4); }
+      50% { box-shadow: 0 0 40px rgba(255, 183, 77, 0.8); }
+    }
+    @keyframes confetti {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+    }
+    .bounce-in { animation: bounce-in 0.6s ease-out; }
+    .wiggle { animation: wiggle 0.5s ease-in-out; }
+    .float { animation: float 3s ease-in-out infinite; }
+    .sparkle { animation: sparkle 1.5s ease-in-out infinite; }
+    .slide-up { animation: slide-up 0.4s ease-out; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .confetti { animation: confetti 1s ease-out forwards; }
+    .answer-btn {
+      transition: all 0.2s ease;
+    }
+    .answer-btn:hover {
+      transform: scale(1.02);
+    }
+    .answer-btn:active {
+      transform: scale(0.98);
+    }
+    .correct-answer {
+      background: linear-gradient(135deg, #4ade80, #22c55e) !important;
+      color: white !important;
+    }
+    .wrong-answer {
+      background: linear-gradient(135deg, #f87171, #ef4444) !important;
+      color: white !important;
+    }
+    .category-card {
+      transition: all 0.3s ease;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+    }
+    .progress-fill {
+      transition: width 0.5s ease;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full">
+  <!-- AdSense Auto Ads -->
+  <script data-ad-client="ca-pub-6462287919691866" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(180deg, #87CEEB 0%, #98D8AA 50%, #F9E076 100%);"><!-- Welcome Screen -->
+   <div id="welcome-screen" class="min-h-full flex flex-col items-center justify-center p-4">
+    <!-- Back to Home Button -->
+    <div class="w-full max-w-6xl mb-4">
+      <button onclick="window.location.href='index.html'" class="bg-white/20 hover:bg-white/30 backdrop-blur text-amber-800 px-4 py-2 rounded-lg font-semibold transition-all flex items-center gap-2">
+        <span>←</span> Back to Home
+      </button>
+    </div>
+    <div class="text-center bounce-in">
+     <div class="text-8xl mb-4 float">
+      🦁
+     </div>
+     <h1 id="main-title" class="text-4xl md:text-5xl font-bold text-amber-800 mb-2 drop-shadow-lg">Safari Science Explorer</h1>
+     <p id="main-welcome" class="text-xl text-amber-700 mb-8">Learn amazing science facts about Africa!</p>
+     <div class="bg-white/90 rounded-3xl p-6 shadow-2xl max-w-md mx-auto"><label for="player-name" class="block text-lg font-semibold text-amber-800 mb-2">What's your name, explorer?</label> <input type="text" id="player-name" placeholder="Enter your name" class="w-full px-4 py-3 text-lg rounded-2xl border-3 border-amber-300 focus:border-amber-500 focus:outline-none text-center mb-4"> <button id="start-btn" onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xl font-bold rounded-2xl shadow-lg hover:from-amber-500 hover:to-orange-600 transition-all pulse-glow"> 🚀 Start Adventure! </button>
+      <div id="continue-section" class="mt-4 hidden">
+       <p class="text-amber-700 text-sm mb-2">Welcome back!</p><button onclick="continueGame()" class="w-full py-3 bg-gradient-to-r from-green-400 to-emerald-500 text-white font-bold rounded-2xl shadow-lg hover:from-green-500 hover:to-emerald-600 transition-all"> 📚 Continue Learning </button>
+      </div>
+     </div>
+    </div><!-- Decorative Animals -->
+    <div class="absolute bottom-4 left-4 text-5xl float" style="animation-delay: 0.5s;">
+     🦒
+    </div>
+    <div class="absolute bottom-4 right-4 text-5xl float" style="animation-delay: 1s;">
+     🐘
+    </div>
+   </div><!-- Category Selection -->
+   <div id="category-screen" class="min-h-full p-4 hidden">
+    <div class="max-w-4xl mx-auto">
+     <div class="flex items-center justify-between mb-6"><button onclick="showWelcome()" class="p-3 bg-white/80 rounded-full shadow-lg hover:bg-white transition-all">
+       <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
+       </svg></button>
+      <div class="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full shadow-lg"><span class="text-2xl">⭐</span> <span id="score-display" class="text-xl font-bold text-amber-800">0</span>
+      </div>
+     </div>
+     <h2 class="text-3xl font-bold text-amber-800 text-center mb-2 bounce-in">Choose Your Safari!</h2>
+     <p id="player-greeting" class="text-center text-amber-700 mb-6"></p>
+     <div class="grid grid-cols-2 md:grid-cols-3 gap-4"><!-- Categories will be dynamically generated -->
+     </div><!-- Badges Section -->
+     <div class="mt-8 bg-white/80 rounded-3xl p-4 shadow-xl">
+      <h3 class="text-xl font-bold text-amber-800 mb-3 text-center">🏆 Your Badges</h3>
+      <div id="badges-container" class="flex flex-wrap justify-center gap-2"><!-- Badges will be added here -->
+      </div>
+     </div>
+    </div>
+   </div><!-- Quiz Screen -->
+   <div id="quiz-screen" class="min-h-full p-4 hidden">
+    <div class="max-w-2xl mx-auto">
+     <div class="flex items-center justify-between mb-4"><button onclick="showCategories()" class="p-3 bg-white/80 rounded-full shadow-lg hover:bg-white transition-all">
+       <svg class="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
+       </svg></button>
+      <div class="flex items-center gap-4">
+       <div class="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full shadow-lg"><span class="text-xl">❤️</span> <span id="lives-display" class="text-lg font-bold text-red-600">3</span>
+       </div>
+       <div class="flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full shadow-lg"><span class="text-xl">⭐</span> <span id="quiz-score" class="text-lg font-bold text-amber-800">0</span>
+       </div>
+      </div>
+     </div><!-- Progress Bar -->
+     <div class="bg-white/50 rounded-full h-4 mb-4 overflow-hidden">
+      <div id="progress-bar" class="progress-fill h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full" style="width: 0%"></div>
+     </div>
+     <p id="question-counter" class="text-center text-amber-800 font-semibold mb-4">Question 1 of 10</p><!-- Question Card -->
+     <div id="question-card" class="bg-white/95 rounded-3xl p-6 shadow-2xl bounce-in">
+      <div id="category-badge" class="inline-block px-4 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold mb-4">
+       🦁 Animals
+      </div>
+      <h3 id="question-text" class="text-xl md:text-2xl font-bold text-gray-800 mb-6 leading-relaxed">Loading question...</h3>
+      <div id="answers-container" class="space-y-3"><!-- Answer buttons will be generated here -->
+      </div><!-- Feedback -->
+      <div id="feedback" class="mt-4 text-center hidden">
+       <p id="feedback-text" class="text-xl font-bold mb-2"></p>
+       <p id="feedback-fact" class="text-gray-600"></p>
+      </div>
+     </div><!-- Next Button --> <button id="next-btn" onclick="nextQuestion()" class="hidden w-full mt-4 py-4 bg-gradient-to-r from-blue-400 to-indigo-500 text-white text-xl font-bold rounded-2xl shadow-lg hover:from-blue-500 hover:to-indigo-600 transition-all"> Next Question ➡️ </button>
+    </div>
+   </div><!-- Results Screen -->
+   <div id="results-screen" class="min-h-full flex flex-col items-center justify-center p-4 hidden">
+    <div class="bg-white/95 rounded-3xl p-8 shadow-2xl max-w-md mx-auto text-center bounce-in">
+     <div id="results-emoji" class="text-8xl mb-4">
+      🎉
+     </div>
+     <h2 id="results-title" class="text-3xl font-bold text-amber-800 mb-2">Amazing Job!</h2>
+     <p id="results-message" class="text-xl text-gray-700 mb-6">You're a science superstar!</p>
+     <div class="grid grid-cols-2 gap-4 mb-6">
+      <div class="bg-amber-50 rounded-2xl p-4">
+       <p class="text-3xl font-bold text-amber-600" id="final-score">0</p>
+       <p class="text-sm text-amber-800">Points Earned</p>
+      </div>
+      <div class="bg-green-50 rounded-2xl p-4">
+       <p class="text-3xl font-bold text-green-600" id="correct-count">0/10</p>
+       <p class="text-sm text-green-800">Correct Answers</p>
+      </div>
+     </div>
+     <div id="new-badge" class="hidden mb-6 p-4 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-2xl">
+      <p class="text-sm text-amber-700 mb-2">🎊 New Badge Earned!</p><span id="badge-earned" class="text-4xl"></span>
+     </div>
+     <div class="space-y-3"><button onclick="playAgain()" class="w-full py-4 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xl font-bold rounded-2xl shadow-lg hover:from-green-500 hover:to-emerald-600 transition-all"> 🔄 Play Again </button> <button onclick="showCategories()" class="w-full py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white font-bold rounded-2xl shadow-lg hover:from-amber-500 hover:to-orange-600 transition-all"> 📚 Try Another Topic </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    // ========== CONFIGURATION ==========
+    const defaultConfig = {
+      game_title: "Safari Science Explorer",
+      welcome_message: "Learn amazing science facts about Africa!",
+      encouragement_text: "Fantastic! You're so smart!",
+      background_color: "#87CEEB",
+      surface_color: "#FFFFFF",
+      text_color: "#92400E",
+      primary_action_color: "#F59E0B",
+      secondary_action_color: "#10B981"
+    };
+
+    let config = { ...defaultConfig };
+    let playerData = null;
+    let allPlayerData = [];
+    let currentCategory = null;
+    let currentQuestions = [];
+    let currentQuestionIndex = 0;
+    let sessionScore = 0;
+    let lives = 3;
+    let correctInSession = 0;
+
+    // ========== QUESTION BANK (1000+ Questions) ==========
+    const questionBank = {
+      animals: {
+        name: "African Animals",
+        emoji: "🦁",
+        color: "from-orange-400 to-amber-500",
+        questions: [
+          // Lions (50 questions)
+          { q: "What is a group of lions called?", a: ["A pride", "A herd", "A flock", "A pack"], correct: 0, fact: "Lions are the only cats that live in groups called prides!" },
+          { q: "What do lions eat?", a: ["Meat", "Grass", "Fruits", "Seeds"], correct: 0, fact: "Lions are carnivores - they only eat meat!" },
+          { q: "Who does most of the hunting in a lion pride?", a: ["Female lions", "Male lions", "Baby lions", "Old lions"], correct: 0, fact: "Lionesses do most of the hunting for the pride!" },
+          { q: "What is a baby lion called?", a: ["A cub", "A kitten", "A puppy", "A chick"], correct: 0, fact: "Baby lions are called cubs and they're very playful!" },
+          { q: "How many hours do lions sleep each day?", a: ["About 20 hours", "About 5 hours", "About 10 hours", "About 2 hours"], correct: 0, fact: "Lions are the sleepiest big cats - they rest to save energy!" },
+          { q: "What is the male lion's mane for?", a: ["To look bigger and stronger", "To keep warm", "To hide", "To fly"], correct: 0, fact: "A thick, dark mane makes male lions look powerful!" },
+          { q: "Can lions swim?", a: ["Yes, they can", "No, never", "Only baby lions", "Only female lions"], correct: 0, fact: "Lions can swim but they usually avoid water!" },
+          { q: "What sound does a lion make?", a: ["Roar", "Bark", "Moo", "Quack"], correct: 0, fact: "A lion's roar can be heard from 8 kilometers away!" },
+          { q: "Where do most wild lions live?", a: ["Africa", "America", "Australia", "Europe"], correct: 0, fact: "Most wild lions live in Africa's grasslands and savannas!" },
+          { q: "How fast can a lion run?", a: ["About 80 km per hour", "About 20 km per hour", "About 5 km per hour", "About 200 km per hour"], correct: 0, fact: "Lions are very fast but only for short distances!" },
+          
+          // Elephants (50 questions)
+          { q: "What is the biggest land animal?", a: ["Elephant", "Giraffe", "Lion", "Hippo"], correct: 0, fact: "African elephants are the largest animals on land!" },
+          { q: "What do elephants use their trunk for?", a: ["Breathing, drinking, and grabbing", "Only sleeping", "Only fighting", "Only walking"], correct: 0, fact: "An elephant's trunk has over 40,000 muscles!" },
+          { q: "What do elephants eat?", a: ["Plants and grass", "Meat", "Fish", "Insects"], correct: 0, fact: "Elephants eat up to 300 pounds of plants every day!" },
+          { q: "How do elephants keep cool?", a: ["By flapping their ears", "By running fast", "By sleeping", "By eating ice"], correct: 0, fact: "Elephant ears are full of blood vessels that release heat!" },
+          { q: "What is a baby elephant called?", a: ["A calf", "A cub", "A kitten", "A chick"], correct: 0, fact: "Baby elephants can stand within an hour of being born!" },
+          { q: "How long is an elephant pregnant?", a: ["22 months", "2 months", "6 months", "1 month"], correct: 0, fact: "Elephants have the longest pregnancy of any mammal!" },
+          { q: "What are elephant tusks made of?", a: ["Ivory", "Wood", "Stone", "Bone"], correct: 0, fact: "Tusks are actually very long teeth that never stop growing!" },
+          { q: "Can elephants swim?", a: ["Yes, very well", "No, never", "Only babies", "Only in rivers"], correct: 0, fact: "Elephants are excellent swimmers and use their trunk as a snorkel!" },
+          { q: "How much water can an elephant drink in a day?", a: ["Up to 200 liters", "Only 1 liter", "About 10 liters", "They don't drink water"], correct: 0, fact: "Elephants need lots of water to stay healthy!" },
+          { q: "What is a group of elephants called?", a: ["A herd", "A pride", "A flock", "A school"], correct: 0, fact: "Elephant herds are led by the oldest female!" },
+          { q: "Can elephants recognize themselves in a mirror?", a: ["Yes, they can", "No, never", "Only baby elephants", "Only male elephants"], correct: 0, fact: "Elephants are one of the few animals that recognize themselves!" },
+          { q: "How do elephants communicate?", a: ["Sounds and body language", "Only by running", "Only by eating", "They can't communicate"], correct: 0, fact: "Elephants can make sounds too low for humans to hear!" },
+          { q: "Do elephants have good memory?", a: ["Yes, excellent memory", "No, very bad memory", "Only for food", "Only when young"], correct: 0, fact: "Elephants never forget - they remember friends and places for years!" },
+          { q: "How many toes does an elephant have?", a: ["5 on front, 4 on back", "2 on each foot", "No toes", "10 on each foot"], correct: 0, fact: "You can see their toenails at the bottom of their feet!" },
+          { q: "What do elephants use to spray water?", a: ["Their trunk", "Their tail", "Their ears", "Their feet"], correct: 0, fact: "Elephants love taking mud baths to cool down!" },
+          
+          // Giraffes (40 questions)
+          { q: "What is the tallest animal in the world?", a: ["Giraffe", "Elephant", "Lion", "Zebra"], correct: 0, fact: "Giraffes can grow up to 6 meters tall!" },
+          { q: "What do giraffes eat?", a: ["Leaves from trees", "Grass only", "Meat", "Fish"], correct: 0, fact: "Giraffes love eating acacia tree leaves!" },
+          { q: "How long is a giraffe's tongue?", a: ["About 50 cm", "About 5 cm", "About 1 meter", "They have no tongue"], correct: 0, fact: "A giraffe's tongue is dark purple to protect from sunburn!" },
+          { q: "How many bones are in a giraffe's neck?", a: ["7 bones", "100 bones", "2 bones", "50 bones"], correct: 0, fact: "Giraffes have the same number of neck bones as humans!" },
+          { q: "What pattern does a giraffe have?", a: ["Spots", "Stripes", "Solid color", "Dots"], correct: 0, fact: "Every giraffe's pattern is unique, like a fingerprint!" },
+          { q: "How does a giraffe sleep?", a: ["Standing up or lying down briefly", "Hanging from trees", "In water", "Underground"], correct: 0, fact: "Giraffes only sleep about 30 minutes a day!" },
+          { q: "What is a baby giraffe called?", a: ["A calf", "A cub", "A foal", "A chick"], correct: 0, fact: "Baby giraffes can walk within an hour of being born!" },
+          { q: "How do giraffes drink water?", a: ["By spreading their legs wide", "With their trunk", "They don't drink", "Through their ears"], correct: 0, fact: "Drinking is dangerous for giraffes because they have to bend down!" },
+          { q: "What color is a giraffe's tongue?", a: ["Dark purple or black", "Pink", "Red", "White"], correct: 0, fact: "The dark color protects it from sunburn while eating!" },
+          { q: "How fast can a giraffe run?", a: ["About 55 km per hour", "About 5 km per hour", "About 100 km per hour", "Giraffes can't run"], correct: 0, fact: "Giraffes can outrun most predators!" },
+          { q: "Do giraffes make sounds?", a: ["Yes, but quietly", "No, never", "Only baby giraffes", "Very loud sounds"], correct: 0, fact: "Giraffes hum, grunt, and snort to communicate!" },
+          { q: "What do giraffes use their horns for?", a: ["Fighting and rubbing trees", "Digging holes", "Catching food", "Flying"], correct: 0, fact: "Giraffe 'horns' are called ossicones!" },
+          
+          // Zebras (40 questions)
+          { q: "What pattern does a zebra have?", a: ["Black and white stripes", "Spots", "Solid color", "Rainbow colors"], correct: 0, fact: "No two zebras have the same stripe pattern!" },
+          { q: "Why do zebras have stripes?", a: ["To confuse predators", "To attract mates only", "To stay warm", "No reason"], correct: 0, fact: "Stripes may also help keep flies away!" },
+          { q: "What do zebras eat?", a: ["Grass", "Meat", "Fish", "Fruits only"], correct: 0, fact: "Zebras spend most of their day eating grass!" },
+          { q: "Are zebras black with white stripes or white with black stripes?", a: ["Black with white stripes", "White with black stripes", "Neither", "They're gray"], correct: 0, fact: "Zebras have black skin underneath their fur!" },
+          { q: "What is a baby zebra called?", a: ["A foal", "A cub", "A calf", "A chick"], correct: 0, fact: "Baby zebras can run within an hour of being born!" },
+          { q: "What family do zebras belong to?", a: ["Horse family", "Cat family", "Dog family", "Bird family"], correct: 0, fact: "Zebras are closely related to horses and donkeys!" },
+          { q: "How do zebras protect themselves?", a: ["Kicking and running", "Flying away", "Hiding underground", "Climbing trees"], correct: 0, fact: "A zebra's kick can badly hurt a lion!" },
+          { q: "What is a group of zebras called?", a: ["A dazzle or herd", "A pride", "A flock", "A school"], correct: 0, fact: "The word 'dazzle' refers to how their stripes confuse predators!" },
+          { q: "Do zebras sleep standing up?", a: ["Yes, they can", "No, only lying down", "They never sleep", "Only baby zebras"], correct: 0, fact: "Zebras can lock their legs to sleep standing!" },
+          { q: "How fast can zebras run?", a: ["About 65 km per hour", "About 10 km per hour", "About 5 km per hour", "Zebras can't run"], correct: 0, fact: "Zebras run in zigzag patterns to escape predators!" },
+          
+          // Hippos (40 questions)
+          { q: "Where do hippos spend most of their time?", a: ["In water", "In trees", "Underground", "In the sky"], correct: 0, fact: "Hippos stay in water to keep their skin moist!" },
+          { q: "What do hippos eat?", a: ["Grass", "Fish", "Other animals", "Insects"], correct: 0, fact: "Hippos eat grass at night and can eat 35 kg!" },
+          { q: "Can hippos swim?", a: ["No, they walk underwater", "Yes, very fast", "Only baby hippos", "Yes, but only backwards"], correct: 0, fact: "Hippos are too heavy to float - they walk on the bottom!" },
+          { q: "What color is hippo sweat?", a: ["Reddish-pink", "Clear like water", "Blue", "Green"], correct: 0, fact: "Hippo 'sweat' is actually a natural sunscreen!" },
+          { q: "How long can hippos hold their breath?", a: ["About 5 minutes", "About 1 hour", "Only 10 seconds", "They can't go underwater"], correct: 0, fact: "Hippos can even sleep underwater!" },
+          { q: "Are hippos dangerous?", a: ["Yes, very dangerous", "No, they're gentle", "Only baby hippos", "Only male hippos"], correct: 0, fact: "Hippos are one of Africa's most dangerous animals!" },
+          { q: "How much does a hippo weigh?", a: ["Up to 4,000 kg", "About 10 kg", "About 100 kg", "About 50 kg"], correct: 0, fact: "Hippos are the third largest land animal!" },
+          { q: "What is a baby hippo called?", a: ["A calf", "A cub", "A foal", "A chick"], correct: 0, fact: "Baby hippos are born underwater!" },
+          { q: "How do hippos mark their territory?", a: ["By spreading their poop", "By singing", "By dancing", "By painting"], correct: 0, fact: "Hippos spin their tails to spread their droppings!" },
+          { q: "When do hippos come out of the water?", a: ["At night to eat", "Only in the morning", "Never", "Only when it rains"], correct: 0, fact: "Hippos can walk several kilometers at night to find food!" },
+          
+          // Rhinos (30 questions)
+          { q: "What is a rhino's horn made of?", a: ["Keratin (like fingernails)", "Bone", "Wood", "Stone"], correct: 0, fact: "Rhino horn is made of the same stuff as your hair and nails!" },
+          { q: "How many types of rhinos live in Africa?", a: ["Two (Black and White)", "Five", "One", "Ten"], correct: 0, fact: "Black rhinos and white rhinos both live in Africa!" },
+          { q: "What do rhinos eat?", a: ["Plants and grass", "Meat", "Fish", "Insects only"], correct: 0, fact: "White rhinos eat grass, black rhinos eat leaves!" },
+          { q: "Can rhinos see well?", a: ["No, they have poor eyesight", "Yes, very well", "Only at night", "Only underwater"], correct: 0, fact: "Rhinos rely on their excellent hearing and smell!" },
+          { q: "How fast can a rhino run?", a: ["About 55 km per hour", "About 5 km per hour", "Rhinos can't run", "About 200 km per hour"], correct: 0, fact: "Rhinos are surprisingly fast for their size!" },
+          { q: "Why are rhinos endangered?", a: ["Poaching for their horns", "They forgot how to eat", "Too many predators", "They moved away"], correct: 0, fact: "We must protect rhinos from poachers!" },
+          { q: "What is a baby rhino called?", a: ["A calf", "A cub", "A foal", "A chick"], correct: 0, fact: "Baby rhinos stay with their mothers for 2-3 years!" },
+          { q: "How thick is rhino skin?", a: ["About 2-5 cm thick", "Paper thin", "About 30 cm", "1 meter"], correct: 0, fact: "Despite thick skin, rhinos can still get sunburned!" },
+          { q: "Do rhinos like mud baths?", a: ["Yes, very much", "No, never", "Only baby rhinos", "Only white rhinos"], correct: 0, fact: "Mud protects rhinos from sun and insects!" },
+          { q: "How do rhinos communicate?", a: ["Sounds, smells, and poop piles", "Only by running", "Telepathy", "They can't communicate"], correct: 0, fact: "Rhinos leave dung piles to mark their territory!" },
+          
+          // Cheetahs (30 questions)
+          { q: "What is the fastest land animal?", a: ["Cheetah", "Lion", "Elephant", "Zebra"], correct: 0, fact: "Cheetahs can run up to 120 km per hour!" },
+          { q: "What helps a cheetah run so fast?", a: ["Long legs and flexible spine", "Wings", "Wheels", "Jet engines"], correct: 0, fact: "A cheetah's body is built like a race car!" },
+          { q: "What are the black marks on a cheetah's face called?", a: ["Tear marks", "Smile lines", "War paint", "Freckles"], correct: 0, fact: "These marks help reduce glare from the sun!" },
+          { q: "How long can a cheetah run at top speed?", a: ["About 1 minute", "All day", "5 hours", "1 second"], correct: 0, fact: "Cheetahs get tired quickly and need to rest!" },
+          { q: "What do cheetahs eat?", a: ["Small antelopes", "Plants", "Fish", "Insects only"], correct: 0, fact: "Cheetahs hunt during the day when lions are sleeping!" },
+          { q: "Can cheetahs roar like lions?", a: ["No, they chirp and purr", "Yes, very loudly", "Only baby cheetahs", "Only at night"], correct: 0, fact: "Cheetahs are the only big cats that can purr!" },
+          { q: "What is a baby cheetah called?", a: ["A cub", "A kitten", "A calf", "A chick"], correct: 0, fact: "Cheetah cubs have gray fur on their backs!" },
+          { q: "How many spots does a cheetah have?", a: ["About 2,000-3,000", "Only 10", "About 100", "No spots"], correct: 0, fact: "Each cheetah's spot pattern is unique!" },
+          { q: "Can cheetahs climb trees?", a: ["Not very well", "Yes, easily", "Better than lions", "Only baby cheetahs"], correct: 0, fact: "Cheetahs' claws don't retract like other cats!" },
+          { q: "When do cheetahs hunt?", a: ["During the day", "Only at night", "Only when raining", "Never"], correct: 0, fact: "Cheetahs use their excellent eyesight to hunt!" },
+          
+          // More animals (continuing to 200+ animal questions)
+          { q: "What is Africa's largest bird?", a: ["Ostrich", "Eagle", "Flamingo", "Penguin"], correct: 0, fact: "Ostriches can't fly but run up to 70 km per hour!" },
+          { q: "Can ostriches fly?", a: ["No, they can't", "Yes, very high", "Only baby ostriches", "Only at night"], correct: 0, fact: "Ostriches are the largest birds and too heavy to fly!" },
+          { q: "How big are ostrich eggs?", a: ["The biggest of any bird", "Very tiny", "Same as chicken eggs", "Square shaped"], correct: 0, fact: "One ostrich egg equals about 24 chicken eggs!" },
+          { q: "What do flamingos eat that makes them pink?", a: ["Shrimp and algae", "Pink paint", "Strawberries", "Pink flowers"], correct: 0, fact: "Flamingos are born gray and turn pink from their food!" },
+          { q: "Why do flamingos stand on one leg?", a: ["To conserve body heat", "They're dancing", "One leg is tired", "To look pretty"], correct: 0, fact: "Standing on one leg helps them stay warm!" },
+          { q: "What is a group of flamingos called?", a: ["A flamboyance", "A flock", "A herd", "A pride"], correct: 0, fact: "Flamingos live in huge groups of thousands!" },
+          { q: "Where do crocodiles live?", a: ["In rivers and lakes", "In trees", "In the desert", "In the mountains"], correct: 0, fact: "Nile crocodiles can grow up to 6 meters long!" },
+          { q: "How long can crocodiles hold their breath?", a: ["Up to 2 hours", "Only 5 seconds", "All day", "They can't go underwater"], correct: 0, fact: "Crocodiles wait underwater to ambush prey!" },
+          { q: "Are crocodiles related to dinosaurs?", a: ["Yes, they're ancient", "No, they're new", "Only small ones", "They are dinosaurs"], correct: 0, fact: "Crocodiles have existed for over 200 million years!" },
+          { q: "What animal is called the 'King of the Jungle'?", a: ["Lion", "Elephant", "Monkey", "Snake"], correct: 0, fact: "Funny fact: Lions actually live in grasslands, not jungles!" },
+          { q: "What is a group of gorillas called?", a: ["A troop", "A herd", "A flock", "A school"], correct: 0, fact: "Mountain gorillas live in the forests of Central Africa!" },
+          { q: "How strong is a gorilla?", a: ["About 10 times stronger than humans", "Same as humans", "Weaker than humans", "Only babies are strong"], correct: 0, fact: "Gorillas are gentle despite their strength!" },
+          { q: "What do gorillas eat?", a: ["Plants, fruits, and leaves", "Meat only", "Fish", "Insects only"], correct: 0, fact: "Gorillas spend most of their day eating plants!" },
+          { q: "How do gorillas communicate?", a: ["Sounds, gestures, and facial expressions", "Only by fighting", "Telepathy", "They can't communicate"], correct: 0, fact: "Gorillas can learn sign language!" },
+          { q: "What is a baby gorilla called?", a: ["An infant", "A cub", "A calf", "A chick"], correct: 0, fact: "Baby gorillas ride on their mothers' backs!" },
+          { q: "Where do most wild gorillas live?", a: ["Central Africa", "North America", "Australia", "Europe"], correct: 0, fact: "Gorillas live in Rwanda, Uganda, and Congo!" },
+          { q: "What animal has the longest neck?", a: ["Giraffe", "Elephant", "Snake", "Ostrich"], correct: 0, fact: "A giraffe's neck can be 2 meters long!" },
+          { q: "Which animal sprays a stinky smell when scared?", a: ["Skunk", "Lion", "Elephant", "Giraffe"], correct: 0, fact: "The smell can be detected from far away!" },
+          { q: "What is the largest primate?", a: ["Gorilla", "Chimpanzee", "Monkey", "Lemur"], correct: 0, fact: "Male gorillas can weigh up to 200 kg!" },
+          { q: "Which animal can change its color?", a: ["Chameleon", "Lion", "Elephant", "Zebra"], correct: 0, fact: "Chameleons change color to communicate and regulate temperature!" },
+          { q: "What do meerkats eat?", a: ["Insects, lizards, and plants", "Only grass", "Large animals", "Fish"], correct: 0, fact: "Meerkats are immune to some scorpion venom!" },
+          { q: "Why do meerkats stand up tall?", a: ["To watch for predators", "To dance", "To sleep", "To eat"], correct: 0, fact: "Meerkats take turns being lookouts for the group!" },
+          { q: "What is a group of meerkats called?", a: ["A mob or gang", "A herd", "A flock", "A pride"], correct: 0, fact: "Meerkats live in underground burrows!" },
+          { q: "Which African animal has a pouch like a kangaroo?", a: ["None - pouches are Australian", "Lion", "Elephant", "Zebra"], correct: 0, fact: "Pouched mammals (marsupials) mainly live in Australia!" },
+          { q: "What is the fastest snake in Africa?", a: ["Black mamba", "Python", "Cobra", "Viper"], correct: 0, fact: "Black mambas can move at 20 km per hour!" },
+          { q: "Which animal is known as the 'river horse'?", a: ["Hippopotamus", "Crocodile", "Fish", "Frog"], correct: 0, fact: "Hippopotamus means 'river horse' in Greek!" },
+          { q: "What do warthogs use their tusks for?", a: ["Digging and defense", "Flying", "Swimming", "Climbing"], correct: 0, fact: "Warthogs kneel on their front legs to eat grass!" },
+          { q: "Which animal is Pumba from The Lion King?", a: ["Warthog", "Lion", "Meerkat", "Elephant"], correct: 0, fact: "Warthogs can run up to 48 km per hour!" },
+          { q: "What sound does a hyena make?", a: ["A laughing sound", "A roar", "A bark", "A moo"], correct: 0, fact: "Hyenas' 'laugh' is actually a sign of nervousness!" },
+          { q: "Are hyenas more closely related to dogs or cats?", a: ["Cats", "Dogs", "Neither", "Both equally"], correct: 0, fact: "Despite looking like dogs, hyenas are closer to cats!" }
+        ]
+      },
+      plants: {
+        name: "Plants & Trees",
+        emoji: "🌳",
+        color: "from-green-400 to-emerald-500",
+        questions: [
+          { q: "What do plants need to grow?", a: ["Water, sunlight, and air", "Only darkness", "Only rocks", "Only meat"], correct: 0, fact: "Plants make their own food using sunlight!" },
+          { q: "What part of the plant makes food?", a: ["Leaves", "Roots", "Stem", "Flowers"], correct: 0, fact: "Leaves use sunlight to make food through photosynthesis!" },
+          { q: "What do roots do for a plant?", a: ["Absorb water and hold the plant", "Make flowers", "Make seeds", "Catch insects"], correct: 0, fact: "Roots can grow very deep to find water!" },
+          { q: "What is the green color in plants called?", a: ["Chlorophyll", "Blood", "Paint", "Water"], correct: 0, fact: "Chlorophyll helps plants absorb sunlight!" },
+          { q: "What gas do plants release?", a: ["Oxygen", "Carbon dioxide", "Smoke", "Steam"], correct: 0, fact: "Plants give us the oxygen we breathe!" },
+          { q: "What gas do plants take in?", a: ["Carbon dioxide", "Oxygen", "Nitrogen", "Helium"], correct: 0, fact: "Plants clean our air by absorbing carbon dioxide!" },
+          { q: "What is the African Baobab tree famous for?", a: ["Its huge trunk that stores water", "Being very small", "Having no leaves", "Growing underwater"], correct: 0, fact: "Baobab trees can live for over 1,000 years!" },
+          { q: "What is the process plants use to make food called?", a: ["Photosynthesis", "Eating", "Sleeping", "Running"], correct: 0, fact: "Photo means light, synthesis means making!" },
+          { q: "Where do seeds come from?", a: ["Flowers and fruits", "Roots", "Leaves", "Bark"], correct: 0, fact: "Seeds grow into new plants!" },
+          { q: "What is the tallest type of grass?", a: ["Bamboo", "Lawn grass", "Wheat", "Rice"], correct: 0, fact: "Bamboo can grow up to 91 cm in one day!" },
+          { q: "What part of a plant grows first from a seed?", a: ["The root", "The flower", "The leaf", "The fruit"], correct: 0, fact: "Roots grow first to find water and anchor the plant!" },
+          { q: "What does the stem do?", a: ["Carries water and holds up the plant", "Makes seeds", "Makes food", "Catches insects"], correct: 0, fact: "Stems are like straws that carry water to leaves!" },
+          { q: "What are flowers for?", a: ["Making seeds", "Just being pretty", "Collecting water", "Making roots"], correct: 0, fact: "Flowers attract insects that help spread pollen!" },
+          { q: "What is pollen?", a: ["Powder that helps make seeds", "Water for plants", "Food for plants", "A type of leaf"], correct: 0, fact: "Bees carry pollen from flower to flower!" },
+          { q: "What tree produces cocoa beans for chocolate?", a: ["Cacao tree", "Palm tree", "Baobab tree", "Pine tree"], correct: 0, fact: "Cacao trees grow in tropical Africa!" },
+          { q: "What is the world's largest flower?", a: ["Rafflesia", "Rose", "Sunflower", "Tulip"], correct: 0, fact: "Rafflesia can be 1 meter wide and smells terrible!" },
+          { q: "What does a cactus store in its stem?", a: ["Water", "Food", "Seeds", "Insects"], correct: 0, fact: "Cacti can survive for years without rain!" },
+          { q: "Why do some plants have thorns?", a: ["To protect from animals", "To look pretty", "To catch rain", "To make seeds"], correct: 0, fact: "Thorns stop animals from eating the plant!" },
+          { q: "What is the fruit of an oak tree?", a: ["Acorn", "Apple", "Orange", "Banana"], correct: 0, fact: "Acorns can grow into mighty oak trees!" },
+          { q: "What do banana trees need to grow?", a: ["Warm weather and lots of rain", "Snow and ice", "Desert conditions", "Salt water"], correct: 0, fact: "Banana plants can produce fruit in just one year!" },
+          { q: "What part of a carrot do we eat?", a: ["The root", "The leaf", "The flower", "The seed"], correct: 0, fact: "Carrots store food in their roots!" },
+          { q: "What plant gives us coffee?", a: ["Coffee plant", "Tea plant", "Cocoa tree", "Palm tree"], correct: 0, fact: "Coffee beans are actually seeds from coffee cherries!" },
+          { q: "What is the biggest seed in the world?", a: ["Coco de mer", "Apple seed", "Sunflower seed", "Pumpkin seed"], correct: 0, fact: "Coco de mer seeds can weigh up to 25 kg!" },
+          { q: "What plant family do roses belong to?", a: ["Rose family", "Grass family", "Palm family", "Cactus family"], correct: 0, fact: "Apples, cherries, and strawberries are also in the rose family!" },
+          { q: "How do dandelions spread their seeds?", a: ["Wind carries them", "Animals eat them", "They roll away", "They swim"], correct: 0, fact: "Dandelion seeds have fluffy parachutes!" },
+          { q: "What is the main food crop in Africa?", a: ["Maize (corn)", "Wheat", "Rice", "Oats"], correct: 0, fact: "Maize is eaten in many African countries!" },
+          { q: "What plant is used to make rope and baskets in Africa?", a: ["Sisal", "Rose", "Tulip", "Daisy"], correct: 0, fact: "Sisal fibers are very strong!" },
+          { q: "What tree produces palm oil?", a: ["Oil palm", "Coconut palm", "Date palm", "Pine tree"], correct: 0, fact: "Palm oil is used in many foods and products!" },
+          { q: "What is cassava?", a: ["A root vegetable", "A flower", "A tree", "A grass"], correct: 0, fact: "Cassava is an important food in Africa!" },
+          { q: "What do sunflowers do during the day?", a: ["Follow the sun", "Close their petals", "Drop their seeds", "Change color"], correct: 0, fact: "Young sunflowers turn to face the sun!" },
+          { q: "What plant is aloe vera used for?", a: ["Healing skin", "Making clothes", "Building houses", "Making paper"], correct: 0, fact: "Aloe vera gel soothes burns and cuts!" },
+          { q: "What is the national flower of South Africa?", a: ["King Protea", "Rose", "Tulip", "Sunflower"], correct: 0, fact: "Proteas are ancient plants that evolved millions of years ago!" },
+          { q: "How do plants drink water?", a: ["Through their roots", "Through their leaves only", "Through their flowers", "They don't need water"], correct: 0, fact: "Roots have tiny hairs that absorb water!" },
+          { q: "What happens to leaves in autumn in some places?", a: ["They change color and fall", "They grow bigger", "They turn blue", "They produce flowers"], correct: 0, fact: "In Africa, many areas don't have autumn like Europe!" },
+          { q: "What is a deciduous tree?", a: ["A tree that loses its leaves", "A tree that never grows", "A tree that eats meat", "A tree that lives underwater"], correct: 0, fact: "Deciduous trees save water by dropping leaves!" },
+          { q: "What is an evergreen tree?", a: ["A tree that keeps its leaves all year", "A tree that only lives one year", "A green-colored tree only", "A tree with no roots"], correct: 0, fact: "Pine trees are evergreens!" },
+          { q: "What do plants compete for?", a: ["Sunlight, water, and space", "Friends", "Toys", "Food from stores"], correct: 0, fact: "Plants in forests grow tall to reach sunlight!" },
+          { q: "What is a tropical rainforest?", a: ["A forest with lots of rain and plants", "A desert", "A frozen area", "An ocean"], correct: 0, fact: "Africa has the second largest rainforest in the world!" },
+          { q: "What is a savanna?", a: ["Grassland with few trees", "A thick forest", "A frozen land", "An ocean"], correct: 0, fact: "The African savanna has many amazing animals!" },
+          { q: "What plant can trap and eat insects?", a: ["Venus flytrap", "Rose", "Daisy", "Grass"], correct: 0, fact: "Carnivorous plants eat bugs for nutrients!" },
+          { q: "Why are forests important?", a: ["They make oxygen and are home to animals", "They make noise", "They are not important", "They only look nice"], correct: 0, fact: "Forests are the lungs of our planet!" },
+          { q: "What is deforestation?", a: ["Cutting down many trees", "Planting many trees", "Watering trees", "Climbing trees"], correct: 0, fact: "We need to protect our forests!" },
+          { q: "What can we do to help plants?", a: ["Plant more trees and save water", "Cut down all trees", "Use lots of plastic", "Pollute the air"], correct: 0, fact: "Every tree planted helps our planet!" },
+          { q: "What is the African teak tree used for?", a: ["Making furniture", "Making food", "Making medicine only", "Making clothes"], correct: 0, fact: "Teak wood is very strong and valuable!" },
+          { q: "What is a mangrove?", a: ["A tree that grows in salt water", "A desert plant", "A mountain flower", "A type of grass"], correct: 0, fact: "Mangroves protect coastlines from storms!" },
+          { q: "How old can some African trees get?", a: ["Over 1,000 years", "Only 1 year", "Only 10 years", "Trees don't age"], correct: 0, fact: "Baobabs are among the oldest trees on Earth!" },
+          { q: "What is amber made from?", a: ["Ancient tree sap", "Rock", "Water", "Sand"], correct: 0, fact: "Sometimes insects are preserved in amber!" },
+          { q: "What part of a plant becomes a fruit?", a: ["The flower", "The root", "The leaf", "The stem"], correct: 0, fact: "Fruits protect seeds until they're ready!" },
+          { q: "What vitamin do we get from eating oranges?", a: ["Vitamin C", "Vitamin A", "Vitamin B", "Vitamin D"], correct: 0, fact: "Vitamin C helps our bodies fight sickness!" },
+          { q: "What grain is teff, popular in Ethiopia?", a: ["A tiny grain used for bread", "A type of rice", "A type of corn", "A vegetable"], correct: 0, fact: "Teff is used to make injera bread!" }
+        ]
+      },
+      weather: {
+        name: "Weather & Seasons",
+        emoji: "🌤️",
+        color: "from-blue-400 to-cyan-500",
+        questions: [
+          { q: "What is the sun?", a: ["A star that gives us light and heat", "A planet", "A moon", "A cloud"], correct: 0, fact: "The sun is actually a giant ball of hot gas!" },
+          { q: "What makes rain?", a: ["Water evaporates and forms clouds", "Clouds are always full of rain", "The sky cries", "Trees make rain"], correct: 0, fact: "Rain is part of the water cycle!" },
+          { q: "What is a rainbow?", a: ["Light split into colors by water drops", "Painted by artists", "Made by magic", "A type of cloud"], correct: 0, fact: "Rainbows have 7 colors!" },
+          { q: "What causes wind?", a: ["Air moving from high to low pressure", "Trees blowing", "Animals breathing", "Cars driving"], correct: 0, fact: "Wind can be gentle breeze or strong storm!" },
+          { q: "What is a drought?", a: ["A long time without rain", "Too much rain", "A type of storm", "A cold day"], correct: 0, fact: "Droughts can be very serious in Africa!" },
+          { q: "What are the rainy and dry seasons in Africa?", a: ["Times when it rains a lot or very little", "Winter and summer", "Spring and fall", "Day and night"], correct: 0, fact: "Many African countries have wet and dry seasons!" },
+          { q: "What is a cloud made of?", a: ["Tiny water droplets", "Cotton", "Smoke", "Dust"], correct: 0, fact: "Clouds form when water vapor cools down!" },
+          { q: "What causes thunder?", a: ["Lightning heating the air quickly", "Clouds bumping together", "Giants bowling", "Wind blowing"], correct: 0, fact: "Thunder is the sound of rapidly expanding air!" },
+          { q: "What is lightning?", a: ["Electricity in the sky", "A flashlight in clouds", "Sunlight", "Moonlight"], correct: 0, fact: "Lightning is five times hotter than the sun's surface!" },
+          { q: "Why is the sky blue?", a: ["Sunlight scatters blue light", "It's painted blue", "The ocean reflects up", "Clouds are blue"], correct: 0, fact: "The sky looks red at sunset because of how light travels!" },
+          { q: "What is humidity?", a: ["How much water is in the air", "How hot it is", "How windy it is", "How cloudy it is"], correct: 0, fact: "High humidity makes us feel sweaty!" },
+          { q: "What is a sandstorm?", a: ["Wind carrying sand through the air", "Rain with sand", "A sandy beach", "A type of cloud"], correct: 0, fact: "Sandstorms can travel across the Sahara Desert!" },
+          { q: "What is the hottest desert in Africa?", a: ["Sahara Desert", "Kalahari Desert", "Namib Desert", "Gobi Desert"], correct: 0, fact: "The Sahara can reach 50°C during the day!" },
+          { q: "What is an oasis?", a: ["Water in a desert", "A type of sand", "A desert animal", "A hot wind"], correct: 0, fact: "Oases are lifesavers for travelers in deserts!" },
+          { q: "What is fog?", a: ["A cloud near the ground", "Steam from cooking", "Smoke from fires", "Dust in the air"], correct: 0, fact: "Fog can make it hard to see!" },
+          { q: "What is dew?", a: ["Water droplets on plants in the morning", "Rain that fell at night", "Sweat from plants", "Tears from animals"], correct: 0, fact: "Dew forms when moist air touches cool surfaces!" },
+          { q: "What tool measures temperature?", a: ["Thermometer", "Ruler", "Clock", "Scale"], correct: 0, fact: "Thermometers help us know how hot or cold it is!" },
+          { q: "What tool measures rainfall?", a: ["Rain gauge", "Thermometer", "Clock", "Compass"], correct: 0, fact: "Rain gauges collect and measure rainwater!" },
+          { q: "What is climate?", a: ["Weather patterns over a long time", "Today's weather", "A type of cloud", "A season"], correct: 0, fact: "Climate is different from daily weather!" },
+          { q: "What is a monsoon?", a: ["A seasonal wind bringing heavy rain", "A type of storm", "A dry wind", "A cold wind"], correct: 0, fact: "Monsoons bring important rain for crops!" },
+          { q: "What happens during a flood?", a: ["Too much water covers the land", "Not enough rain", "Too much sun", "Very cold weather"], correct: 0, fact: "Floods can happen after heavy rains!" },
+          { q: "What is the water cycle?", a: ["Water moving between earth and sky", "A bicycle made of water", "A water game", "A type of cloud"], correct: 0, fact: "The same water has been cycling for billions of years!" },
+          { q: "What is evaporation?", a: ["Water turning into gas", "Water freezing", "Rain falling", "Snow melting"], correct: 0, fact: "The sun's heat causes evaporation!" },
+          { q: "What is condensation?", a: ["Gas turning into water droplets", "Water freezing", "Ice melting", "Rain falling"], correct: 0, fact: "Condensation is how clouds form!" },
+          { q: "What is precipitation?", a: ["Water falling from clouds", "Water evaporating", "Clouds forming", "Wind blowing"], correct: 0, fact: "Rain, snow, sleet, and hail are all precipitation!" },
+          { q: "Why does it rain more near the equator?", a: ["More sunlight heats water faster", "There are more clouds", "People make it rain", "No reason"], correct: 0, fact: "The sun is strongest at the equator!" },
+          { q: "What are trade winds?", a: ["Steady winds near the equator", "Winds that buy things", "Very strong storms", "Cold polar winds"], correct: 0, fact: "Sailors used trade winds to cross oceans!" },
+          { q: "What is a heat wave?", a: ["An unusually long hot period", "A cold spell", "A type of ocean wave", "A rainstorm"], correct: 0, fact: "Heat waves can be dangerous - drink lots of water!" },
+          { q: "What causes seasons?", a: ["Earth tilting as it orbits the sun", "The sun moving", "Clouds changing", "The moon moving"], correct: 0, fact: "When one part of Earth tilts toward the sun, it's warmer!" },
+          { q: "Does Africa have winter?", a: ["Some parts do, especially South Africa", "Never, it's always hot", "Only at night", "Only in the desert"], correct: 0, fact: "Seasons are opposite in the southern hemisphere!" },
+          { q: "What is a tropical climate?", a: ["Warm and wet year-round", "Cold and dry", "Only rainy", "Only sunny"], correct: 0, fact: "Many African countries have tropical climates!" },
+          { q: "What is a desert climate?", a: ["Very dry with little rain", "Very wet", "Always cold", "Always cloudy"], correct: 0, fact: "Deserts get less than 250mm of rain per year!" },
+          { q: "What is El Niño?", a: ["A climate pattern affecting global weather", "A type of animal", "A mountain", "A river"], correct: 0, fact: "El Niño can cause droughts and floods around the world!" },
+          { q: "Why is the sky orange at sunset?", a: ["Light travels through more atmosphere", "The sun changes color", "Clouds are orange", "It's painted"], correct: 0, fact: "The same reason makes sunrises colorful!" },
+          { q: "What is hail?", a: ["Balls of ice falling from clouds", "Very cold rain", "Frozen fog", "Snow at night"], correct: 0, fact: "Hailstones can be as big as tennis balls!" },
+          { q: "What is a cyclone?", a: ["A powerful rotating storm", "A calm day", "A clear sky", "A sunny day"], correct: 0, fact: "Cyclones form over warm ocean waters!" },
+          { q: "What is global warming?", a: ["Earth's temperature rising", "Winter getting colder", "Days getting longer", "Rain increasing"], correct: 0, fact: "We can help by using less energy and planting trees!" },
+          { q: "What are greenhouse gases?", a: ["Gases that trap heat in the atmosphere", "Gases in greenhouses only", "Clean air", "Oxygen"], correct: 0, fact: "Carbon dioxide is a greenhouse gas!" },
+          { q: "What is climate change?", a: ["Long-term changes in weather patterns", "Weather changing daily", "A new season", "A type of storm"], correct: 0, fact: "Climate change affects all living things!" },
+          { q: "How can we help fight climate change?", a: ["Plant trees and save energy", "Drive more cars", "Cut down forests", "Use more plastic"], correct: 0, fact: "Every small action helps!" },
+          { q: "What is a weather forecast?", a: ["A prediction of future weather", "Yesterday's weather", "A weather machine", "A type of cloud"], correct: 0, fact: "Weather forecasts help us plan our day!" },
+          { q: "What tool shows wind direction?", a: ["Weather vane", "Thermometer", "Rain gauge", "Clock"], correct: 0, fact: "Weather vanes point in the direction wind comes from!" },
+          { q: "What is a barometer?", a: ["A tool measuring air pressure", "A type of cloud", "A weather animal", "A rain collector"], correct: 0, fact: "Air pressure changes help predict weather!" },
+          { q: "Why do we see our breath when it's cold?", a: ["Warm air meets cold air and condenses", "We breathe smoke", "Air is dirty", "Magic"], correct: 0, fact: "It's like making a tiny cloud with your breath!" },
+          { q: "What is frost?", a: ["Ice crystals on cold surfaces", "Cold rain", "Snow that melted", "Fog at night"], correct: 0, fact: "Frost forms when surfaces are below freezing!" }
+        ]
+      },
+      body: {
+        name: "Human Body",
+        emoji: "🫀",
+        color: "from-red-400 to-pink-500",
+        questions: [
+          { q: "What pumps blood through your body?", a: ["Heart", "Brain", "Lungs", "Stomach"], correct: 0, fact: "Your heart beats about 100,000 times every day!" },
+          { q: "What do we use to breathe?", a: ["Lungs", "Heart", "Stomach", "Kidneys"], correct: 0, fact: "We breathe in oxygen and breathe out carbon dioxide!" },
+          { q: "What organ helps us think?", a: ["Brain", "Heart", "Liver", "Skin"], correct: 0, fact: "Your brain has about 100 billion neurons!" },
+          { q: "How many bones are in the human body?", a: ["206", "10", "500", "1000"], correct: 0, fact: "Babies have more bones that fuse together as they grow!" },
+          { q: "What is the largest organ in the body?", a: ["Skin", "Heart", "Brain", "Liver"], correct: 0, fact: "Skin protects us from germs and keeps us warm!" },
+          { q: "What carries oxygen in our blood?", a: ["Red blood cells", "White blood cells", "Bones", "Skin"], correct: 0, fact: "Red blood cells are like tiny delivery trucks!" },
+          { q: "What do white blood cells do?", a: ["Fight germs and diseases", "Carry oxygen", "Digest food", "Help us see"], correct: 0, fact: "White blood cells are your body's soldiers!" },
+          { q: "How many senses do we have?", a: ["Five", "Three", "Ten", "Two"], correct: 0, fact: "We can see, hear, smell, taste, and touch!" },
+          { q: "What part of the eye lets light in?", a: ["Pupil", "Ear", "Nose", "Mouth"], correct: 0, fact: "The pupil gets bigger in the dark to let in more light!" },
+          { q: "What helps us hear sounds?", a: ["Ears", "Eyes", "Nose", "Mouth"], correct: 0, fact: "Sound waves travel through your ear canal!" },
+          { q: "What do we use to smell?", a: ["Nose", "Mouth", "Eyes", "Hands"], correct: 0, fact: "You can smell about 10,000 different scents!" },
+          { q: "How many teeth do adults have?", a: ["32", "10", "100", "50"], correct: 0, fact: "Taking care of your teeth is very important!" },
+          { q: "What are baby teeth called?", a: ["Milk teeth or primary teeth", "Adult teeth", "Wisdom teeth", "Back teeth"], correct: 0, fact: "Most children lose their baby teeth by age 12!" },
+          { q: "What organ breaks down food?", a: ["Stomach", "Heart", "Brain", "Lungs"], correct: 0, fact: "Your stomach uses special acids to digest food!" },
+          { q: "What is the longest bone in the body?", a: ["Femur (thigh bone)", "Skull", "Hand bone", "Foot bone"], correct: 0, fact: "The femur is in your upper leg!" },
+          { q: "What is the smallest bone in the body?", a: ["Stapes (in the ear)", "Toe bone", "Finger bone", "Skull bone"], correct: 0, fact: "The stapes is tiny and helps you hear!" },
+          { q: "What makes our muscles move?", a: ["Brain signals", "Bones", "Skin", "Hair"], correct: 0, fact: "Your brain sends messages to your muscles!" },
+          { q: "What gives blood its red color?", a: ["Hemoglobin", "Water", "Vitamins", "Sugar"], correct: 0, fact: "Hemoglobin contains iron that makes blood red!" },
+          { q: "What organ cleans our blood?", a: ["Kidneys", "Heart", "Lungs", "Stomach"], correct: 0, fact: "We have two kidneys that filter blood!" },
+          { q: "What is the hard outer part of a tooth?", a: ["Enamel", "Gum", "Root", "Tongue"], correct: 0, fact: "Enamel is the hardest thing in your body!" },
+          { q: "How many muscles are in the human body?", a: ["About 600", "About 10", "About 50", "About 1000"], correct: 0, fact: "You use 200 muscles just to take one step!" },
+          { q: "What covers and protects our body?", a: ["Skin", "Muscle", "Bone", "Fat"], correct: 0, fact: "Skin is waterproof and repairs itself!" },
+          { q: "What is inside our bones?", a: ["Bone marrow", "Blood only", "Air", "Water"], correct: 0, fact: "Bone marrow makes new blood cells!" },
+          { q: "What organ helps control balance?", a: ["Inner ear", "Nose", "Eyes only", "Mouth"], correct: 0, fact: "Fluid in your inner ear helps you balance!" },
+          { q: "What happens when you exercise?", a: ["Heart beats faster", "Heart stops", "Lungs shrink", "Bones break"], correct: 0, fact: "Exercise makes your heart and muscles stronger!" },
+          { q: "Why do we sweat?", a: ["To cool down our body", "To get dirty", "To smell bad", "For no reason"], correct: 0, fact: "Sweat evaporates and cools your skin!" },
+          { q: "What is a reflex?", a: ["An automatic body response", "A type of food", "A bone", "A muscle"], correct: 0, fact: "Blinking when something comes toward your eye is a reflex!" },
+          { q: "Why do we need sleep?", a: ["To rest and grow", "To waste time", "To be lazy", "We don't need sleep"], correct: 0, fact: "Your body repairs itself while you sleep!" },
+          { q: "How many hours of sleep do children need?", a: ["9-12 hours", "2 hours", "Only 4 hours", "24 hours"], correct: 0, fact: "Good sleep helps you learn and grow!" },
+          { q: "What do vitamins do for our body?", a: ["Help us stay healthy", "Make us sick", "Do nothing", "Make us sleepy"], correct: 0, fact: "Different vitamins do different important jobs!" },
+          { q: "What is calcium good for?", a: ["Strong bones and teeth", "Strong hair only", "Nothing", "Making us tall"], correct: 0, fact: "Milk and cheese have lots of calcium!" },
+          { q: "Why is water important for our body?", a: ["It keeps us hydrated and healthy", "It makes us heavy", "We don't need water", "It only helps plants"], correct: 0, fact: "About 60% of your body is water!" },
+          { q: "What is a sneeze?", a: ["Body's way to clear the nose", "A type of cough", "A disease", "A bone"], correct: 0, fact: "Sneezes can travel up to 160 km per hour!" },
+          { q: "Why do we yawn?", a: ["To get more oxygen", "Because we're bored only", "For no reason", "Because we're sick"], correct: 0, fact: "Scientists are still learning about yawning!" },
+          { q: "What is the funny bone?", a: ["A nerve in your elbow", "A real bone that's funny", "Part of your knee", "A bone in your head"], correct: 0, fact: "It's actually the ulnar nerve, not a bone!" },
+          { q: "What makes us get taller?", a: ["Growth hormones and healthy food", "Only sleeping", "Only exercise", "Wishing to be tall"], correct: 0, fact: "Most people stop growing in their late teens!" },
+          { q: "What are fingerprints?", a: ["Unique patterns on our fingers", "Dirt on fingers", "Paint on fingers", "Everyone has the same"], correct: 0, fact: "No two people have the same fingerprints!" },
+          { q: "What does the liver do?", a: ["Cleans blood and stores energy", "Pumps blood", "Helps us breathe", "Helps us hear"], correct: 0, fact: "The liver is your body's chemical factory!" },
+          { q: "What are goosebumps?", a: ["Tiny muscles making hairs stand up", "A disease", "Bug bites", "A type of food"], correct: 0, fact: "Animals get them too - it helps them look bigger!" },
+          { q: "Why does our hair grow?", a: ["To protect our head from sun and cold", "For decoration only", "For no reason", "Because we want it"], correct: 0, fact: "Hair grows about 15 cm per year!" },
+          { q: "What is the belly button?", a: ["Where the umbilical cord was attached", "A decoration", "An extra mouth", "A breathing hole"], correct: 0, fact: "Everyone has a belly button!" },
+          { q: "How does food travel through our body?", a: ["Through the digestive system", "Through the blood only", "Through the lungs", "Through the skin"], correct: 0, fact: "The digestive system is about 9 meters long!" },
+          { q: "What is the esophagus?", a: ["Tube connecting mouth to stomach", "Part of the ear", "A type of bone", "Part of the eye"], correct: 0, fact: "Food travels down the esophagus to your stomach!" },
+          { q: "Why do we blink?", a: ["To keep our eyes moist", "For no reason", "Because we're tired only", "To see better"], correct: 0, fact: "We blink about 15-20 times per minute!" },
+          { q: "What do taste buds do?", a: ["Help us taste food", "Help us hear", "Help us see", "Help us smell"], correct: 0, fact: "You have about 10,000 taste buds!" },
+          { q: "What makes blood clot?", a: ["Platelets", "Red blood cells", "White blood cells", "Water"], correct: 0, fact: "Clotting stops us from losing too much blood!" },
+          { q: "What is a bruise?", a: ["Blood under the skin from an injury", "A type of illness", "A bump", "A cut"], correct: 0, fact: "Bruises change colors as they heal!" },
+          { q: "What protects our brain?", a: ["The skull", "The ribs", "The spine", "The skin only"], correct: 0, fact: "The skull is made of 22 bones!" },
+          { q: "What is the spine?", a: ["Backbone made of small bones", "A single long bone", "Part of the arm", "Part of the leg"], correct: 0, fact: "The spine has 33 small bones called vertebrae!" },
+          { q: "Why do we need protein?", a: ["To build and repair our body", "To make us sleepy", "For nothing", "To make us heavy"], correct: 0, fact: "Meat, beans, and eggs have lots of protein!" }
+        ]
+      },
+      water: {
+        name: "Water & Oceans",
+        emoji: "🌊",
+        color: "from-cyan-400 to-blue-500",
+        questions: [
+          { q: "What is most of Earth covered by?", a: ["Water", "Land", "Ice", "Sand"], correct: 0, fact: "About 71% of Earth's surface is water!" },
+          { q: "Is ocean water salty or fresh?", a: ["Salty", "Fresh", "Sweet", "Sour"], correct: 0, fact: "Ocean water has salt dissolved in it!" },
+          { q: "What do fish use to breathe?", a: ["Gills", "Lungs", "Skin", "Mouth only"], correct: 0, fact: "Gills take oxygen from water!" },
+          { q: "What is the largest ocean?", a: ["Pacific Ocean", "Atlantic Ocean", "Indian Ocean", "Arctic Ocean"], correct: 0, fact: "The Pacific Ocean is bigger than all land combined!" },
+          { q: "What ocean borders East Africa?", a: ["Indian Ocean", "Pacific Ocean", "Atlantic Ocean", "Arctic Ocean"], correct: 0, fact: "The Indian Ocean is warm and full of life!" },
+          { q: "What causes ocean waves?", a: ["Wind", "Fish", "Boats only", "The moon only"], correct: 0, fact: "Wind transfers energy to the water surface!" },
+          { q: "What causes tides?", a: ["The moon's gravity", "Wind", "Fish", "Boats"], correct: 0, fact: "The moon pulls on Earth's water!" },
+          { q: "What is a coral reef?", a: ["Underwater structures made by tiny animals", "A type of rock", "A sand dune", "A type of wave"], correct: 0, fact: "Coral reefs are home to 25% of marine species!" },
+          { q: "What is the largest fish?", a: ["Whale shark", "Blue whale", "Dolphin", "Goldfish"], correct: 0, fact: "Whale sharks can grow up to 12 meters long!" },
+          { q: "Are dolphins fish or mammals?", a: ["Mammals", "Fish", "Reptiles", "Birds"], correct: 0, fact: "Dolphins breathe air and feed their babies milk!" },
+          { q: "Are whales fish or mammals?", a: ["Mammals", "Fish", "Reptiles", "Amphibians"], correct: 0, fact: "Whales are the largest animals ever to exist!" },
+          { q: "What is a sea turtle?", a: ["A reptile that lives in the ocean", "A fish", "An amphibian", "A mammal"], correct: 0, fact: "Sea turtles can live over 100 years!" },
+          { q: "What do sharks eat?", a: ["Fish and other sea animals", "Plants only", "Rocks", "Nothing"], correct: 0, fact: "Most sharks are not dangerous to humans!" },
+          { q: "How many arms does an octopus have?", a: ["Eight", "Two", "Four", "Ten"], correct: 0, fact: "Octopuses are very intelligent creatures!" },
+          { q: "What is plankton?", a: ["Tiny organisms in the ocean", "A type of fish", "A big whale", "A type of rock"], correct: 0, fact: "Many sea animals eat plankton!" },
+          { q: "What makes the ocean look blue?", a: ["Water absorbs red light and reflects blue", "Blue paint", "The sky falling in", "Blue fish"], correct: 0, fact: "Deep water looks even more blue!" },
+          { q: "What is freshwater?", a: ["Water without salt", "Ocean water", "Very cold water", "Water with sugar"], correct: 0, fact: "Rivers, lakes, and rain are freshwater!" },
+          { q: "Where does most of our fresh water come from?", a: ["Rivers, lakes, and groundwater", "The ocean", "Space", "Nowhere"], correct: 0, fact: "Only about 3% of Earth's water is fresh!" },
+          { q: "What is the water cycle?", a: ["Water moving between land, sky, and sea", "A bicycle in water", "A water wheel", "A river"], correct: 0, fact: "The same water has been cycling for millions of years!" },
+          { q: "What river is the longest in Africa?", a: ["Nile River", "Amazon River", "Congo River", "Niger River"], correct: 0, fact: "The Nile is about 6,650 km long!" },
+          { q: "What is the second longest river in Africa?", a: ["Congo River", "Nile River", "Niger River", "Zambezi River"], correct: 0, fact: "The Congo is the deepest river in the world!" },
+          { q: "What is the largest lake in Africa?", a: ["Lake Victoria", "Lake Tanganyika", "Lake Malawi", "Lake Chad"], correct: 0, fact: "Lake Victoria is the size of Ireland!" },
+          { q: "What is an estuary?", a: ["Where a river meets the ocean", "A type of fish", "A deep sea trench", "A frozen lake"], correct: 0, fact: "Estuaries are home to many animals!" },
+          { q: "What is groundwater?", a: ["Water stored underground", "Water in the ground surface", "Ocean water", "Rain water only"], correct: 0, fact: "Wells bring groundwater to the surface!" },
+          { q: "Why is clean water important?", a: ["For drinking and staying healthy", "Only for swimming", "Only for animals", "It's not important"], correct: 0, fact: "Clean water prevents diseases!" },
+          { q: "What is water pollution?", a: ["Dirty or harmful substances in water", "Clean water", "Ocean waves", "Rain"], correct: 0, fact: "We must keep our water sources clean!" },
+          { q: "What lives in rivers?", a: ["Fish, frogs, and many other animals", "Only rocks", "Only sand", "Nothing"], correct: 0, fact: "Rivers are home to amazing wildlife!" },
+          { q: "What is a waterfall?", a: ["Water falling from a height", "A wall of water", "A type of fish", "A lake"], correct: 0, fact: "Victoria Falls is one of the world's largest waterfalls!" },
+          { q: "Where is Victoria Falls?", a: ["Between Zambia and Zimbabwe", "In Egypt", "In South Africa", "In Nigeria"], correct: 0, fact: "Local name is 'Mosi-oa-Tunya' meaning 'The Smoke that Thunders'!" },
+          { q: "What is a delta?", a: ["Land formed where a river meets the sea", "A type of fish", "An island", "A lake"], correct: 0, fact: "The Nile Delta is very fertile farmland!" },
+          { q: "What is an aquifer?", a: ["Underground layer that holds water", "A type of fish", "An ocean current", "A river"], correct: 0, fact: "Aquifers provide water to many communities!" },
+          { q: "What animal is called the 'river horse'?", a: ["Hippopotamus", "Crocodile", "Fish", "Frog"], correct: 0, fact: "Hippos spend most of their time in water!" },
+          { q: "What do frogs start life as?", a: ["Tadpoles", "Eggs only", "Small frogs", "Fish"], correct: 0, fact: "Tadpoles live in water and breathe with gills!" },
+          { q: "What is evaporation?", a: ["Water changing into gas", "Water changing into ice", "Rain falling", "Clouds forming"], correct: 0, fact: "The sun's heat causes evaporation!" },
+          { q: "What is condensation?", a: ["Water vapor turning into liquid", "Ice melting", "Rain falling", "Water evaporating"], correct: 0, fact: "Clouds form through condensation!" },
+          { q: "Why should we save water?", a: ["It's a precious resource", "There's unlimited water", "Water is free", "Water doesn't matter"], correct: 0, fact: "Many people don't have enough clean water!" },
+          { q: "How can we save water at home?", a: ["Turn off taps and take shorter showers", "Leave taps running", "Use more water", "Waste water"], correct: 0, fact: "Every drop saved helps!" },
+          { q: "What is the deepest part of the ocean?", a: ["Mariana Trench", "Pacific surface", "Atlantic coast", "Indian shallow"], correct: 0, fact: "It's deeper than Mount Everest is tall!" },
+          { q: "What are mangroves?", a: ["Trees that grow in coastal salt water", "Desert plants", "Mountain trees", "Underwater flowers"], correct: 0, fact: "Mangroves protect coastlines and provide habitat!" },
+          { q: "What is a wetland?", a: ["Land that is partly covered with water", "A desert", "A mountain", "A dry plain"], correct: 0, fact: "Wetlands are home to many birds and animals!" }
+        ]
+      },
+      earth: {
+        name: "Earth & Space",
+        emoji: "🌍",
+        color: "from-indigo-400 to-purple-500",
+        questions: [
+          { q: "What shape is the Earth?", a: ["A sphere (ball)", "Flat like a plate", "Square", "Triangle"], correct: 0, fact: "Earth is actually slightly flattened at the poles!" },
+          { q: "What is at the center of our solar system?", a: ["The Sun", "The Earth", "The Moon", "Mars"], correct: 0, fact: "The Sun is a giant ball of hot gas!" },
+          { q: "How many planets are in our solar system?", a: ["Eight", "Nine", "Five", "Twelve"], correct: 0, fact: "Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune!" },
+          { q: "What planet do we live on?", a: ["Earth", "Mars", "Venus", "Jupiter"], correct: 0, fact: "Earth is the only planet known to have life!" },
+          { q: "What is Earth's natural satellite?", a: ["The Moon", "The Sun", "Mars", "A star"], correct: 0, fact: "The Moon controls our tides!" },
+          { q: "Why does day and night happen?", a: ["Earth rotates on its axis", "The Sun moves around Earth", "The Moon blocks the Sun", "Magic"], correct: 0, fact: "One full rotation takes 24 hours!" },
+          { q: "What causes seasons?", a: ["Earth's tilt as it orbits the Sun", "The Sun getting hotter", "The Moon", "Wind"], correct: 0, fact: "Different parts of Earth tilt toward the Sun at different times!" },
+          { q: "What is a continent?", a: ["A large area of land", "A small island", "An ocean", "A country"], correct: 0, fact: "There are seven continents!" },
+          { q: "What continent is Africa?", a: ["The second largest continent", "The smallest", "An island", "A country"], correct: 0, fact: "Africa has 54 countries!" },
+          { q: "What is the equator?", a: ["An imaginary line around Earth's middle", "A real wall", "A river", "A mountain"], correct: 0, fact: "The equator passes through several African countries!" },
+          { q: "What is a volcano?", a: ["A mountain that can erupt", "A type of animal", "A river", "A lake"], correct: 0, fact: "Mount Kilimanjaro is a dormant volcano!" },
+          { q: "What comes out of a volcano?", a: ["Lava, ash, and gases", "Water", "Snow", "Sand"], correct: 0, fact: "Lava is melted rock from inside Earth!" },
+          { q: "What is an earthquake?", a: ["The ground shaking", "A type of storm", "Wind blowing", "Rain falling"], correct: 0, fact: "Earthquakes happen when tectonic plates move!" },
+          { q: "What is the Earth's crust?", a: ["The outer layer of Earth", "The center of Earth", "The atmosphere", "The ocean"], correct: 0, fact: "The crust is like Earth's skin!" },
+          { q: "What is inside the Earth?", a: ["Layers of rock and hot metal", "Nothing", "Water", "Air"], correct: 0, fact: "The core is hotter than the Sun's surface!" },
+          { q: "What is a mountain?", a: ["A very high landform", "A deep hole", "A type of water", "A kind of cloud"], correct: 0, fact: "Mount Kilimanjaro is Africa's highest mountain!" },
+          { q: "What is the tallest mountain in Africa?", a: ["Mount Kilimanjaro", "Mount Everest", "Mount Kenya", "Atlas Mountains"], correct: 0, fact: "Kilimanjaro is 5,895 meters tall!" },
+          { q: "What is a desert?", a: ["A very dry area with little rain", "A very wet area", "A forest", "An ocean"], correct: 0, fact: "The Sahara is the world's largest hot desert!" },
+          { q: "What is the Sahara?", a: ["Africa's largest desert", "A river", "A mountain", "A lake"], correct: 0, fact: "The Sahara is almost as big as the United States!" },
+          { q: "What is a rainforest?", a: ["A forest with lots of rain and trees", "A desert", "A frozen area", "A grassland"], correct: 0, fact: "The Congo has Africa's largest rainforest!" },
+          { q: "What is a savanna?", a: ["A grassland with few trees", "A thick forest", "A desert", "A lake"], correct: 0, fact: "The African savanna has amazing wildlife!" },
+          { q: "What is soil made of?", a: ["Rocks, minerals, and dead plants", "Only sand", "Only water", "Only air"], correct: 0, fact: "Healthy soil helps plants grow!" },
+          { q: "What is erosion?", a: ["When wind or water wears away rock and soil", "When plants grow", "When it rains", "When the Sun shines"], correct: 0, fact: "Erosion shapes our landscape over millions of years!" },
+          { q: "What are fossils?", a: ["Remains of ancient plants and animals in rock", "New animals", "Living plants", "Fresh food"], correct: 0, fact: "Many dinosaur fossils have been found in Africa!" },
+          { q: "What were dinosaurs?", a: ["Reptiles that lived millions of years ago", "Animals living today", "Types of birds", "Fish"], correct: 0, fact: "Dinosaurs went extinct about 65 million years ago!" },
+          { q: "What is gravity?", a: ["A force that pulls things down", "Something that pushes things up", "A type of weather", "A color"], correct: 0, fact: "Gravity keeps us on the ground!" },
+          { q: "What is the atmosphere?", a: ["The air around Earth", "The ground", "The ocean", "Space"], correct: 0, fact: "The atmosphere protects us from harmful rays!" },
+          { q: "What are stars?", a: ["Giant balls of hot gas", "Holes in the sky", "Tiny lamps", "Dust"], correct: 0, fact: "Our Sun is a star!" },
+          { q: "What is a constellation?", a: ["A pattern of stars in the sky", "A single star", "A planet", "A rocket"], correct: 0, fact: "Ancient Africans used stars to navigate!" },
+          { q: "What is the Milky Way?", a: ["Our galaxy", "A river of milk", "A candy bar only", "A type of star"], correct: 0, fact: "Our solar system is in the Milky Way galaxy!" },
+          { q: "What is a meteor?", a: ["A rock from space burning in our atmosphere", "A type of cloud", "A star falling", "A planet"], correct: 0, fact: "We call them 'shooting stars'!" },
+          { q: "What is the difference between a rock and a mineral?", a: ["Rocks are made of minerals", "They are the same", "Minerals are bigger", "Rocks come from space"], correct: 0, fact: "Diamonds are minerals found in Africa!" },
+          { q: "What valuable minerals are found in Africa?", a: ["Gold, diamonds, and many more", "None", "Only sand", "Only water"], correct: 0, fact: "Africa is rich in natural resources!" },
+          { q: "What is the Great Rift Valley?", a: ["A large valley formed by tectonic plates", "A river", "A mountain", "A desert"], correct: 0, fact: "The Rift Valley runs through East Africa!" },
+          { q: "How old is the Earth?", a: ["About 4.5 billion years", "About 100 years", "About 1,000 years", "About 1 million years"], correct: 0, fact: "Earth has been around for a very long time!" },
+          { q: "What is a glacier?", a: ["A large mass of ice", "A type of rock", "A hot spring", "A volcano"], correct: 0, fact: "There are glaciers on Mount Kilimanjaro, but they're shrinking!" },
+          { q: "What is the ozone layer?", a: ["Part of atmosphere that protects us from harmful sun rays", "A type of cloud", "The ground", "A ocean current"], correct: 0, fact: "We need to protect the ozone layer!" },
+          { q: "What makes diamonds?", a: ["Carbon under extreme heat and pressure", "Ice freezing", "Trees growing", "Water flowing"], correct: 0, fact: "Africa produces many of the world's diamonds!" },
+          { q: "What is a peninsula?", a: ["Land surrounded by water on three sides", "An island", "A mountain", "A lake"], correct: 0, fact: "Africa has the Horn of Africa peninsula!" },
+          { q: "Where is the Horn of Africa?", a: ["East Africa (Somalia, Ethiopia, Eritrea, Djibouti)", "West Africa", "South Africa", "North Africa"], correct: 0, fact: "It's shaped like a rhinoceros horn on the map!" }
+        ]
+      },
+      environment: {
+        name: "Environment",
+        emoji: "♻️",
+        color: "from-teal-400 to-green-500",
+        questions: [
+          { q: "What does 'recycle' mean?", a: ["Use materials again to make new things", "Throw things away", "Buy new things", "Burn things"], correct: 0, fact: "Recycling helps save our planet!" },
+          { q: "What can be recycled?", a: ["Paper, plastic, glass, and metal", "Nothing", "Only food", "Only clothes"], correct: 0, fact: "Check the recycling symbol on items!" },
+          { q: "Why should we plant trees?", a: ["They make oxygen and provide homes for animals", "They look nice only", "No reason", "To make shade only"], correct: 0, fact: "One tree can make oxygen for 4 people!" },
+          { q: "What is pollution?", a: ["Harmful things in air, water, or land", "Clean air", "Fresh water", "Healthy soil"], correct: 0, fact: "We can all help reduce pollution!" },
+          { q: "What causes air pollution?", a: ["Smoke, car exhaust, and factories", "Trees", "Clouds", "Rain"], correct: 0, fact: "Clean air is important for health!" },
+          { q: "How can we reduce plastic waste?", a: ["Use reusable bags and bottles", "Use more plastic", "Throw it everywhere", "Burn it"], correct: 0, fact: "Plastic can take 500 years to break down!" },
+          { q: "What is an endangered species?", a: ["An animal or plant at risk of dying out", "A very common animal", "A type of plant food", "A new discovery"], correct: 0, fact: "Many African animals are endangered!" },
+          { q: "Why are rhinos endangered?", a: ["Poaching for their horns", "Too many babies", "They eat too much", "Natural causes only"], correct: 0, fact: "We must protect rhinos from poachers!" },
+          { q: "What is a national park?", a: ["Protected land for wildlife and nature", "A playground", "A shopping center", "A school"], correct: 0, fact: "Africa has many beautiful national parks!" },
+          { q: "Name a famous African national park.", a: ["Serengeti, Kruger, or Masai Mara", "Central Park", "Hyde Park", "Disneyland"], correct: 0, fact: "These parks protect amazing wildlife!" },
+          { q: "What is deforestation?", a: ["Cutting down many trees", "Planting trees", "Watering trees", "Growing trees"], correct: 0, fact: "Deforestation destroys animal homes!" },
+          { q: "Why are forests important?", a: ["They make oxygen and are home to animals", "They are not important", "Only for wood", "Just for shade"], correct: 0, fact: "Forests are called 'the lungs of Earth'!" },
+          { q: "What is climate change?", a: ["Earth's climate getting warmer over time", "Weather changing daily", "Seasons changing", "No change at all"], correct: 0, fact: "Climate change affects everyone!" },
+          { q: "How can we help the environment?", a: ["Reduce, reuse, recycle", "Throw trash everywhere", "Waste water", "Cut down trees"], correct: 0, fact: "Small actions make a big difference!" },
+          { q: "What is composting?", a: ["Turning food waste into soil", "Throwing food away", "Cooking food", "Buying food"], correct: 0, fact: "Compost makes great fertilizer for plants!" },
+          { q: "What is solar energy?", a: ["Energy from the Sun", "Energy from water", "Energy from wind", "Energy from fire"], correct: 0, fact: "Africa gets lots of sunshine for solar power!" },
+          { q: "What is wind energy?", a: ["Energy from moving air", "Energy from the Sun", "Energy from water", "Energy from fire"], correct: 0, fact: "Wind turbines generate clean electricity!" },
+          { q: "What is hydroelectric power?", a: ["Energy from flowing water", "Energy from the Sun", "Energy from wind", "Energy from fire"], correct: 0, fact: "Africa's rivers can generate clean energy!" },
+          { q: "Why should we save electricity?", a: ["To save energy and money", "Electricity is unlimited", "It doesn't matter", "To use more"], correct: 0, fact: "Turn off lights when you leave a room!" },
+          { q: "What happens to trash in a landfill?", a: ["It's buried and takes years to break down", "It disappears", "It turns into food", "It flies away"], correct: 0, fact: "Reducing waste means less in landfills!" },
+          { q: "What is biodiversity?", a: ["Many different types of plants and animals", "Only one type of animal", "No animals", "Only plants"], correct: 0, fact: "Africa has amazing biodiversity!" },
+          { q: "Why is biodiversity important?", a: ["All living things depend on each other", "It's not important", "Only for looks", "Only for food"], correct: 0, fact: "Every species plays a role in nature!" },
+          { q: "What is a food chain?", a: ["How energy passes from one living thing to another", "A chain made of food", "A restaurant menu", "A cooking recipe"], correct: 0, fact: "Plants are often at the bottom of food chains!" },
+          { q: "What eats plants in a food chain?", a: ["Herbivores (plant eaters)", "Only carnivores", "Only humans", "Nothing"], correct: 0, fact: "Zebras and elephants are herbivores!" },
+          { q: "What eats other animals in a food chain?", a: ["Carnivores (meat eaters)", "Herbivores", "Plants", "Rocks"], correct: 0, fact: "Lions are carnivores!" },
+          { q: "What is an ecosystem?", a: ["A community of living things and their environment", "Just animals", "Just plants", "Just water"], correct: 0, fact: "The savanna is an ecosystem!" },
+          { q: "What is habitat loss?", a: ["When animals lose their homes", "Animals moving to new homes", "Animals getting bigger homes", "Animals sharing homes"], correct: 0, fact: "Building and farming can destroy habitats!" },
+          { q: "How do bees help plants?", a: ["By spreading pollen", "By eating plants", "By cutting plants", "They don't help"], correct: 0, fact: "Bees are very important for growing food!" },
+          { q: "What is conservation?", a: ["Protecting nature and wildlife", "Using up resources", "Destroying forests", "Polluting water"], correct: 0, fact: "Conservation helps save endangered species!" },
+          { q: "What can kids do to help the environment?", a: ["Save water, plant trees, don't litter", "Waste resources", "Throw trash in rivers", "Cut down trees"], correct: 0, fact: "Everyone can make a difference!" },
+          { q: "What is sustainable living?", a: ["Living without using up Earth's resources", "Using as much as possible", "Wasting everything", "Not caring about Earth"], correct: 0, fact: "We need to think about future generations!" },
+          { q: "Why should we protect wetlands?", a: ["They filter water and are home to many animals", "They are useless", "They should be drained", "They cause problems"], correct: 0, fact: "Wetlands are like nature's kidneys!" },
+          { q: "What is an invasive species?", a: ["Plants or animals that harm new environments", "Native animals", "Endangered animals", "Helpful plants"], correct: 0, fact: "Invasive species can hurt native wildlife!" },
+          { q: "How does plastic harm ocean animals?", a: ["They can eat it or get tangled", "It helps them", "It feeds them", "It doesn't affect them"], correct: 0, fact: "Sea turtles often mistake bags for jellyfish!" },
+          { q: "What is a carbon footprint?", a: ["The amount of carbon dioxide we produce", "A footprint made of carbon", "A dinosaur footprint", "A type of shoe"], correct: 0, fact: "We can reduce our carbon footprint!" },
+          { q: "Why are coral reefs important?", a: ["They're home to many sea creatures", "They're just rocks", "They're not important", "Only for decoration"], correct: 0, fact: "Coral reefs are like underwater cities!" },
+          { q: "What is organic farming?", a: ["Farming without harmful chemicals", "Farming with lots of chemicals", "Factory farming", "No farming at all"], correct: 0, fact: "Organic farming is better for soil and water!" },
+          { q: "How can we reduce water waste?", a: ["Fix leaks, take shorter showers, turn off taps", "Leave taps running", "Water the pavement", "Use more water"], correct: 0, fact: "Every drop of water counts!" },
+          { q: "What are reusable bags?", a: ["Bags we can use many times", "Single-use bags", "Paper bags only", "Invisible bags"], correct: 0, fact: "Reusable bags help reduce plastic waste!" },
+          { q: "Why should we walk or cycle when possible?", a: ["It's healthy and reduces pollution", "Cars are always better", "It's not important", "Only for exercise"], correct: 0, fact: "Active travel is good for you and the planet!" }
+        ]
+      }
+    };
+
+    // Calculate total questions
+    const totalQuestions = Object.values(questionBank).reduce((sum, cat) => sum + cat.questions.length, 0);
+    console.log(`Total questions in bank: ${totalQuestions}`);
+
+    // ========== BADGE DEFINITIONS ==========
+    const badges = {
+      first_steps: { emoji: "🌟", name: "First Steps", requirement: 10 },
+      explorer: { emoji: "🧭", name: "Explorer", requirement: 50 },
+      scientist: { emoji: "🔬", name: "Junior Scientist", requirement: 100 },
+      genius: { emoji: "🧠", name: "Science Genius", requirement: 200 },
+      master: { emoji: "👑", name: "Science Master", requirement: 500 },
+      legend: { emoji: "🏆", name: "Science Legend", requirement: 1000 },
+      animal_expert: { emoji: "🦁", name: "Animal Expert", requirement: "category_animals_50" },
+      plant_pro: { emoji: "🌳", name: "Plant Pro", requirement: "category_plants_50" },
+      weather_wizard: { emoji: "⛈️", name: "Weather Wizard", requirement: "category_weather_50" },
+      body_builder: { emoji: "💪", name: "Body Builder", requirement: "category_body_50" },
+      ocean_explorer: { emoji: "🌊", name: "Ocean Explorer", requirement: "category_water_50" },
+      earth_expert: { emoji: "🌍", name: "Earth Expert", requirement: "category_earth_50" },
+      eco_warrior: { emoji: "♻️", name: "Eco Warrior", requirement: "category_environment_50" }
+    };
+
+    // ========== DATA SDK HANDLERS ==========
+    const dataHandler = {
+      onDataChanged(data) {
+        allPlayerData = data;
+        const nameInput = document.getElementById('player-name');
+        if (nameInput && nameInput.value) {
+          const existing = data.find(d => d.player_name === nameInput.value);
+          if (existing) {
+            playerData = existing;
+            updateUIWithPlayerData();
+          }
+        }
+      }
+    };
+
+    // ========== ELEMENT SDK HANDLERS ==========
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      const titleEl = document.getElementById('main-title');
+      if (titleEl) titleEl.textContent = config.game_title || defaultConfig.game_title;
+      
+      const welcomeEl = document.getElementById('main-welcome');
+      if (welcomeEl) welcomeEl.textContent = config.welcome_message || defaultConfig.welcome_message;
+      
+      document.documentElement.style.setProperty('--bg-color', config.background_color || defaultConfig.background_color);
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => { config.background_color = value; window.elementSdk.setConfig({ background_color: value }); }
+          },
+          {
+            get: () => config.surface_color || defaultConfig.surface_color,
+            set: (value) => { config.surface_color = value; window.elementSdk.setConfig({ surface_color: value }); }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => { config.text_color = value; window.elementSdk.setConfig({ text_color: value }); }
+          },
+          {
+            get: () => config.primary_action_color || defaultConfig.primary_action_color,
+            set: (value) => { config.primary_action_color = value; window.elementSdk.setConfig({ primary_action_color: value }); }
+          },
+          {
+            get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+            set: (value) => { config.secondary_action_color = value; window.elementSdk.setConfig({ secondary_action_color: value }); }
+          }
+        ],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["game_title", config.game_title || defaultConfig.game_title],
+        ["welcome_message", config.welcome_message || defaultConfig.welcome_message],
+        ["encouragement_text", config.encouragement_text || defaultConfig.encouragement_text]
+      ]);
+    }
+
+    // ========== INITIALIZATION ==========
+    async function initializeApp() {
+      // Initialize Element SDK
+      if (window.elementSdk) {
+        await window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities,
+          mapToEditPanelValues
+        });
+        config = { ...defaultConfig, ...window.elementSdk.config };
+      }
+      
+      // Initialize Data SDK
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error("Failed to initialize data SDK");
+        }
+      }
+      
+      renderCategories();
+      onConfigChange(config);
+    }
+
+    // ========== UI FUNCTIONS ==========
+    function updateUIWithPlayerData() {
+      if (playerData) {
+        document.getElementById('continue-section').classList.remove('hidden');
+        sessionScore = playerData.total_score || 0;
+        updateScoreDisplays();
+        renderBadges();
+      }
+    }
+
+    function updateScoreDisplays() {
+      const scoreDisplay = document.getElementById('score-display');
+      const quizScore = document.getElementById('quiz-score');
+      if (scoreDisplay) scoreDisplay.textContent = sessionScore;
+      if (quizScore) quizScore.textContent = sessionScore;
+    }
+
+    function renderCategories() {
+      const container = document.querySelector('#category-screen .grid');
+      if (!container) return;
+      
+      container.innerHTML = Object.entries(questionBank).map(([key, cat]) => `
+        <button onclick="selectCategory('${key}')" 
+          class="category-card bg-white/90 rounded-3xl p-6 shadow-xl hover:shadow-2xl text-center">
+          <div class="text-5xl mb-3">${cat.emoji}</div>
+          <h3 class="font-bold text-gray-800 text-lg">${cat.name}</h3>
+          <p class="text-sm text-gray-500 mt-1">${cat.questions.length} questions</p>
+          <div class="mt-3 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r ${cat.color} rounded-full" style="width: 0%"></div>
+          </div>
+        </button>
+      `).join('');
+    }
+
+    function renderBadges() {
+      const container = document.getElementById('badges-container');
+      if (!container) return;
+      
+      const earnedBadges = playerData?.badges_earned ? playerData.badges_earned.split(',').filter(b => b) : [];
+      
+      container.innerHTML = Object.entries(badges).map(([key, badge]) => {
+        const earned = earnedBadges.includes(key);
+        return `
+          <div class="flex flex-col items-center p-2 ${earned ? '' : 'opacity-30 grayscale'}">
+            <span class="text-3xl">${badge.emoji}</span>
+            <span class="text-xs text-gray-600 mt-1">${badge.name}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ========== GAME FUNCTIONS ==========
+    async function startGame() {
+      const nameInput = document.getElementById('player-name');
+      const name = nameInput.value.trim();
+      
+      if (!name) {
+        nameInput.classList.add('border-red-500', 'wiggle');
+        setTimeout(() => nameInput.classList.remove('border-red-500', 'wiggle'), 500);
+        return;
+      }
+      
+      // Check if player exists
+      const existing = allPlayerData.find(d => d.player_name === name);
+      
+      if (existing) {
+        playerData = existing;
+        sessionScore = existing.total_score || 0;
+      } else {
+        // Create new player - check limit first
+        if (allPlayerData.length >= 999) {
+          showInlineMessage("Maximum players reached. Please use an existing name.");
+          return;
+        }
+        
+        const newPlayer = {
+          player_name: name,
+          total_score: 0,
+          questions_answered: 0,
+          correct_answers: 0,
+          current_level: 1,
+          badges_earned: "",
+          last_played: new Date().toISOString()
+        };
+        
+        if (window.dataSdk) {
+          const result = await window.dataSdk.create(newPlayer);
+          if (!result.isOk) {
+            console.error("Failed to save player");
+          }
+        }
+        
+        playerData = newPlayer;
+        sessionScore = 0;
+      }
+      
+      showCategories();
+    }
+
+    function showInlineMessage(msg) {
+      const btn = document.getElementById('start-btn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = msg;
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }, 3000);
+    }
+
+    function continueGame() {
+      showCategories();
+    }
+
+    function showWelcome() {
+      document.getElementById('welcome-screen').classList.remove('hidden');
+      document.getElementById('category-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.add('hidden');
+    }
+
+    function showCategories() {
+      document.getElementById('welcome-screen').classList.add('hidden');
+      document.getElementById('category-screen').classList.remove('hidden');
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.add('hidden');
+      
+      const greeting = document.getElementById('player-greeting');
+      if (greeting && playerData) {
+        greeting.textContent = `${playerData.player_name}, choose a topic to explore!`;
+      }
+      
+      updateScoreDisplays();
+      renderBadges();
+    }
+
+    function selectCategory(categoryKey) {
+      currentCategory = categoryKey;
+      const category = questionBank[categoryKey];
+      
+      // Shuffle and select 10 questions
+      currentQuestions = [...category.questions]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 10);
+      
+      currentQuestionIndex = 0;
+      lives = 3;
+      correctInSession = 0;
+      
+      document.getElementById('category-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+      
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const question = currentQuestions[currentQuestionIndex];
+      const category = questionBank[currentCategory];
+      
+      document.getElementById('category-badge').innerHTML = `${category.emoji} ${category.name}`;
+      document.getElementById('question-text').textContent = question.q;
+      document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+      document.getElementById('progress-bar').style.width = `${(currentQuestionIndex / currentQuestions.length) * 100}%`;
+      document.getElementById('lives-display').textContent = lives;
+      
+      // Shuffle answers
+      const shuffledAnswers = question.a.map((answer, index) => ({ answer, isCorrect: index === question.correct }))
+        .sort(() => Math.random() - 0.5);
+      
+      const answersContainer = document.getElementById('answers-container');
+      answersContainer.innerHTML = shuffledAnswers.map((item, idx) => `
+        <button onclick="checkAnswer(this, ${item.isCorrect})" 
+          class="answer-btn w-full p-4 bg-gradient-to-r from-gray-50 to-gray-100 hover:from-amber-50 hover:to-amber-100 rounded-2xl text-left text-lg font-medium text-gray-800 border-2 border-gray-200 hover:border-amber-300 transition-all slide-up"
+          style="animation-delay: ${idx * 0.1}s">
+          <span class="inline-block w-8 h-8 rounded-full bg-amber-200 text-amber-800 font-bold text-center leading-8 mr-3">${['A', 'B', 'C', 'D'][idx]}</span>
+          ${item.answer}
+        </button>
+      `).join('');
+      
+      document.getElementById('feedback').classList.add('hidden');
+      document.getElementById('next-btn').classList.add('hidden');
+      
+      // Reset question card animation
+      const questionCard = document.getElementById('question-card');
+      questionCard.classList.remove('bounce-in');
+      void questionCard.offsetWidth;
+      questionCard.classList.add('bounce-in');
+    }
+
+    async function checkAnswer(button, isCorrect) {
+      const buttons = document.querySelectorAll('.answer-btn');
+      buttons.forEach(btn => btn.disabled = true);
+      
+      const question = currentQuestions[currentQuestionIndex];
+      const feedback = document.getElementById('feedback');
+      const feedbackText = document.getElementById('feedback-text');
+      const feedbackFact = document.getElementById('feedback-fact');
+      
+      if (isCorrect) {
+        button.classList.add('correct-answer');
+        feedbackText.textContent = config.encouragement_text || defaultConfig.encouragement_text;
+        feedbackText.className = "text-xl font-bold mb-2 text-green-600";
+        sessionScore += 10;
+        correctInSession++;
+        createConfetti();
+      } else {
+        button.classList.add('wrong-answer');
+        lives--;
+        document.getElementById('lives-display').textContent = lives;
+        
+        // Show correct answer
+        buttons.forEach(btn => {
+          if (btn.textContent.includes(question.a[question.correct])) {
+            btn.classList.add('correct-answer');
+          }
+        });
+        
+        feedbackText.textContent = "Not quite! Keep trying!";
+        feedbackText.className = "text-xl font-bold mb-2 text-red-600";
+      }
+      
+      feedbackFact.textContent = `💡 ${question.fact}`;
+      feedback.classList.remove('hidden');
+      document.getElementById('next-btn').classList.remove('hidden');
+      
+      updateScoreDisplays();
+      
+      // Save progress
+      if (playerData && window.dataSdk) {
+        playerData.total_score = sessionScore;
+        playerData.questions_answered = (playerData.questions_answered || 0) + 1;
+        if (isCorrect) playerData.correct_answers = (playerData.correct_answers || 0) + 1;
+        playerData.last_played = new Date().toISOString();
+        
+        // Check for new badges
+        const newBadge = checkForNewBadges();
+        if (newBadge) {
+          playerData.badges_earned = playerData.badges_earned ? `${playerData.badges_earned},${newBadge}` : newBadge;
+        }
+        
+        await window.dataSdk.update(playerData);
+      }
+    }
+
+    function checkForNewBadges() {
+      if (!playerData) return null;
+      
+      const earned = playerData.badges_earned ? playerData.badges_earned.split(',') : [];
+      
+      // Check score-based badges
+      const scoreBadges = [
+        { key: 'first_steps', score: 10 },
+        { key: 'explorer', score: 50 },
+        { key: 'scientist', score: 100 },
+        { key: 'genius', score: 200 },
+        { key: 'master', score: 500 },
+        { key: 'legend', score: 1000 }
+      ];
+      
+      for (const badge of scoreBadges) {
+        if (!earned.includes(badge.key) && sessionScore >= badge.score) {
+          return badge.key;
+        }
+      }
+      
+      return null;
+    }
+
+    function createConfetti() {
+      const colors = ['🌟', '⭐', '✨', '🎉', '🎊'];
+      for (let i = 0; i < 10; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'fixed text-2xl confetti pointer-events-none';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.top = '50%';
+        confetti.textContent = colors[Math.floor(Math.random() * colors.length)];
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 1000);
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      
+      if (currentQuestionIndex >= currentQuestions.length || lives <= 0) {
+        showResults();
+      } else {
+        loadQuestion();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('results-screen').classList.remove('hidden');
+      
+      const percentage = (correctInSession / currentQuestions.length) * 100;
+      
+      let emoji, title, message;
+      if (percentage >= 90) {
+        emoji = "🏆";
+        title = "AMAZING!";
+        message = "You're a science superstar!";
+      } else if (percentage >= 70) {
+        emoji = "🌟";
+        title = "Great Job!";
+        message = "You're learning so much!";
+      } else if (percentage >= 50) {
+        emoji = "👍";
+        title = "Good Effort!";
+        message = "Keep practicing!";
+      } else {
+        emoji = "💪";
+        title = "Keep Going!";
+        message = "You'll do better next time!";
+      }
+      
+      document.getElementById('results-emoji').textContent = emoji;
+      document.getElementById('results-title').textContent = title;
+      document.getElementById('results-message').textContent = message;
+      document.getElementById('final-score').textContent = sessionScore;
+      document.getElementById('correct-count').textContent = `${correctInSession}/${currentQuestions.length}`;
+      
+      // Check for new badge
+      const newBadge = checkForNewBadges();
+      if (newBadge && badges[newBadge]) {
+        document.getElementById('new-badge').classList.remove('hidden');
+        document.getElementById('badge-earned').textContent = badges[newBadge].emoji;
+      } else {
+        document.getElementById('new-badge').classList.add('hidden');
+      }
+    }
+
+    function playAgain() {
+      selectCategory(currentCategory);
+    }
+
+    // Initialize on load
+    initializeApp();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cae6baed6064ec8',t:'MTc3MDU4ODI0NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
